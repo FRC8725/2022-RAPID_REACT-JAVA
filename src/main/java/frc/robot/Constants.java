@@ -9,13 +9,13 @@ public final class Constants {
     public final class Driver {
         // CAN
         public final static String MOTOR_TYPE = "Spark"; //CAN or PWM or Spark
-        public final static int LEFT_FRONT_MOTOR = 0;
-        public final static int LEFT_BACK_MOTOR = 1;
-        public final static int RIGHT_FRONT_MOTOR = 2;
-        public final static int RIGHT_BACK_MOTOR = 3;
+        public final static int LEFT_FRONT_MOTOR = 1;
+        public final static int LEFT_BACK_MOTOR = 2;
+        public final static int RIGHT_FRONT_MOTOR = 3;
+        public final static int RIGHT_BACK_MOTOR = 4;
         // DIO
-        public final static int LEFT_ENCODER = 0; // DIO 0 & 1
-        public final static int RIGHT_ENCODER = 2; // DIO 2 & 3
+        public final static int LEFT_ENCODER = 1; // DIO 1 & 2
+        public final static int RIGHT_ENCODER = 3; // DIO 3 & 4
         // Value
         public final static double SPEED = .7;
         public final static double ENCODER_PULSE = 526.;
@@ -24,9 +24,9 @@ public final class Constants {
 
     public static final class Shooter {
         // CAN
-        public final static int LEFT_SHOOT_MOTOR[] = { 4 };
-        public final static int RIGHT_SHOOT_MOTOR[] = { 5 };
-        public final static int TEST_SPARK[] = { 6 };
+        public final static int LEFT_SHOOT_MOTOR[] = { 5 };
+        public final static int RIGHT_SHOOT_MOTOR[] = { 6 };
+        public final static int TEST_SPARK[] = { 7 };
         // Value
         public final static double SPEED = .3;
     }
@@ -46,6 +46,9 @@ public final class Constants {
 
     public final class Joystick {
         public final static int JOYSTICK_A = 0;
+
+        public final static int LEFT_MOTOR_AXIS = 0;
+        public final static int RIGHT_MOTOR_AXIS = 3;
 
         public final static int SHOOT_BUTTON = 6;
         public final static int RELEASE_PRESSURE_BUTTON = 5;
