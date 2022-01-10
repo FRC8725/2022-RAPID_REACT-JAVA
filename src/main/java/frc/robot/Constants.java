@@ -8,7 +8,7 @@ public final class Constants {
 
     public final class Driver {
         // CAN
-        public final static String MOTOR_PORT_TYPE = "CAN"; //CAN or PWM
+        public final static String MOTOR_TYPE = "Spark"; //CAN or PWM or Spark
         public final static int LEFT_FRONT_MOTOR = 0;
         public final static int LEFT_BACK_MOTOR = 1;
         public final static int RIGHT_FRONT_MOTOR = 2;

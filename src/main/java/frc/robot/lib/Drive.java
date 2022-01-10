@@ -5,20 +5,26 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.wpilibj.Encoder;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Drive {
     private final static double MOTOR_PULSE = Constants.Driver.ENCODER_PULSE;
     private final static double MOTOR_PERIMETER = Constants.Driver.MOTOR_PERIMETER;
     private final static double MAX_PERIOD = .1;
+    MotorControllerGroup Motors[] = {};
 
     public MotorControllerGroup[] Drive_Setup(String Motor_Port_Type) {
-        MotorControllerGroup Motors[] = {};
+        
         switch (Motor_Port_Type) {
             case "CAN":
                 Motors = Motor_Setup_CAN();
                 break;
             case "PWM":
                 Motors = Motor_Setup_PWM();
+                break;
+            case "Spark":
+                Motors = Motor_Setup_Spark();
                 break;
             default:
                 System.out.println("Error");
@@ -42,7 +48,23 @@ public class Drive {
         return Motors;
     }
 
-    private MotorControllerGroup[] Motor_Setup_PWM() {
+    private MotorControllerGroup[] Motor_Setup_Spark() {
+        CANSparkMax leftfront_SparkMax = new CANSparkMax(Constants.Driver.LEFT_FRONT_MOTOR, MotorType.kBrushless);
+        CANSparkMax leftback_SparkMax = new CANSparkMax(Constants.Driver.LEFT_BACK_MOTOR, MotorType.kBrushless);
+        CANSparkMax rightfront_SparkMax = new CANSparkMax(Constants.Driver.RIGHT_FRONT_MOTOR, MotorType.kBrushless);
+        CANSparkMax rightback_SparkMax = new CANSparkMax(Constants.Driver.RIGHT_BACK_MOTOR, MotorType.kBrushless);
+
+        MotorControllerGroup leftMotors = new MotorControllerGroup(leftfront_SparkMax, leftback_SparkMax);
+        MotorControllerGroup rightMotors = new MotorControllerGroup(rightfront_SparkMax, rightback_SparkMax);
+
+        leftMotors.setInverted(true);
+
+        MotorControllerGroup[] Motors = { leftMotors, rightMotors };
+
+        return Motors;
+    }
+
+    public MotorControllerGroup[] Motor_Setup_PWM() {
         PWMVictorSPX leftfront_VictorSPX = new PWMVictorSPX(Constants.Driver.LEFT_FRONT_MOTOR);
         PWMVictorSPX leftback_VictorSPX = new PWMVictorSPX(Constants.Driver.LEFT_BACK_MOTOR);
         PWMVictorSPX rightfront_VictorSPX = new PWMVictorSPX(Constants.Driver.RIGHT_FRONT_MOTOR);

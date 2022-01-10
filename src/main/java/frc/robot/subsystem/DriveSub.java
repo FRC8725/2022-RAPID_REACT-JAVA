@@ -17,7 +17,7 @@ public class DriveSub extends SubsystemBase {
     Drive Drive = new Drive();
 
     public void Move_Set() {
-        m_Driver = Drive.Drive_Setup(Constants.Driver.MOTOR_PORT_TYPE);
+        m_Driver = Drive.Drive_Setup(Constants.Driver.MOTOR_TYPE);
         m_DriverEncoder = Drive.Encoder_Setup();
     }
 
