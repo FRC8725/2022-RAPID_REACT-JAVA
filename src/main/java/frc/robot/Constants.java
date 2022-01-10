@@ -54,8 +54,14 @@ public final class Constants {
         public final static int RELEASE_PRESSURE_BUTTON = 5;
     }
 
+    public final class Test {
+        public final static int MOTOR = 10;
+        public final static double MOTOR_SPEED = .1;
+    }
+
     public final class DataSheet {
         public final static int TALONFX_ENCODER_UNITS = 2048;
     }
+
 
 }

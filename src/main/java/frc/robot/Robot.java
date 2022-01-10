@@ -8,7 +8,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
+
 import frc.robot.subsystem.*;
+import frc.robot.lib.Test;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,6 +30,7 @@ public class Robot extends TimedRobot {
   Joystick m_Joystick = new Joystick(Constants.Joystick.JOYSTICK_A);
 
   DriveSub DriveSub = new DriveSub();
+  Test Test = new Test();
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -38,6 +41,7 @@ public class Robot extends TimedRobot {
   private void Robot_Pause() {
     DriveSub.Drive_Stop();
     DriveSub.Encoder_Zero();
+    Test.Spark_Spin(false);
   }
 
   @Override
@@ -110,7 +114,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    DriveSub.Move(m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS), m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
+    DriveSub.Move(m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
+        m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
   }
 
   @Override
@@ -129,5 +134,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
+    Test.Spark_Spin(true);
   }
 }
