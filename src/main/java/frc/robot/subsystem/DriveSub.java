@@ -12,7 +12,7 @@ public class DriveSub extends SubsystemBase {
     Drive Drive = new Drive("Spark");
 
     public void Move(double LSpeed, double RSpeed) {
-        Drive.Motor_Run(LSpeed, RSpeed);
+        Drive.Motor_Run(LSpeed * Move_Speed, RSpeed * Move_Speed);
     }
 
     public void Encoder_Zero() {
