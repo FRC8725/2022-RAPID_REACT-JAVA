@@ -45,8 +45,8 @@ public class Drive {
 
     public void Motor_Run(double LSpeed, double RSpeed) {
         if (Motor_Port_Type == "Spark") {
-            leftfront_SparkMax.set(LSpeed);
-            leftback_SparkMax.set(LSpeed);
+            leftfront_SparkMax.set(LSpeed * -1);
+            leftback_SparkMax.set(LSpeed * -1);
             rightfront_SparkMax.set(RSpeed);
             rightback_SparkMax.set(RSpeed);
         } else {
@@ -63,8 +63,6 @@ public class Drive {
 
         MotorControllerGroup leftMotors = new MotorControllerGroup(leftfront_VictorSPX, leftback_VictorSPX);
         MotorControllerGroup rightMotors = new MotorControllerGroup(rightfront_VictorSPX, rightback_VictorSPX);
-
-        leftMotors.setInverted(true);
 
         MotorControllerGroup[] Motors = { leftMotors, rightMotors };
 
@@ -92,9 +90,6 @@ public class Drive {
         leftback_SparkMax = new CANSparkMax(Constants.Driver.LEFT_BACK_MOTOR, MotorType.kBrushless);
         rightfront_SparkMax = new CANSparkMax(Constants.Driver.RIGHT_FRONT_MOTOR, MotorType.kBrushless);
         rightback_SparkMax = new CANSparkMax(Constants.Driver.RIGHT_BACK_MOTOR, MotorType.kBrushless);
-        
-        leftfront_SparkMax.setInverted(true);
-        leftback_SparkMax.setInverted(true);
     }
 
     public void Encoder_Setup() {

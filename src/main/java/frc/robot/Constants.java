@@ -8,7 +8,7 @@ public final class Constants {
 
     public final class Driver {
         // CAN
-        public final static String MOTOR_TYPE = "Spark"; //CAN or PWM or Spark
+        public final static String MOTOR_TYPE = "Spark"; // CAN or PWM or Spark
         public final static int LEFT_FRONT_MOTOR = 1;
         public final static int LEFT_BACK_MOTOR = 2;
         public final static int RIGHT_FRONT_MOTOR = 3;
@@ -33,7 +33,7 @@ public final class Constants {
 
     public final static class Pneumatic {
         public final static int COMPRESSOR = 0;
-        //PCM PWM
+        // PCM PWM
         public final static int DOUBLESOLENOID_FORWARD_CHANNEL[] = { 0, 2 };
         public final static int DOUBLESOLENOID_BACKWARD_CHANNEL[] = { 1, 3 };
         // Analog
@@ -47,7 +47,7 @@ public final class Constants {
     public final class Joystick {
         public final static int JOYSTICK_A = 0;
 
-        public final static int LEFT_MOTOR_AXIS = 0;
+        public final static int LEFT_MOTOR_AXIS = 1;
         public final static int RIGHT_MOTOR_AXIS = 3;
 
         public final static int SHOOT_BUTTON = 6;
@@ -62,6 +62,5 @@ public final class Constants {
     public final class DataSheet {
         public final static int TALONFX_ENCODER_UNITS = 2048;
     }
-
 
 }
