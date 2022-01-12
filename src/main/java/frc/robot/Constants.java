@@ -55,8 +55,11 @@ public final class Constants {
     }
 
     public final class Test {
+        // Motors
         public final static int MOTOR = 10;
-        public final static double MOTOR_SPEED = .1;
+        public final static double MOTOR_SPEED = .5;
+        // Joystick
+        public final static int SPIN_BUTTON = 5;
     }
 
     public final class DataSheet {

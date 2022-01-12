@@ -45,10 +45,20 @@ public class Drive {
 
     public void Motor_Run(double LSpeed, double RSpeed) {
         if (Motor_Port_Type == "Spark") {
-            leftfront_SparkMax.set(LSpeed * -1);
-            leftback_SparkMax.set(LSpeed * -1);
-            rightfront_SparkMax.set(RSpeed);
-            rightback_SparkMax.set(RSpeed);
+            if (Math.abs(LSpeed) > 0.08) {
+                leftfront_SparkMax.set(LSpeed);
+                leftback_SparkMax.set(LSpeed);
+            } else {
+                leftfront_SparkMax.set(0);
+                leftback_SparkMax.set(0);
+            }
+            if (Math.abs(RSpeed) > 0.08) {
+                rightfront_SparkMax.set(RSpeed);
+                rightback_SparkMax.set(RSpeed);
+            } else {
+                rightfront_SparkMax.set(0);
+                rightback_SparkMax.set(0);
+            }
         } else {
             Motors[0].set(LSpeed);
             Motors[1].set(RSpeed);

@@ -134,6 +134,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
-    Test.Spark_Spin(true);
+    Test.Spark_Spin(m_Joystick.getRawButton(Constants.Test.SPIN_BUTTON));
   }
 }
