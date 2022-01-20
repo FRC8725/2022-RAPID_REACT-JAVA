@@ -66,4 +66,8 @@ public final class Constants {
         public final static int TALONFX_ENCODER_UNITS = 2048;
     }
 
+    public final class Climber {
+        
+    }
+
 }
