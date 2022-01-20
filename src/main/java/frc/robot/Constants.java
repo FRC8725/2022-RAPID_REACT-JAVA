@@ -35,7 +35,7 @@ public final class Constants {
         public final static int COMPRESSOR = 0;
         // PCM PWM
         public final static int DOUBLESOLENOID_FORWARD_CHANNEL[] = { 0, 2 };
-        public final static int DOUBLESOLENOID_BACKWARD_CHANNEL[] = { 1, 3 };
+        public final static int DOUBLESOLENOID_REVERSE_CHANNEL[] = { 1, 3 };
         // Analog
         public final static int SENSOR_SCALE = 250;
         public final static int SENSOR_OFFSET = -25;
