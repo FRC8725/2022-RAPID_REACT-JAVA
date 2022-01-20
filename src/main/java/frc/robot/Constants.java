@@ -62,12 +62,27 @@ public final class Constants {
         public final static int SPIN_BUTTON = 5;
     }
 
-    public final class DataSheet {
+    public final class DataSheet { // @@
         public final static int TALONFX_ENCODER_UNITS = 2048;
     }
 
-    public final class Climber {
-        
+    public final static class Climber {
+        // CAN
+        public final static int ENCODER_NEO_1 = 0;
+        public final static int ENCODER_NEO_2 = 0;
+        public final static int ENCODER_NEO_3 = 0;
+        public final static int ENCODER_NEO_4 = 0;
+        public final static int ENCODER_SPARKMAX_1 = 0;
+        public final static int ENCODER_SPARKMAX_2 = 0;
+
+        public final static int CLIMBER_NEO_0 = 1; //
+        public final static int CLIMBER_NEO_1 = 2; //
+        public final static int CLIMBER_NEO_2 = 3; //
+        public final static int CLIMBER_NEO_3 = 4; //
+
+        public final static int CLIMBER_SPARKMAX_0 = 5; //
+        public final static int CLIMBER_SPARKMAX_1 = 6; //
+
     }
 
 }
