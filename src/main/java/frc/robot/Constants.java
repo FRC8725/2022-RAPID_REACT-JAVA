@@ -75,13 +75,13 @@ public final class Constants {
         public final static int FRONT_WINCH_ENCODER = 0;
         public final static int BACK_WINCH_ENCODER = 0;
 
-        public final static int FRONT_HOOK_NEO = 1; //
-        public final static int BACK_HOOK_NEO = 2; //
-        public final static int FRONT_ANGLE_NEO = 3; //
-        public final static int BACK_ANGLE_NEO = 4; //
+        public final static int FRONT_HOOK_NEO = 1; // 前鉤子(高度控制)
+        public final static int BACK_HOOK_NEO = 2; // 後鉤子(高度控制)
+        public final static int FRONT_ANGLE_NEO = 3; // 前邊轉角馬達
+        public final static int BACK_ANGLE_NEO = 4; // 後邊轉角馬達
 
-        public final static int FRONT_WINCH_CLIMBER = 5; //
-        public final static int BACK_WINCH_CLIMBER = 6; //
+        public final static int FRONT_WINCH_CLIMBER = 5; // 絞盤馬達 (前)
+        public final static int BACK_WINCH_CLIMBER = 6; // 絞盤馬達 (後)
 
     }
 
