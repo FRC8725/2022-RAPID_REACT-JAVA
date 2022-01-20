@@ -8,9 +8,12 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
+// import edu.wpi.first.wpilibj.util.Color;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import frc.robot.subsystem.*;
 import frc.robot.lib.Test;
+// import frc.robot.lib.ColorSensor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,12 +29,13 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  private final SendableChooser<Boolean> m_Chooser_Color = new SendableChooser<>();
 
   Joystick m_Joystick = new Joystick(Constants.Joystick.JOYSTICK_A);
 
   DriveSub DriveSub = new DriveSub();
   Test Test = new Test();
-
+  
   /**
    * This function is run when the robot is first started up and should be used
    * for any
@@ -42,6 +46,7 @@ public class Robot extends TimedRobot {
     DriveSub.Drive_Stop();
     DriveSub.Encoder_Zero();
     Test.Spark_Spin(false);
+    CameraServer.startAutomaticCapture();
   }
 
   @Override
@@ -49,6 +54,9 @@ public class Robot extends TimedRobot {
     Robot_Pause();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
+    m_Chooser_Color.setDefaultOption("Blue", true);
+    m_Chooser_Color.addOption("Red", false);
+    SmartDashboard.putData("Team_Color", m_Chooser_Color);
     SmartDashboard.putData("Auto choices", m_chooser);
   }
 
@@ -67,23 +75,6 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
   }
 
-  /**
-   * This autonomous (along with the chooser code above) shows how to select
-   * between different
-   * autonomous modes using the dashboard. The sendable chooser code works with
-   * the Java
-   * SmartDashboard. If you prefer the LabVIEW Dashboard, remove all of the
-   * chooser code and
-   * uncomment the getString line to get the auto name from the text box below the
-   * Gyro
-   *
-   * <p>
-   * You can add additional auto modes by adding additional comparisons to the
-   * switch structure
-   * below with additional strings. If using the SendableChooser make sure to add
-   * them to the
-   * chooser code above as well.
-   */
   @Override
   public void autonomousInit() {
     Robot_Pause();
