@@ -27,7 +27,7 @@ class Intake {
     }
     public void Off(){
         First_Solenoid.set(Value.kOff);
-        Second_Solenoid.set(Value.kOff);`
+        Second_Solenoid.set(Value.kOff);
     }    
 }
     
