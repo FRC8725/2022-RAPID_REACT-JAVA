@@ -11,8 +11,11 @@ class Intake {
         Second_Solenoid = new DoubleSolenoid(null,Constants.Pneumatic.DOUBLESOLENOID_FORWARD_CHANNEL[1],Constants.Pneumatic.DOUBLESOLENOID_REVERSE_CHANNEL[1]);
     }
     private CANSparkMax Neo = new CANSparkMax(10, MotorType.kBrushless);
-    public void Set(int speed){
+    public void Set_Neo(int speed){
         Neo.set(speed);
+    }
+    public void Stop_Neo(){
+        Neo.disable();
     }
     public void Forward(){
         First_Solenoid.set(Value.kForward);
@@ -24,7 +27,7 @@ class Intake {
     }
     public void Off(){
         First_Solenoid.set(Value.kOff);
-        Second_Solenoid.set(Value.kOff);
+        Second_Solenoid.set(Value.kOff);`
     }    
 }
     
