@@ -3,5 +3,5 @@ package frc.robot.lib;
 
 
 public class Climber {
-    
+    int i = 0;
 }
