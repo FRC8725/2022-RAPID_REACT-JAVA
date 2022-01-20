@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.Joystick;
 
 import frc.robot.subsystem.*;
 import frc.robot.lib.Test;
-
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to
@@ -31,6 +30,7 @@ public class Robot extends TimedRobot {
 
   DriveSub DriveSub = new DriveSub();
   Test Test = new Test();
+  
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -81,8 +81,8 @@ public class Robot extends TimedRobot {
    * You can add additional auto modes by adding additional comparisons to the
    * switch structure
    * below with additional strings. If using the SendableChooser make sure to add
-   * them to the
-   * chooser code above as well.
+   * them to thes w
+   * chooser cod eabove aell.
    */
   @Override
   public void autonomousInit() {
@@ -98,6 +98,7 @@ public class Robot extends TimedRobot {
     switch (m_autoSelected) {
       case kCustomAuto:
         // Put custom auto code here
+        
         break;
       case kDefaultAuto:
       default:
