@@ -46,6 +46,7 @@ public class Robot extends TimedRobot {
     DriveSub.Drive_Stop();
     DriveSub.Encoder_Zero();
     Test.Spark_Spin(false);
+    Test.Zero_Encoder();
     CameraServer.startAutomaticCapture();
   }
 
@@ -126,5 +127,7 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
     Test.Spark_Spin(m_Joystick.getRawButton(Constants.Test.SPIN_BUTTON));
+    SmartDashboard.putNumber("TestEncoder", Test.get_Encoder());
+    SmartDashboard.putBoolean("Button", m_Joystick.getRawButton(Constants.Test.SPIN_BUTTON));
   }
 }
