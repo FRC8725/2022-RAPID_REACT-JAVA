@@ -1,17 +1,18 @@
 package frc.robot.lib;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import frc.robot.Constants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 class Intake {
     DoubleSolenoid First_Solenoid,Second_Solenoid;//We decide to use two double solenoids.
     public Intake () {
-        First_Solenoid = new DoubleSolenoid(null,Constants.Pneumatic.DOUBLESOLENOID_FORWARD_CHANNEL[0],Constants.Pneumatic.DOUBLESOLENOID_REVERSE_CHANNEL[0]);   
-        Second_Solenoid = new DoubleSolenoid(null,Constants.Pneumatic.DOUBLESOLENOID_FORWARD_CHANNEL[1],Constants.Pneumatic.DOUBLESOLENOID_REVERSE_CHANNEL[1]);
+        First_Solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM ,Constants.Pneumatic.DOUBLESOLENOID_FORWARD_CHANNEL[0],Constants.Pneumatic.DOUBLESOLENOID_REVERSE_CHANNEL[0]);   
+        Second_Solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM ,Constants.Pneumatic.DOUBLESOLENOID_FORWARD_CHANNEL[1],Constants.Pneumatic.DOUBLESOLENOID_REVERSE_CHANNEL[1]);
     }
     private CANSparkMax Neo = new CANSparkMax(10, MotorType.kBrushless);
-    public void Set_Neo(int speed){
+    public void Set_Neo(double speed){
         Neo.set(speed);
     }
     public void Stop_Neo(){

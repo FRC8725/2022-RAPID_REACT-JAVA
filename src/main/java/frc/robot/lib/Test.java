@@ -6,13 +6,14 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import frc.robot.Constants;
 
 public class Test {
+    Intake m_Intake = new Intake();
     public static final double speed = Constants.Test.MOTOR_SPEED;
+    CANSparkMax SparkTest = new CANSparkMax(Constants.Test.MOTOR, MotorType.kBrushless);
 
     public void Spark_Spin(boolean run) {
-        CANSparkMax SparkTest = new CANSparkMax(Constants.Test.MOTOR, MotorType.kBrushless);
         if (run)
-            SparkTest.set(speed);
+            m_Intake.Set_Neo(speed);
         else
-            SparkTest.close();
+            m_Intake.Stop_Neo();
     }
 }
