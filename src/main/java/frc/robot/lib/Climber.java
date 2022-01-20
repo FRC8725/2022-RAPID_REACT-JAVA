@@ -7,52 +7,57 @@ import com.revrobotics.RelativeEncoder;
 
 
 public class Climber {
-    private CANSparkMax SparkMax_1;
-    private CANSparkMax SparkMax_2;
+    private CANSparkMax Front_Winch; // 絞盤馬達 (前)
+    private CANSparkMax Back_Winch; // 絞盤馬達 (後)
 
-    private CANSparkMax NEO_1;
-    private CANSparkMax NEO_2;
-    private CANSparkMax NEO_3;
-    private CANSparkMax NEO_4;
+    private CANSparkMax Front_Hook; // 前鉤子(高度控制)
+    private CANSparkMax Back_Hook; // 後鉤子(高度控制)
+    private CANSparkMax Front_Angle; // 前邊轉角馬達
+    private CANSparkMax Back_Angle; // 後邊轉角馬達
 
-    private RelativeEncoder Encoder_SparkMax_1;
-    private RelativeEncoder Encoder_SparkMax_2;
 
-    private RelativeEncoder Encoder_NEO_1;
-    private RelativeEncoder Encoder_NEO_2;
-    private RelativeEncoder Encoder_NEO_3;
-    private RelativeEncoder Encoder_NEO_4;
+    private RelativeEncoder Front_Winch_Encoder; // 絞盤馬達 (前)
+    private RelativeEncoder Back_Winch_Encoder; // 絞盤馬達 (後)
+
+    private RelativeEncoder Front_Hook_Encoder; // 前鉤子(高度控制)
+    private RelativeEncoder Back_Hook_Encoder; // 後鉤子(高度控制)
+    private RelativeEncoder Front_Angle_Encoder; // 前邊轉角馬達
+    private RelativeEncoder Back_Angle_Encoder; // 後邊轉角馬達
 
 
     public void Climber_Setup_Spark() {
-        SparkMax_1 = new CANSparkMax(Constants.Climber.CLIMBER_SPARKMAX_0, MotorType.kBrushed);
-        SparkMax_2 = new CANSparkMax(Constants.Climber.CLIMBER_SPARKMAX_1, MotorType.kBrushed);
+        Front_Winch = new CANSparkMax(Constants.Climber.FRONT_WINCH_CLIMBER, MotorType.kBrushed);
+        Back_Winch = new CANSparkMax(Constants.Climber.BACK_WINCH_CLIMBER, MotorType.kBrushed);
 
-        NEO_1 = new CANSparkMax(Constants.Climber.CLIMBER_NEO_0, MotorType.kBrushless);
-        NEO_2 = new CANSparkMax(Constants.Climber.CLIMBER_NEO_1, MotorType.kBrushless);
-        NEO_3 = new CANSparkMax(Constants.Climber.CLIMBER_NEO_2, MotorType.kBrushless);
-        NEO_4 = new CANSparkMax(Constants.Climber.CLIMBER_NEO_3, MotorType.kBrushless);
+        Front_Hook = new CANSparkMax(Constants.Climber.FRONT_HOOK_NEO, MotorType.kBrushless);
+        Back_Hook = new CANSparkMax(Constants.Climber.BACK_HOOK_NEO, MotorType.kBrushless);
+        Front_Angle = new CANSparkMax(Constants.Climber.FRONT_ANGLE_NEO, MotorType.kBrushless);
+        Back_Angle = new CANSparkMax(Constants.Climber.BACK_ANGLE_NEO, MotorType.kBrushless);
     }
 
     public void Encoder_Setup() {
-        Encoder_SparkMax_1 = SparkMax_1.getEncoder();
-        Encoder_SparkMax_2 = SparkMax_2.getEncoder();
+        Front_Winch_Encoder = Front_Winch.getEncoder();
+        Back_Winch_Encoder = Back_Winch.getEncoder();
 
-        Encoder_NEO_1 = NEO_1.getEncoder();
-        Encoder_NEO_2 = NEO_2.getEncoder();
-        Encoder_NEO_3 = NEO_3.getEncoder();
-        Encoder_NEO_4 = NEO_4.getEncoder();
+        Front_Hook_Encoder = Front_Hook.getEncoder();
+        Back_Hook_Encoder = Back_Hook.getEncoder();
+        Front_Angle_Encoder = Front_Angle.getEncoder();
+        Back_Angle_Encoder = Back_Angle.getEncoder();
 
     }
 
-    public void Encoder_Zero() {
-        Encoder_SparkMax_1.setPosition(0);
-        Encoder_SparkMax_2.setPosition(0);
+    public void Encoder_Zero() { // 歸零
+        Front_Winch_Encoder.setPosition(0);
+        Back_Winch_Encoder.setPosition(0);
 
-        Encoder_NEO_1.setPosition(0);
-        Encoder_NEO_2.setPosition(0);
-        Encoder_NEO_3.setPosition(0);
-        Encoder_NEO_4.setPosition(0);
+        Front_Hook_Encoder.setPosition(0);
+        Back_Hook_Encoder.setPosition(0);
+        Front_Angle_Encoder.setPosition(0);
+        Back_Angle_Encoder.setPosition(0);
     }
 
+
+    public void Front_rise() {
+
+    }
 }
