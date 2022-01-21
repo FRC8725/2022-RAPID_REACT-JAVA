@@ -24,9 +24,7 @@ public final class Constants {
 
     public static final class Shooter {
         // CAN
-        public final static int LEFT_SHOOT_MOTOR[] = { 5 };
-        public final static int RIGHT_SHOOT_MOTOR[] = { 6 };
-        public final static int TEST_SPARK[] = { 7 };
+        public final static int SHOOT_MOTOR[] = { 5 };
         // Value
         public final static double SPEED = .3;
     }
