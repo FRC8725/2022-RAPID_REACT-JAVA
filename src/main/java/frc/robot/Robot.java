@@ -31,7 +31,7 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   private final SendableChooser<Boolean> m_Chooser_Color = new SendableChooser<>();
-  private double Shoot_Speed = .5;
+  private double Shoot_Speed = Constants.Shooter.SPEED;
 
   Joystick m_Joystick = new Joystick(Constants.Joystick.JOYSTICK_A);
 
