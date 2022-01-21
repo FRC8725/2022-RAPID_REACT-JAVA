@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.cameraserver.CameraServer;
 import frc.robot.subsystem.*;
 import frc.robot.lib.Test;
+import frc.robot.lib.Shooter;
 // import frc.robot.lib.ColorSensor;
 
 /**
@@ -35,7 +36,9 @@ public class Robot extends TimedRobot {
 
   DriveSub DriveSub = new DriveSub();
   Test Test = new Test();
-  
+  Shooter Shooter = new Shooter();
+
+
   /**
    * This function is run when the robot is first started up and should be used
    * for any
@@ -45,9 +48,10 @@ public class Robot extends TimedRobot {
   private void Robot_Pause() {
     DriveSub.Drive_Stop();
     DriveSub.Encoder_Zero();
-    Test.Spark_Spin(false);
+    Test.Motor_Stop();
     Test.Zero_Encoder();
     CameraServer.startAutomaticCapture();
+    Shooter.stop();
   }
 
   @Override
@@ -59,6 +63,7 @@ public class Robot extends TimedRobot {
     m_Chooser_Color.addOption("Red", false);
     SmartDashboard.putData("Team_Color", m_Chooser_Color);
     SmartDashboard.putData("Auto choices", m_chooser);
+    SmartDashboard.setDefaultNumber("Shooter Speed", 0);
   }
 
   /**
@@ -108,6 +113,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     DriveSub.Move(m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
         m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
+    Shooter.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON), SmartDashboard.getNumber("Shooter Speed", 0));
   }
 
   @Override
@@ -126,7 +132,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
-    Test.Spark_Spin(m_Joystick.getRawButton(Constants.Test.SPIN_BUTTON));
+    Test.Motor_Spin(m_Joystick.getRawButton(Constants.Test.SPIN_BUTTON));
     SmartDashboard.putNumber("TestEncoder", Test.get_Encoder());
     SmartDashboard.putBoolean("Button", m_Joystick.getRawButton(Constants.Test.SPIN_BUTTON));
   }
