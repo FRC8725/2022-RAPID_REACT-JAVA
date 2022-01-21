@@ -68,21 +68,24 @@ public final class Constants {
 
     public final static class Climber {
         // CAN
-        public final static int FRONT_HOOK_ENCODER = 0;
-        public final static int BACK_HOOK_ENCODER = 0;
-        public final static int FRORT_ANGLE_ENCODER = 0;
-        public final static int BACK_ANGLE_ENCODER = 0;
-        public final static int FRONT_WINCH_ENCODER = 0;
-        public final static int BACK_WINCH_ENCODER = 0;
+        // public final static int HOOK_FRONT_ENCODER_SPARKNEO = 0;
+        // public final static int HOOK_BACK_ENCODER_SPARKNEO = 0;
+        public final static int ANGLE_FRORT_ENCODER_SPARKNEO = 0;
+        public final static int ANGLE_BACK_ENCODER_SPARKNEO = 0;
 
-        public final static int FRONT_HOOK_NEO = 1; // 前鉤子(高度控制)
-        public final static int BACK_HOOK_NEO = 2; // 後鉤子(高度控制)
-        public final static int FRONT_ANGLE_NEO = 3; // 前邊轉角馬達
-        public final static int BACK_ANGLE_NEO = 4; // 後邊轉角馬達
+        public final static int WINCH_FRONT_ENCODER_VICTORPG = 0;
+        public final static int WINCH_BACK_ENCODER_VICTORPG = 0;
 
-        public final static int FRONT_WINCH_CLIMBER = 5; // 絞盤馬達 (前)
-        public final static int BACK_WINCH_CLIMBER = 6; // 絞盤馬達 (後)
+        // public final static int HOOK_FRONT_SPARKNEO = 1; // 前鉤子(高度控制)
+        // public final static int HOOK_BACK_SPARKNEO = 2; // 後鉤子(高度控制)
+        public final static int ANGLE_FRONT_SPARKNEO = 3; // 前邊轉角馬達
+        public final static int ANGLE_BACK_SPARKNEO = 4; // 後邊轉角馬達
 
+        public final static int WINCH_FRONT_VICTORPG = 5; // 絞盤馬達 (前)
+        public final static int WINCH_BACK_VICTORPG = 6; // 絞盤馬達 (後)
+
+
+        public final static double ENCODER_PULSE = 526.; // Encoder 增加量
     }
 
 }
