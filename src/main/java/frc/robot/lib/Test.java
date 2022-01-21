@@ -26,16 +26,17 @@ public class Test {
         VictorTest = new VictorSPX(Constants.Test.MOTOR);
         m_Encoder = new Encoder(0, 1, false, EncodingType.k2X);
         m_Encoder.setMinRate(20);
-        m_Encoder.setDistancePerPulse(60. / 180.);
+        m_Encoder.setDistancePerPulse(Constants.DataSheet.CIMCODER_PPR / 360.);
     }
 
     public void Motor_Spin(boolean run) {
-        if (run && get_Encoder() <= 1)
+        if (run && get_Encoder() < 1)
             // SparkTest.set(speed);
             VictorTest.set(ControlMode.PercentOutput, speed);
         else if (!run) {
             // SparkEncoder.setPosition(0.);
             m_Encoder.reset();
+            VictorTest.set(ControlMode.PercentOutput, 0);
         } else {
             // SparkTest.set(0.);
             VictorTest.set(ControlMode.PercentOutput, 0);
@@ -44,7 +45,7 @@ public class Test {
 
     public void Motor_Stop() {
         VictorTest.set(ControlMode.PercentOutput, 0);
-}
+    }
 
     public double get_Encoder() {
         // return SparkEncoder.getPosition();

@@ -31,13 +31,13 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   private final SendableChooser<Boolean> m_Chooser_Color = new SendableChooser<>();
+  private double Shoot_Speed = .5;
 
   Joystick m_Joystick = new Joystick(Constants.Joystick.JOYSTICK_A);
 
   DriveSub DriveSub = new DriveSub();
   Test Test = new Test();
   Shooter Shooter = new Shooter();
-
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -63,7 +63,7 @@ public class Robot extends TimedRobot {
     m_Chooser_Color.addOption("Red", false);
     SmartDashboard.putData("Team_Color", m_Chooser_Color);
     SmartDashboard.putData("Auto choices", m_chooser);
-    SmartDashboard.setDefaultNumber("Shooter Speed", 0);
+    SmartDashboard.setDefaultNumber("Shooter Speed", Shoot_Speed);
   }
 
   /**
@@ -113,7 +113,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     DriveSub.Move(m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
         m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
-    Shooter.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON), SmartDashboard.getNumber("Shooter Speed", 0));
+    Shooter.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON), SmartDashboard.getNumber("Shooter Speed", Shoot_Speed));
   }
 
   @Override
