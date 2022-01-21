@@ -66,4 +66,11 @@ public final class Constants {
         public final static int TALONFX_ENCODER_UNITS = 2048;
     }
 
+    public final static class HOPPER {
+        public final static int ENCODER_NEO_1 = 0;
+        public final static int ENCODER_NEO_2 = 0;
+
+        public final static int HOPPER_NEO_1 = 1;
+        public final static int HOPPER_NEO_2 = 2;
+    }
 }

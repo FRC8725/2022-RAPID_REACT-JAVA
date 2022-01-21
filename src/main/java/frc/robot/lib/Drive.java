@@ -79,7 +79,7 @@ public class Drive {
         return Motors;
     }
 
-    private MotorControllerGroup[] Motor_Setup_PWM(){
+    private MotorControllerGroup[] Motor_Setup_PWM() {
         PWMVictorSPX leftfront_VictorSPX = new PWMVictorSPX(Constants.Driver.LEFT_FRONT_MOTOR);
         PWMVictorSPX leftback_VictorSPX = new PWMVictorSPX(Constants.Driver.LEFT_BACK_MOTOR);
         PWMVictorSPX rightfront_VictorSPX = new PWMVictorSPX(Constants.Driver.RIGHT_FRONT_MOTOR);
