@@ -64,17 +64,18 @@ public final class Constants {
 
     public final class DataSheet { // @@
         public final static int TALONFX_ENCODER_UNITS = 2048;
+        public final static double PG_ENCODER_PPR = 7.;
     }
 
     public final static class Climber {
         // CAN
-        // public final static int HOOK_FRONT_ENCODER_SPARKNEO = 0;
-        // public final static int HOOK_BACK_ENCODER_SPARKNEO = 0;
-        public final static int ANGLE_FRORT_ENCODER_SPARKNEO = 0;
-        public final static int ANGLE_BACK_ENCODER_SPARKNEO = 0;
+        // public final static int HOOK_FRONT_ENCODER_SPARKNEO = 0; // 前鉤子(高度控制)
+        // public final static int HOOK_BACK_ENCODER_SPARKNEO = 0; // 後鉤子(高度控制)
+        public final static int ANGLE_FRORT_ENCODER_SPARKNEO = 0; // 前邊轉角馬達
+        public final static int ANGLE_BACK_ENCODER_SPARKNEO = 0; // 後邊轉角馬達
 
-        public final static int WINCH_FRONT_ENCODER_VICTORPG = 0;
-        public final static int WINCH_BACK_ENCODER_VICTORPG = 0;
+        public final static int WINCH_FRONT_ENCODER_VICTORPG = 0; // 絞盤馬達 (前)
+        public final static int WINCH_BACK_ENCODER_VICTORPG = 0; // 絞盤馬達 (後)
 
         // public final static int HOOK_FRONT_SPARKNEO = 1; // 前鉤子(高度控制)
         // public final static int HOOK_BACK_SPARKNEO = 2; // 後鉤子(高度控制)
@@ -85,7 +86,8 @@ public final class Constants {
         public final static int WINCH_BACK_VICTORPG = 6; // 絞盤馬達 (後)
 
 
-        public final static double ENCODER_PULSE = 526.; // Encoder 增加量
+        public final static double ANGLE_ENCODER_PULSE = .3; // Angle Encoder 增加量
+        public final static double WINCH_ENCODER_PULSE = .3; // Winch Encoder 增加量
     }
 
 }
