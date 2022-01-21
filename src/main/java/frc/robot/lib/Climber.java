@@ -66,7 +66,7 @@ public class Climber {
         } else if (run && get_Encoder(Angle_Front_Encoder_SparkNeo) > 0 && direction_Front_Angle == false) {
             Angle_Front_SparkNeo.set(- Constants.Climber.ANGLE_ENCODER_PULSE);
             buffer_Front_Angle = true;
-        }else if (!run && buffer_Front_Angle) {
+        } else if (!run && buffer_Front_Angle) {
             Angle_Front_SparkNeo.set(0);
             direction_Front_Angle = !direction_Front_Angle;
             buffer_Front_Angle = false;
