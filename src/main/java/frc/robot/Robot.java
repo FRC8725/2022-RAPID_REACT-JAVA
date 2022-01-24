@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.Joystick;
 
 import frc.robot.subsystem.*;
 import frc.robot.lib.Gyro;
-import frc.robot.lib.Test;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to
@@ -30,7 +29,7 @@ public class Robot extends TimedRobot {
   Joystick m_Joystick = new Joystick(Constants.Joystick.JOYSTICK_A);
 
   DriveSub DriveSub = new DriveSub();
-  Test Test = new Test();
+  DriveAuto DriveAuto = new DriveAuto();
   Gyro Gyro = new Gyro();
   
 
@@ -43,11 +42,11 @@ public class Robot extends TimedRobot {
   private void Robot_Pause() {
     DriveSub.Drive_Stop();
     DriveSub.Encoder_Zero();
-    Test.Spark_Spin(false);
   }
 
   @Override
   public void robotInit() {
+    DriveAuto.drive(Constants.Auto.kangle);
     Robot_Pause();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
@@ -109,6 +108,5 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
-    Test.Spark_Spin(m_Joystick.getRawButton(Constants.Test.SPIN_BUTTON));
   }
 }

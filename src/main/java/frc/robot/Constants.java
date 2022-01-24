@@ -6,6 +6,10 @@ package frc.robot;
 
 public final class Constants {
 
+    public final class Auto {
+        public final static double kangle = .3;
+    }
+
     public final class Driver {
         // CAN
         public final static String MOTOR_TYPE = "Spark"; // CAN or PWM or Spark
