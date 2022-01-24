@@ -32,7 +32,6 @@ public class Robot extends TimedRobot {
 
   DriveSub DriveSub = new DriveSub();
   Gyro Gyro = new Gyro();
-  double startTime;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -59,6 +58,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Yaw", Gyro.get_Yaw());
   }
 
+  double startTime;
+  
   @Override
   public void autonomousInit() {
     Robot_Pause();
@@ -71,7 +72,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     double time = Timer.getFPGATimestamp();
-    if (Math.abs(Gyro.get_Yaw()) > Constants.Auto.kangle) {
+    if (Math.abs(Gyro.get_Yaw()) > Constants.Auto.kangle && Gyro.get_Yaw()>1) {
       DriveSub.Move(-Gyro.get_Yaw() / 180 * Constants.Auto.GYRO_kp, Gyro.get_Yaw() / 180 * Constants.Auto.GYRO_kp);
       SmartDashboard.putNumber("status", 1);
     } else {

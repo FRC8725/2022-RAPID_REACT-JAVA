@@ -7,8 +7,8 @@ package frc.robot;
 public final class Constants {
 
     public final class Auto {
-        public final static double kangle = 2.0;
-        public final static double GYRO_kp = 2;
+        public final static double kangle = 3.0;
+        public final static double GYRO_kp = 2.4;
     }
 
     public final class Driver {
