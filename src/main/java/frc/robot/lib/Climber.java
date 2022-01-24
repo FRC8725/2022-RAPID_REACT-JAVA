@@ -95,6 +95,48 @@ public class Climber {
         }
     }
 
+    // 前伸縮桿
+    boolean direction_Front_Winch = true; // 旋轉方向
+    boolean buffer_Front_Winch = true; // 存取方向是否已經轉換過
+
+    public void Front_Winch_Turn(boolean run) {
+        if (run && get_Encoder(Winch_Front_Encoder_VictorPG) < 0.5 && direction_Front_Winch == true) {
+            Winch_Front_VictorPG.set(Constants.Climber.WINCH_ENCODER_PULSE);
+            buffer_Front_Winch = true;
+        } else if (run && get_Encoder(Winch_Front_Encoder_VictorPG) > 0 && direction_Front_Winch == false) {
+            Winch_Front_VictorPG.set(- Constants.Climber.WINCH_ENCODER_PULSE);
+            buffer_Front_Winch = true;
+        } else if (!run && buffer_Front_Winch) {
+            Winch_Front_VictorPG.set(0);
+            direction_Front_Winch = !direction_Front_Winch;
+            buffer_Front_Winch = false;
+        } else {
+            Winch_Front_VictorPG.set(0);
+        }
+    }
+
+    // 後伸縮桿
+    boolean direction_Back_Winch = true; // 旋轉方向
+    boolean buffer_Back_Winch = true; // 存取方向是否已經轉換過
+
+    public void Back_Winch_Turn(boolean run) {
+        if (run && get_Encoder(Winch_Back_Encoder_VictorPG) < 0.5 && direction_Back_Winch == true) {
+            Winch_Back_VictorPG.set(Constants.Climber.WINCH_ENCODER_PULSE);
+            buffer_Back_Winch = true;
+        } else if (run && get_Encoder(Winch_Back_Encoder_VictorPG) > 0 && direction_Back_Winch == false) {
+            Winch_Back_VictorPG.set(- Constants.Climber.WINCH_ENCODER_PULSE);
+            buffer_Back_Winch = true;
+        } else if (!run && buffer_Back_Winch) {
+            Winch_Back_VictorPG.set(0);
+            direction_Back_Winch = !direction_Back_Winch;
+            buffer_Back_Winch = false;
+        } else {
+            Winch_Back_VictorPG.set(0);
+        }
+    }
+
+
+
     // 取 Encoder 位置 Spark
     public double get_Encoder(RelativeEncoder The_encoder) {
         return The_encoder.getPosition();
