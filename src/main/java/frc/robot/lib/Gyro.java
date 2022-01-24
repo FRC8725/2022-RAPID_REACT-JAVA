@@ -12,6 +12,6 @@ public class Gyro {
     }
 
     public double get_Yaw() { // z-axis of the bot
-        return gyro.getRawGyroZ();
+        return gyro.getYaw();
     }
 }

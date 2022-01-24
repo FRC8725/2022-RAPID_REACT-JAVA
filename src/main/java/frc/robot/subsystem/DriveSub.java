@@ -1,11 +1,10 @@
 package frc.robot.subsystem;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.lib.Drive;
 import frc.robot.Constants;
 
-public class DriveSub extends SubsystemBase {
+public class DriveSub{
     MotorControllerGroup m_Driver[];
     double Move_Speed = Constants.Driver.SPEED;
 

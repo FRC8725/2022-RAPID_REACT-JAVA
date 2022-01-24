@@ -27,7 +27,7 @@ public class Drive {
         Encoder_Setup();
     }
 
-    public void Drive_Setup(String Motor_Port_Type) {
+    private void Drive_Setup(String Motor_Port_Type) {
         switch (Motor_Port_Type) {
             case "CAN":
                 Motors = Motor_Setup_CAN();
@@ -44,6 +44,7 @@ public class Drive {
     }
 
     public void Motor_Run(double LSpeed, double RSpeed) {
+        RSpeed = -RSpeed;
         if (Motor_Port_Type == "Spark") {
             if (Math.abs(LSpeed) > 0.08) {
                 leftfront_SparkMax.set(LSpeed);
@@ -79,7 +80,7 @@ public class Drive {
         return Motors;
     }
 
-    private MotorControllerGroup[] Motor_Setup_PWM(){
+    private MotorControllerGroup[] Motor_Setup_PWM() {
         PWMVictorSPX leftfront_VictorSPX = new PWMVictorSPX(Constants.Driver.LEFT_FRONT_MOTOR);
         PWMVictorSPX leftback_VictorSPX = new PWMVictorSPX(Constants.Driver.LEFT_BACK_MOTOR);
         PWMVictorSPX rightfront_VictorSPX = new PWMVictorSPX(Constants.Driver.RIGHT_FRONT_MOTOR);

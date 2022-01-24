@@ -5,12 +5,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
 
 import frc.robot.subsystem.*;
 import frc.robot.lib.Gyro;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to
@@ -29,9 +31,8 @@ public class Robot extends TimedRobot {
   Joystick m_Joystick = new Joystick(Constants.Joystick.JOYSTICK_A);
 
   DriveSub DriveSub = new DriveSub();
-  DriveAuto DriveAuto = new DriveAuto();
   Gyro Gyro = new Gyro();
-  
+  double startTime;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -42,11 +43,11 @@ public class Robot extends TimedRobot {
   private void Robot_Pause() {
     DriveSub.Drive_Stop();
     DriveSub.Encoder_Zero();
+    Gyro.zero_Yaw();
   }
 
   @Override
   public void robotInit() {
-    DriveAuto.drive(Constants.Auto.kangle);
     Robot_Pause();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
@@ -55,6 +56,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putNumber("Yaw", Gyro.get_Yaw());
   }
 
   @Override
@@ -63,19 +65,22 @@ public class Robot extends TimedRobot {
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
+    startTime = Timer.getFPGATimestamp();
   }
 
   @Override
   public void autonomousPeriodic() {
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
+    double time = Timer.getFPGATimestamp();
+    if (Math.abs(Gyro.get_Yaw()) > Constants.Auto.kangle) {
+      DriveSub.Move(-Gyro.get_Yaw() / 180 * Constants.Auto.GYRO_kp, Gyro.get_Yaw() / 180 * Constants.Auto.GYRO_kp);
+      SmartDashboard.putNumber("status", 1);
+    } else {
+      SmartDashboard.putNumber("status", 0);
+      if (time - startTime < 30) {
+        DriveSub.Move(.3, .3);
+      } else {
+        DriveSub.Move(0, 0);
+      }
     }
   }
 
@@ -87,9 +92,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    DriveSub.Move(m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
-        m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
-    SmartDashboard.putNumber("Yaw", Gyro.get_Yaw());
+    DriveSub.Move(-m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
+        -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
   }
 
   @Override
