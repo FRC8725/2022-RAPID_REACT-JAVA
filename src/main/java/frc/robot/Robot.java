@@ -31,6 +31,7 @@ public class Robot extends TimedRobot {
   Joystick m_Joystick = new Joystick(Constants.Joystick.JOYSTICK_A);
 
   DriveSub DriveSub = new DriveSub();
+  Auto Auto = new Auto();
   Gyro Gyro = new Gyro();
 
   /**
@@ -72,17 +73,21 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     double time = Timer.getFPGATimestamp();
-    if (Math.abs(Gyro.get_Yaw()) > Constants.Auto.kangle && Gyro.get_Yaw()>1) {
-      DriveSub.Move(-Gyro.get_Yaw() / 180 * Constants.Auto.GYRO_kp, Gyro.get_Yaw() / 180 * Constants.Auto.GYRO_kp);
-      SmartDashboard.putNumber("status", 1);
-    } else {
-      SmartDashboard.putNumber("status", 0);
-      if (time - startTime < 30) {
-        DriveSub.Move(.3, .3);
-      } else {
-        DriveSub.Move(0, 0);
-      }
+    while(!Auto.is_right_direction(0.5)) {
+      double PID = Auto.Right_Direction_PID(Gyro.get_Yaw(), 90);
+      DriveSub.Move(PID, -PID);
     }
+    
+    // if (Math.abs(Gyro.get_Yaw()) > Constants.Auto.kangle && Gyro.get_Yaw()>1) {
+    //   SmartDashboard.putNumber("status", 1);
+    // } else {
+    //   SmartDashboard.putNumber("status", 0);
+    //   if (time - startTime < 30) {
+    //     DriveSub.Move(.3, .3);
+    //   } else {
+    //     DriveSub.Move(0, 0);
+    //   }
+    // }
   }
 
   @Override
