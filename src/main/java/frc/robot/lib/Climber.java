@@ -55,7 +55,7 @@ public class Climber {
 
     }
 
-
+    // 前桿轉角
     boolean direction_Front_Angle = true; // 旋轉方向
     boolean buffer_Front_Angle = true; // 存取方向是否已經轉換過
 
@@ -75,11 +75,32 @@ public class Climber {
         }
     }
 
+    // 後桿轉角
+    boolean direction_Back_Angle = true; // 旋轉方向
+    boolean buffer_Back_Angle = true; // 存取方向是否已經轉換過
 
+    public void Back_Angle_Turn(boolean run) { //  direction: (true 正轉,false 反轉)
+        if (run && get_Encoder(Angle_Back_Encoder_SparkNeo) < 0.5 && direction_Back_Angle == true) {
+            Angle_Back_SparkNeo.set(Constants.Climber.ANGLE_ENCODER_PULSE);
+            buffer_Back_Angle = true;
+        } else if (run && get_Encoder(Angle_Back_Encoder_SparkNeo) > 0 && direction_Back_Angle == false) {
+            Angle_Back_SparkNeo.set(- Constants.Climber.ANGLE_ENCODER_PULSE);
+            buffer_Back_Angle = true;
+        } else if (!run && buffer_Back_Angle) {
+            Angle_Back_SparkNeo.set(0);
+            direction_Back_Angle = !direction_Back_Angle;
+            buffer_Back_Angle = false;
+        } else {
+            Angle_Back_SparkNeo.set(0);
+        }
+    }
+
+    // 取 Encoder 位置 Spark
     public double get_Encoder(RelativeEncoder The_encoder) {
         return The_encoder.getPosition();
     }
 
+    // 取 Encoder 位置 Victor
     public double get_Encoder(Encoder The_Encoder) {
         return The_Encoder.getDistance();
     }
