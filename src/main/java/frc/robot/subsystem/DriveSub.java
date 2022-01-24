@@ -6,12 +6,12 @@ import frc.robot.lib.Drive;
 import frc.robot.Constants;
 
 public class DriveSub extends SubsystemBase {
-    static MotorControllerGroup m_Driver[];
-    static double Move_Speed = Constants.Driver.SPEED;
+    MotorControllerGroup m_Driver[];
+    double Move_Speed = Constants.Driver.SPEED;
 
-    static Drive Drive = new Drive("Spark");
+    Drive Drive = new Drive("Spark");
 
-    public static void Move(double LSpeed, double RSpeed) {
+    public void Move(double LSpeed, double RSpeed) {
         Drive.Motor_Run(LSpeed * Move_Speed, RSpeed * Move_Speed);
     }
 

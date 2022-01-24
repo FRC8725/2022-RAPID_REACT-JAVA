@@ -1,18 +1,30 @@
 package frc.robot.subsystem;
 
-import edu.wpi.first.wpilibj.Timer;
-import frc.robot.subsystem.*;
+import frc.robot.lib.Time;
+import frc.robot.lib.Gyro;
 
 class DriveAuto{
-    private static final double time = Timer.getFPGATimestamp();
+    DriveSub DriveSub = new DriveSub();
+    Time Time = new Time();
+    Gyro Gyro = new Gyro();
 
-    public void drive() {
-        if (time < 3) {
-            DriveSub.Move(100, 100);
-        } else if (time < 6) {
-            DriveSub.Move(-100, -100);
+    public void setup_Auto() {
+        Gyro.zero_Yaw();
+        Time.zero_Timer();
+    }
+
+    public void drive(double kangle) {
+        if (Gyro.get_Yaw() > kangle) {
+            Time.stop_Timer();
         } else {
-            DriveSub.Move(0 ,0);
+            Time.start_Timer();
+            if (Time.get_Time() < 3) {
+                DriveSub.Move(.5, .5);
+            } else if (Time.get_Time() < 6) {
+                DriveSub.Move(-.5, -.5);
+            } else {
+                DriveSub.Move(0, 0);
+            }
         }
     }
 }

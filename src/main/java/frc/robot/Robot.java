@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
 
 import frc.robot.subsystem.*;
+import frc.robot.lib.Gyro;
 import frc.robot.lib.Test;
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,6 +31,7 @@ public class Robot extends TimedRobot {
 
   DriveSub DriveSub = new DriveSub();
   Test Test = new Test();
+  Gyro Gyro = new Gyro();
   
 
   /**
@@ -52,38 +54,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
   }
 
-  /**
-   * This function is called every robot packet, no matter the mode. Use this for
-   * items like
-   * diagnostics that you want ran during disabled, autonomous, teleoperated and
-   * test.
-   *
-   * <p>
-   * This runs after the mode specific periodic functions, but before LiveWindow
-   * and
-   * SmartDashboard integrated updating.
-   */
   @Override
   public void robotPeriodic() {
   }
 
-  /**
-   * This autonomous (along with the chooser code above) shows how to select
-   * between different
-   * autonomous modes using the dashboard. The sendable chooser code works with
-   * the Java
-   * SmartDashboard. If you prefer the LabVIEW Dashboard, remove all of the
-   * chooser code and
-   * uncomment the getString line to get the auto name from the text box below the
-   * Gyro
-   *
-   * <p>
-   * You can add additional auto modes by adding additional comparisons to the
-   * switch structure
-   * below with additional strings. If using the SendableChooser make sure to add
-   * them to thes w
-   * chooser cod eabove aell.
-   */
   @Override
   public void autonomousInit() {
     Robot_Pause();
@@ -92,7 +66,6 @@ public class Robot extends TimedRobot {
     System.out.println("Auto selected: " + m_autoSelected);
   }
 
-  /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
     switch (m_autoSelected) {
@@ -117,6 +90,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     DriveSub.Move(m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
         m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
+    SmartDashboard.putNumber("Yaw", Gyro.get_Yaw());
   }
 
   @Override
