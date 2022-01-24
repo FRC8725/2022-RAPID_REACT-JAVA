@@ -29,6 +29,7 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   Joystick m_Joystick = new Joystick(Constants.Joystick.JOYSTICK_A);
+  Timer m_Timer = new Timer();
 
   DriveSub DriveSub = new DriveSub();
   Auto Auto = new Auto();
@@ -57,6 +58,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     SmartDashboard.putNumber("Yaw", Gyro.get_Yaw());
+    SmartDashboard.putNumber("Time", m_Timer.get());
   }
 
   double startTime;
@@ -67,6 +69,7 @@ public class Robot extends TimedRobot {
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
+    m_Timer.reset();
     startTime = Timer.getFPGATimestamp();
     Auto.setup_Direction_PID();
   }
@@ -74,9 +77,12 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     double time = Timer.getFPGATimestamp();
-    while(!Auto.is_Direction(0.5)) {
+    if (!Auto.is_Direction(0.5)) {
+      m_Timer.stop();
       double PID = Auto.Direction_PID(Gyro.get_Yaw(), 90);
       DriveSub.Move(PID, -PID);
+    } else {
+      m_Timer.start();
     }
     
     // if (Math.abs(Gyro.get_Yaw()) > Constants.Auto.kangle && Gyro.get_Yaw()>1) {
