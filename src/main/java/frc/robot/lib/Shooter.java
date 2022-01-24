@@ -16,8 +16,8 @@ public class Shooter {
 
     public void Shoot(boolean shoot, double speed) {
         if (shoot) {
-            Shooter_Left_TalonFalcon.set(ControlMode.PercentOutput, -speed);
-            Shooter_Right_TalonFalcon.set(ControlMode.PercentOutput, speed);
+            Shooter_Left_TalonFalcon.set(ControlMode.PercentOutput, speed);
+            Shooter_Right_TalonFalcon.set(ControlMode.PercentOutput, -speed);
         } else {
             Shooter_Left_TalonFalcon.set(ControlMode.PercentOutput, 0.);
             Shooter_Right_TalonFalcon.set(ControlMode.PercentOutput, 0.);
