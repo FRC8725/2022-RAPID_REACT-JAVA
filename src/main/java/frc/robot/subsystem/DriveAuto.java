@@ -5,7 +5,6 @@ import frc.robot.subsystem.*;
 
 class DriveAuto{
     private static final double time = Timer.getFPGATimestamp();
-
     if (time < 3) {
         DriveSub.Move(100, 100);
     } else if (time < 6) {

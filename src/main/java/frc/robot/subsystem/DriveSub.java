@@ -9,9 +9,9 @@ public class DriveSub extends SubsystemBase {
     static MotorControllerGroup m_Driver[];
     static double Move_Speed = Constants.Driver.SPEED;
 
-    Drive Drive = new Drive("Spark");
+    static Drive Drive = new Drive("Spark");
 
-    public void Move(double LSpeed, double RSpeed) {
+    public static void Move(double LSpeed, double RSpeed) {
         Drive.Motor_Run(LSpeed * Move_Speed, RSpeed * Move_Speed);
     }
 
