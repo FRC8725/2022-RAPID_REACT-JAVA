@@ -16,7 +16,7 @@ public class Auto {
         SmartDashboard.putNumber("Gyro_max", gyro_max);
     }
 
-    public void setup_Right_Direction_PID() {
+    public void setup_Direction_PID() {
         gyro_kp = SmartDashboard.getNumber("Gyro_kp", 0);
         gyro_ki = SmartDashboard.getNumber("Gyro_ki", 0);
         gyro_kd = SmartDashboard.getNumber("Gyro_kd", 0);
@@ -24,11 +24,11 @@ public class Auto {
         gyro_pid.setIntegratorRange(gyro_min, gyro_max);
     }
 
-    public double Right_Direction_PID(double measurement, double setpoint) {
+    public double Direction_PID(double measurement, double setpoint) {
         return gyro_pid.calculate(measurement, setpoint);
     }
 
-    public boolean is_right_direction(double positionTolerance) {
+    public boolean is_Direction(double positionTolerance) {
         gyro_pid.setTolerance(positionTolerance);
         return gyro_pid.atSetpoint();
     }
