@@ -105,7 +105,7 @@ public class Climber {
 
     // 前伸縮桿
     boolean direction_Front_Winch = true; // 旋轉方向
-    boolean buffer_Front_Winch = true; // 存取方向是否已經轉換過
+    boolean buffer_Front_Winch = false; // 存取方向是否已經轉換過
 
     public void Front_Winch_Turn(boolean run) {
         if (run && Winch_Front_Encoder_VictorPG.getDistance() < 0.5 && direction_Front_Winch == true) {
@@ -125,7 +125,7 @@ public class Climber {
 
     // 後伸縮桿
     boolean direction_Back_Winch = true; // 旋轉方向
-    boolean buffer_Back_Winch = true; // 存取方向是否已經轉換過
+    boolean buffer_Back_Winch = false; // 存取方向是否已經轉換過
 
     public void Back_Winch_Turn(boolean run) {
         if (run && Winch_Back_Encoder_VictorPG.getDistance() < 0.5 && direction_Back_Winch == true) {
