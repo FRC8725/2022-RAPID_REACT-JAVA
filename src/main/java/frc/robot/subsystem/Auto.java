@@ -5,7 +5,7 @@ import edu.wpi.first.math.controller.PIDController;
 
 public class Auto {
 
-    double gyro_kp = 0, gyro_ki = 0, gyro_kd = 0, gyro_min = 0, gyro_max = 1000;
+    double gyro_kp = 0.0093, gyro_ki = 0.0008, gyro_kd = 0.0075, gyro_min = 0, gyro_max = 0.00002;
     PIDController gyro_pid;
 
     public Auto() {
@@ -22,6 +22,7 @@ public class Auto {
         gyro_kd = SmartDashboard.getNumber("Gyro_kd", 0);
         gyro_pid = new PIDController(gyro_kp, gyro_ki, gyro_kd);
         gyro_pid.setIntegratorRange(gyro_min, gyro_max);
+        gyro_pid.setTolerance(3);
     }
 
     public void Direction_PID_setsetpoint(double setpoint) {
@@ -33,7 +34,6 @@ public class Auto {
     }
 
     public boolean is_Direction(double positionTolerance) {
-        gyro_pid.setTolerance(positionTolerance);
         return gyro_pid.atSetpoint();
     }
 }

@@ -35,6 +35,8 @@ public class Robot extends TimedRobot {
   Auto Auto = new Auto();
   Gyro Gyro = new Gyro();
 
+  double Spin_Angle = 90;
+
   /**
    * This function is run when the robot is first started up and should be used
    * for any
@@ -53,6 +55,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    SmartDashboard.putNumber("SpinAngle", Spin_Angle);
   }
 
   @Override
@@ -73,14 +76,15 @@ public class Robot extends TimedRobot {
     Auto.setup_Direction_PID();
   }
 
-  double yaw, pid;
+  double yaw, pid, setpoint;
 
   @Override
   public void autonomousPeriodic() {
     yaw = Gyro.get_Yaw();
-    Auto.Direction_PID_setsetpoint(90);
+    setpoint = SmartDashboard.getNumber("SpinAngle", 90);
+    Auto.Direction_PID_setsetpoint(setpoint);
     pid = Auto.Direction_PID(yaw);
-    if (!Auto.is_Direction(2)) {
+    if (!Auto.is_Direction(0)) {
       m_Timer.stop();
       SmartDashboard.putNumber("PID", pid);
       DriveSub.Move(pid, -pid);
