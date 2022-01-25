@@ -78,8 +78,8 @@ public final class Constants {
 
         // public final static int HOOK_FRONT_SPARKNEO = 1; // 前鉤子(高度控制)
         // public final static int HOOK_BACK_SPARKNEO = 2; // 後鉤子(高度控制)
-        public final static int ANGLE_FRONT_SPARKNEO = 3; // 前邊轉角馬達
-        public final static int ANGLE_BACK_SPARKNEO = 4; // 後邊轉角馬達
+        public final static int ANGLE_FRONT_SPARKNEO = 8; // 前邊轉角馬達
+        public final static int ANGLE_BACK_SPARKNEO = 7; // 後邊轉角馬達
 
         public final static int WINCH_FRONT_VICTORPG = 5; // 絞盤馬達 (前)
         public final static int WINCH_BACK_VICTORPG = 6; // 絞盤馬達 (後)
