@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
 // import edu.wpi.first.wpilibj.util.Color;
-
 import edu.wpi.first.cameraserver.CameraServer;
+
 import frc.robot.subsystem.*;
 import frc.robot.lib.Test;
 import frc.robot.lib.Shooter;
@@ -50,13 +50,13 @@ public class Robot extends TimedRobot {
     DriveSub.Encoder_Zero();
     Test.Motor_Stop();
     Test.Zero_Encoder();
-    CameraServer.startAutomaticCapture();
     Shooter.stop();
   }
 
   @Override
   public void robotInit() {
     Robot_Pause();
+    CameraServer.startAutomaticCapture();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     m_Chooser_Color.setDefaultOption("Blue", true);
@@ -111,9 +111,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    DriveSub.Move(m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
-        m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
-    Shooter.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON), SmartDashboard.getNumber("Shooter Speed", Shoot_Speed));
+    DriveSub.Move(-m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
+        -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
+    Shooter.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON),
+        SmartDashboard.getNumber("Shooter Speed", Shoot_Speed));
   }
 
   @Override
