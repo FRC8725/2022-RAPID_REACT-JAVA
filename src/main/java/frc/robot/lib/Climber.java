@@ -32,17 +32,12 @@ public class Climber {
     private RelativeEncoder Angle_Back_Encoder_SparkNeo; // 後邊轉角馬達
 
     public Climber() {
-        Winch_Front_Encoder_VictorPG = new Encoder(Constants.Climber.WINCH_FRONT_ENCODER, Constants.Climber.WINCH_FRONT_ENCODER + 1, false, EncodingType.k1X);
+        Winch_Front_Encoder_VictorPG = new Encoder(Constants.Climber.WINCH_FRONT_ENCODER_VICTORPG, Constants.Climber.WINCH_FRONT_ENCODER_VICTORPG + 1, false, EncodingType.k1X);
         Winch_Front_Encoder_VictorPG.setDistancePerPulse(7./360); // 一次轉距
 
-        Winch_Back_Encoder_VictorPG = new Encoder(Constants.Climber.WINCH_BACK_ENCODER , Constants.Climber.WINCH_BACK_ENCODER + 1, false, EncodingType.k1X);
+        Winch_Back_Encoder_VictorPG = new Encoder(Constants.Climber.WINCH_BACK_ENCODER_VICTORPG , Constants.Climber.WINCH_BACK_ENCODER_VICTORPG + 1, false, EncodingType.k1X);
         Winch_Back_Encoder_VictorPG.setDistancePerPulse(7./360); // 一次轉距
         
-
-    }
-
-
-    public void Climber_Setup_Motors() {
         Winch_Front_VictorPG = new WPI_VictorSPX(Constants.Climber.WINCH_FRONT_VICTORPG);
         Winch_Back_VictorPG = new WPI_VictorSPX(Constants.Climber.WINCH_BACK_VICTORPG);
 
@@ -51,6 +46,7 @@ public class Climber {
 
         Angle_Front_SparkNeo = new CANSparkMax(Constants.Climber.ANGLE_FRONT_SPARKNEO, MotorType.kBrushless);
         Angle_Back_SparkNeo = new CANSparkMax(Constants.Climber.ANGLE_BACK_SPARKNEO, MotorType.kBrushless);
+
     }
 
 
@@ -72,10 +68,10 @@ public class Climber {
 
     public void Front_Angle_Turn(boolean run) { //  direction: (true 正轉,false 反轉)
         if (run && Angle_Front_Encoder_SparkNeo.getPosition() < 0.5 && direction_Front_Angle == true) {
-            Angle_Front_SparkNeo.set(Constants.Climber.ANGLE_ENCODER_PULSE);
+            Angle_Front_SparkNeo.set(Constants.Climber.ANGLE_ENCODER_SPEED);
             buffer_Front_Angle = true;
         } else if (run && Angle_Front_Encoder_SparkNeo.getPosition() > 0 && direction_Front_Angle == false) {
-            Angle_Front_SparkNeo.set(- Constants.Climber.ANGLE_ENCODER_PULSE);
+            Angle_Front_SparkNeo.set(- Constants.Climber.ANGLE_ENCODER_SPEED);
             buffer_Front_Angle = true;
         } else if (!run && buffer_Front_Angle) {
             Angle_Front_SparkNeo.set(0);
@@ -92,10 +88,10 @@ public class Climber {
 
     public void Back_Angle_Turn(boolean run) { //  direction: (true 正轉,false 反轉)
         if (run && Angle_Back_Encoder_SparkNeo.getPosition() < 0.5 && direction_Back_Angle == true) {
-            Angle_Back_SparkNeo.set(Constants.Climber.ANGLE_ENCODER_PULSE);
+            Angle_Back_SparkNeo.set(Constants.Climber.ANGLE_ENCODER_SPEED);
             buffer_Back_Angle = true;
         } else if (run && Angle_Back_Encoder_SparkNeo.getPosition() > 0 && direction_Back_Angle == false) {
-            Angle_Back_SparkNeo.set(- Constants.Climber.ANGLE_ENCODER_PULSE);
+            Angle_Back_SparkNeo.set(- Constants.Climber.ANGLE_ENCODER_SPEED);
             buffer_Back_Angle = true;
         } else if (!run && buffer_Back_Angle) {
             Angle_Back_SparkNeo.set(0);
@@ -112,10 +108,10 @@ public class Climber {
 
     public void Front_Winch_Turn(boolean run) {
         if (run &&  Winch_Front_Encoder_VictorPG.getDistance() < 0.5 && direction_Front_Winch == true) {
-            Winch_Front_VictorPG.set(Constants.Climber.WINCH_ENCODER_PULSE);
+            Winch_Front_VictorPG.set(Constants.Climber.WINCH_ENCODER_SPEED);
             buffer_Front_Winch = true;
         } else if (run && Winch_Front_Encoder_VictorPG.getDistance() > 0 && direction_Front_Winch == false) {
-            Winch_Front_VictorPG.set(- Constants.Climber.WINCH_ENCODER_PULSE);
+            Winch_Front_VictorPG.set(- Constants.Climber.WINCH_ENCODER_SPEED);
             buffer_Front_Winch = true;
         } else if (!run && buffer_Front_Winch) {
             Winch_Front_VictorPG.set(0);
@@ -132,10 +128,10 @@ public class Climber {
 
     public void Back_Winch_Turn(boolean run) {
         if (run && Winch_Back_Encoder_VictorPG.getDistance() < 0.5 && direction_Back_Winch == true) {
-            Winch_Back_VictorPG.set(Constants.Climber.WINCH_ENCODER_PULSE);
+            Winch_Back_VictorPG.set(Constants.Climber.WINCH_ENCODER_SPEED);
             buffer_Back_Winch = true;
         } else if (run && Winch_Back_Encoder_VictorPG.getDistance() > 0 && direction_Back_Winch == false) {
-            Winch_Back_VictorPG.set(- Constants.Climber.WINCH_ENCODER_PULSE);
+            Winch_Back_VictorPG.set(- Constants.Climber.WINCH_ENCODER_SPEED);
             buffer_Back_Winch = true;
         } else if (!run && buffer_Back_Winch) {
             Winch_Back_VictorPG.set(0);

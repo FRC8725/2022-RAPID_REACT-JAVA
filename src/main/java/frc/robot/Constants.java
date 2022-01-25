@@ -71,18 +71,10 @@ public final class Constants {
     }
 
     public final static class Climber {
-        
-        public final static int WINCH_FRONT_ENCODER = 5; // DIO 5 & 6
-        public final static int WINCH_BACK_ENCODER = 7; // DIO 7 & 8
 
         // Encoder 值
-        // public final static int HOOK_FRONT_ENCODER_SPARKNEO = 0; // 前鉤子(高度控制)
-        // public final static int HOOK_BACK_ENCODER_SPARKNEO = 0; // 後鉤子(高度控制)
-        public final static int ANGLE_FRORT_ENCODER_SPARKNEO = 0; // 前邊轉角馬達 ENCODER
-        public final static int ANGLE_BACK_ENCODER_SPARKNEO = 0; // 後邊轉角馬達 ENCODER
-
-        public final static int WINCH_FRONT_ENCODER_VICTORPG = 0; // 絞盤馬達 (前) ENCODER
-        public final static int WINCH_BACK_ENCODER_VICTORPG = 0; // 絞盤馬達 (後) ENCODER
+        public final static int WINCH_FRONT_ENCODER_VICTORPG = 5; // 絞盤馬達 (前) ENCODER DIO 5 & 6
+        public final static int WINCH_BACK_ENCODER_VICTORPG = 7; // 絞盤馬達 (後) ENCODER  DIO 7 & 8
 
         // public final static int HOOK_FRONT_SPARKNEO = 1; // 前鉤子(高度控制)
         // public final static int HOOK_BACK_SPARKNEO = 2; // 後鉤子(高度控制)
@@ -93,8 +85,8 @@ public final class Constants {
         public final static int WINCH_BACK_VICTORPG = 6; // 絞盤馬達 (後)
 
 
-        public final static double ANGLE_ENCODER_PULSE = .3; // Angle Encoder 增加量
-        public final static double WINCH_ENCODER_PULSE = .3; // Winch Encoder 增加量
+        public final static double ANGLE_ENCODER_SPEED = .3; // Angle Encoder 增加量
+        public final static double WINCH_ENCODER_SPEED = .3; // Winch Encoder 增加量
     }
 
 }
