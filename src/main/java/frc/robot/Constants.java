@@ -78,11 +78,11 @@ public final class Constants {
         // Encoder 值
         // public final static int HOOK_FRONT_ENCODER_SPARKNEO = 0; // 前鉤子(高度控制)
         // public final static int HOOK_BACK_ENCODER_SPARKNEO = 0; // 後鉤子(高度控制)
-        public final static int ANGLE_FRORT_ENCODER_SPARKNEO = 0; // 前邊轉角馬達
-        public final static int ANGLE_BACK_ENCODER_SPARKNEO = 0; // 後邊轉角馬達
+        public final static int ANGLE_FRORT_ENCODER_SPARKNEO = 0; // 前邊轉角馬達 ENCODER
+        public final static int ANGLE_BACK_ENCODER_SPARKNEO = 0; // 後邊轉角馬達 ENCODER
 
-        public final static int WINCH_FRONT_ENCODER_VICTORPG = 0; // 絞盤馬達 (前)
-        public final static int WINCH_BACK_ENCODER_VICTORPG = 0; // 絞盤馬達 (後)
+        public final static int WINCH_FRONT_ENCODER_VICTORPG = 0; // 絞盤馬達 (前) ENCODER
+        public final static int WINCH_BACK_ENCODER_VICTORPG = 0; // 絞盤馬達 (後) ENCODER
 
         // public final static int HOOK_FRONT_SPARKNEO = 1; // 前鉤子(高度控制)
         // public final static int HOOK_BACK_SPARKNEO = 2; // 後鉤子(高度控制)
