@@ -73,15 +73,17 @@ public class Robot extends TimedRobot {
     Auto.setup_Direction_PID();
   }
 
+  double yaw, pid;
+
   @Override
   public void autonomousPeriodic() {
-    double yaw = Gyro.get_Yaw(), pid;
+    yaw = Gyro.get_Yaw();
     Auto.Direction_PID_setsetpoint(90);
+    pid = Auto.Direction_PID(yaw);
     if (!Auto.is_Direction(2)) {
-      pid = Auto.Direction_PID(yaw);
       m_Timer.stop();
       SmartDashboard.putNumber("PID", pid);
-      DriveSub.Move(pid / 180, -pid / 180);
+      DriveSub.Move(pid, -pid);
     } else {
       m_Timer.start();
     }
