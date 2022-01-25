@@ -70,20 +70,18 @@ public class Robot extends TimedRobot {
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
     m_Timer.reset();
-    startTime = Timer.getFPGATimestamp();
     Auto.setup_Direction_PID();
   }
 
   @Override
   public void autonomousPeriodic() {
-    double time = Timer.getFPGATimestamp();
-    double yaw = Gyro.get_Yaw();
-    double PID = Auto.Direction_PID(yaw, 90) / 180;
-    if (PID > 1) PID = 1;
+    double yaw = Gyro.get_Yaw(), pid;
+    Auto.Direction_PID_setsetpoint(90);
     if (!Auto.is_Direction(2)) {
+      pid = Auto.Direction_PID(yaw);
       m_Timer.stop();
-      SmartDashboard.putNumber("PID", PID);
-      DriveSub.Move(PID, -PID);
+      SmartDashboard.putNumber("PID", pid);
+      DriveSub.Move(pid / 180, -pid / 180);
     } else {
       m_Timer.start();
     }

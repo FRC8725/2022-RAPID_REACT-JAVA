@@ -24,8 +24,12 @@ public class Auto {
         gyro_pid.setIntegratorRange(gyro_min, gyro_max);
     }
 
-    public double Direction_PID(double measurement, double setpoint) {
-        return gyro_pid.calculate(measurement, setpoint);
+    public void Direction_PID_setsetpoint(double setpoint) {
+        gyro_pid.setSetpoint(setpoint);
+    }
+
+    public double Direction_PID(double measurement) {
+        return gyro_pid.calculate(measurement);
     }
 
     public boolean is_Direction(double positionTolerance) {
