@@ -17,6 +17,7 @@ ex : `o_drive_LeftFrontVictorCIM`
 | SparkMax | brushed / brushless | REV Robotics |
 | Spark | brushed(expect Falcon 550) | REV Robotics |
 
-> Brushed: PG motor, CIM, 775 Red Line, Gearmotor, Snow Blower Motor, Bosch Seat Motor, 
+> Brushed: PG motor, CIM, 775 Red Line, Gearmotor, Snow Blower Motor, Bosch Seat Motor <br>
 > Brushless: Neo, Neo550, Falcon 500
+
 Table unfinished......
