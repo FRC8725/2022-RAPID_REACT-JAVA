@@ -28,6 +28,7 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   Joystick m_Joystick = new Joystick(Constants.Joystick.JOYSTICK_A);
+  boolean joy_blue_button;
 
   DriveSub DriveSub = new DriveSub();
   Test Test = new Test();
@@ -50,6 +51,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    joy_blue_button = m_Joystick.getRawButton(Constants.Joystick.CLIMBER_WINTH_BUTTON);
   }
 
   /**

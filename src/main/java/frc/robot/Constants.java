@@ -52,6 +52,9 @@ public final class Constants {
 
         public final static int SHOOT_BUTTON = 6;
         public final static int RELEASE_PRESSURE_BUTTON = 5;
+
+        public final static int CLIMBER_WINTH_BUTTON = 1;
+
     }
 
     public final class Test {
