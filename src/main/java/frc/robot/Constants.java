@@ -71,7 +71,11 @@ public final class Constants {
     }
 
     public final static class Climber {
-        // CAN
+        
+        public final static int WINCH_FRONT_ENCODER = 5; // DIO 5 & 6
+        public final static int WINCH_BACK_ENCODER = 7; // DIO 7 & 8
+
+        // Encoder 值
         // public final static int HOOK_FRONT_ENCODER_SPARKNEO = 0; // 前鉤子(高度控制)
         // public final static int HOOK_BACK_ENCODER_SPARKNEO = 0; // 後鉤子(高度控制)
         public final static int ANGLE_FRORT_ENCODER_SPARKNEO = 0; // 前邊轉角馬達

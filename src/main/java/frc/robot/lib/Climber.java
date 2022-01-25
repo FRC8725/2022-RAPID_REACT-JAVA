@@ -3,14 +3,12 @@ package frc.robot.lib;
 import frc.robot.Constants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.RelativeEncoder;
-
-import javax.swing.WindowConstants;
+import com.revrobotics.RelativeEncoder; // Spark
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 // import com.ctre.phoenix.motorcontrol.ControlMode;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.Encoder; // Victor
+import edu.wpi.first.wpilibj.CounterBase.EncodingType; // Victor
 
 
 public class Climber {
@@ -19,6 +17,7 @@ public class Climber {
 
     // private CANSparkMax Hook_Front_SparkNeo; // 前鉤子(高度控制)
     // private CANSparkMax Hook_Back_SparkNeo; // 後鉤子(高度控制)
+
     private CANSparkMax Angle_Front_SparkNeo; // 前邊轉角馬達
     private CANSparkMax Angle_Back_SparkNeo; // 後邊轉角馬達
 
@@ -28,23 +27,30 @@ public class Climber {
 
     // private RelativeEncoder Hook_Front_Encoder_SparkNeo; // 前鉤子(高度控制)
     // private RelativeEncoder Hook_Back_Encoder_SparkNeo; // 後鉤子(高度控制)
+
     private RelativeEncoder Angle_Front_Encoder_SparkNeo; // 前邊轉角馬達
     private RelativeEncoder Angle_Back_Encoder_SparkNeo; // 後邊轉角馬達
 
     public Climber() {
-        Winch_Front_Encoder_VictorPG = new Encoder(0, 1, false, EncodingType.k1X);
-        Winch_Back_Encoder_VictorPG = new Encoder(2 , 3, false, EncodingType.k1X);
-        Winch_Back_Encoder_VictorPG.setDistancePerPulse(7/360);
+        Winch_Front_Encoder_VictorPG = new Encoder(Constants.Climber.WINCH_FRONT_ENCODER, Constants.Climber.WINCH_FRONT_ENCODER + 1, false, EncodingType.k1X);
+        Winch_Front_Encoder_VictorPG.setDistancePerPulse(7/360); // 一次轉距
         Winch_Back_Encoder_VictorPG.getDistance();
+
+        Winch_Back_Encoder_VictorPG = new Encoder(Constants.Climber.WINCH_BACK_ENCODER , Constants.Climber.WINCH_BACK_ENCODER + 1, false, EncodingType.k1X);
+        Winch_Back_Encoder_VictorPG.setDistancePerPulse(7/360); // 一次轉距
+        Winch_Back_Encoder_VictorPG.getDistance();
+        
+
     }
 
 
-    public void Climber_Setup_Spark() {
+    public void Climber_Setup_Motors() {
         Winch_Front_VictorPG = new WPI_VictorSPX(Constants.Climber.WINCH_FRONT_VICTORPG);
         Winch_Back_VictorPG = new WPI_VictorSPX(Constants.Climber.WINCH_BACK_VICTORPG);
 
         // Hook_Front_SparkNeo = new CANSparkMax(Constants.Climber.HOOK_FRONT_SPARKNEO, MotorType.kBrushless);
         // Hook_Back_SparkNeo = new CANSparkMax(Constants.Climber.HOOK_BACK_SPARKNEO, MotorType.kBrushless);
+
         Angle_Front_SparkNeo = new CANSparkMax(Constants.Climber.ANGLE_FRONT_SPARKNEO, MotorType.kBrushless);
         Angle_Back_SparkNeo = new CANSparkMax(Constants.Climber.ANGLE_BACK_SPARKNEO, MotorType.kBrushless);
     }
@@ -56,6 +62,7 @@ public class Climber {
 
         // Winch_Front_Encoder_SparkNeo.setPosition(0);
         // Hook_Back_Encoder_SparkNeo.setPosition(0);
+
         Angle_Front_Encoder_SparkNeo.setPosition(0);
         Angle_Back_Encoder_SparkNeo.setPosition(0);
 
