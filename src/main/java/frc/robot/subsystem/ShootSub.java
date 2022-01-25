@@ -57,7 +57,7 @@ public class ShootSub {
             errorSum += error * dt;
         }
         errorRate = (error - lasterror) / dt;
-        speed = kp * error + ki * errorSum + kp * errorRate;
+        speed = kp * error + ki * errorSum + kd * errorRate;
         Shooter.Lid(speed);
         lasttime = Timer.getFPGATimestamp();
     }
