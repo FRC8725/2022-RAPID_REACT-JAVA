@@ -106,7 +106,7 @@ public class Robot extends TimedRobot {
     Robot_Pause();
   }
 
-  boolean open = false;
+  boolean close = false;
 
   @Override
   public void teleopPeriodic() {
@@ -115,11 +115,11 @@ public class Robot extends TimedRobot {
     ShootSub.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON));
     ShootSub.Rise(m_Joystick.getRawButton(Constants.Joystick.RISE_BUTTON));
     if (m_Joystick.getRawButton(Constants.Joystick.OPEN_LID)) {
-      open = true;
+      close = true;
     } else if (m_Joystick.getRawButton(Constants.Joystick.CLOSE_LID)) {
-      open = false;
+      close = false;
     }
-    ShootSub.Open_Lid(open);
+    ShootSub.Open_Lid(close);
   }
 
   @Override
