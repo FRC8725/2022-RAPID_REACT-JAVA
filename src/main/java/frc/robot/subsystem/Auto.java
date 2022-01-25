@@ -10,7 +10,7 @@ public class Auto {
 
     public Auto() {
         SmartDashboard.putNumber("Gyro_kp", gyro_kp);
-        SmartDashboard.putNumber("Gyro_kp", gyro_ki);
+        SmartDashboard.putNumber("Gyro_ki", gyro_ki);
         SmartDashboard.putNumber("Gyro_kd", gyro_kd);
         SmartDashboard.putNumber("Gyro_min", gyro_min);
         SmartDashboard.putNumber("Gyro_max", gyro_max);

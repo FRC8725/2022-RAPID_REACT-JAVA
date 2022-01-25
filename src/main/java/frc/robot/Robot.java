@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
   }
 
   double startTime;
-  
+
   @Override
   public void autonomousInit() {
     Robot_Pause();
@@ -77,23 +77,26 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     double time = Timer.getFPGATimestamp();
-    if (!Auto.is_Direction(0.5)) {
+    double yaw = Gyro.get_Yaw();
+    double PID = Auto.Direction_PID(yaw, 90) / 180;
+    if (PID > 1) PID = 1;
+    if (!Auto.is_Direction(2)) {
       m_Timer.stop();
-      double PID = Auto.Direction_PID(Gyro.get_Yaw(), 90);
+      SmartDashboard.putNumber("PID", PID);
       DriveSub.Move(PID, -PID);
     } else {
       m_Timer.start();
     }
-    
+
     // if (Math.abs(Gyro.get_Yaw()) > Constants.Auto.kangle && Gyro.get_Yaw()>1) {
-    //   SmartDashboard.putNumber("status", 1);
+    // SmartDashboard.putNumber("status", 1);
     // } else {
-    //   SmartDashboard.putNumber("status", 0);
-    //   if (time - startTime < 30) {
-    //     DriveSub.Move(.3, .3);
-    //   } else {
-    //     DriveSub.Move(0, 0);
-    //   }
+    // SmartDashboard.putNumber("status", 0);
+    // if (time - startTime < 30) {
+    // DriveSub.Move(.3, .3);
+    // } else {
+    // DriveSub.Move(0, 0);
+    // }
     // }
   }
 
@@ -125,5 +128,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
+    if (m_Joystick.getRawButton(4))
+      DriveSub.Move(-.5, .5);
+    else
+      DriveSub.Drive_Stop();
   }
 }
