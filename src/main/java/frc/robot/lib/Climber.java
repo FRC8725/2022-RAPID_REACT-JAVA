@@ -4,9 +4,13 @@ import frc.robot.Constants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
+
+import javax.swing.WindowConstants;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 // import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 
 
 public class Climber {
@@ -28,6 +32,8 @@ public class Climber {
     private RelativeEncoder Angle_Back_Encoder_SparkNeo; // 後邊轉角馬達
 
     public Climber() {
+        Winch_Front_Encoder_VictorPG = new Encoder(0, 1, false, EncodingType.k1X);
+        Winch_Back_Encoder_VictorPG = new Encoder(2 , 3, false, EncodingType.k1X);
         Winch_Back_Encoder_VictorPG.setDistancePerPulse(7/360);
         Winch_Back_Encoder_VictorPG.getDistance();
     }
