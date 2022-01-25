@@ -13,7 +13,6 @@ import edu.wpi.first.cameraserver.CameraServer;
 
 import frc.robot.subsystem.*;
 import frc.robot.lib.Test;
-import frc.robot.lib.Shooter;
 // import frc.robot.lib.ColorSensor;
 
 /**
@@ -31,14 +30,12 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   private final SendableChooser<Boolean> m_Chooser_Color = new SendableChooser<>();
-  private double Shoot_Speed = Constants.Shooter.SPEED;
 
   Joystick m_Joystick = new Joystick(Constants.Joystick.JOYSTICK_A);
 
   DriveSub DriveSub = new DriveSub();
   Test Test = new Test();
-  Shooter Shooter = new Shooter();
-
+  ShootSub ShootSub = new ShootSub();
   /**
    * This function is run when the robot is first started up and should be used
    * for any
@@ -48,14 +45,15 @@ public class Robot extends TimedRobot {
   private void Robot_Pause() {
     DriveSub.Drive_Stop();
     DriveSub.Encoder_Zero();
+    ShootSub.Init();
     Test.Motor_Stop();
     Test.Zero_Encoder();
-    Shooter.stop();
   }
 
   @Override
   public void robotInit() {
     Robot_Pause();
+    ShootSub.zero_Encoder();
     CameraServer.startAutomaticCapture();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
@@ -63,7 +61,6 @@ public class Robot extends TimedRobot {
     m_Chooser_Color.addOption("Red", false);
     SmartDashboard.putData("Team_Color", m_Chooser_Color);
     SmartDashboard.putData("Auto choices", m_chooser);
-    SmartDashboard.setDefaultNumber("Shooter Speed", Shoot_Speed);
   }
 
   /**
@@ -109,12 +106,20 @@ public class Robot extends TimedRobot {
     Robot_Pause();
   }
 
+  boolean open = false;
+
   @Override
   public void teleopPeriodic() {
     DriveSub.Move(-m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
         -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
-    Shooter.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON),
-        SmartDashboard.getNumber("Shooter Speed", Shoot_Speed));
+    ShootSub.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON));
+    ShootSub.Rise(m_Joystick.getRawButton(Constants.Joystick.RISE_BUTTON));
+    if (m_Joystick.getRawButton(Constants.Joystick.OPEN_LID)) {
+      open = true;
+    } else if (m_Joystick.getRawButton(Constants.Joystick.CLOSE_LID)) {
+      open = false;
+    }
+    ShootSub.Open_Lid(open);
   }
 
   @Override
