@@ -1,5 +1,6 @@
 package frc.robot.subsystem;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.lib.Hopper;
@@ -35,7 +36,8 @@ public class ShootSub {
             Shooter.Shoot(0);
     }
 
-    double setpoint, error, speed;
+    double setpoint = 0, error = 0, errorSum = 0, errorRate = 0, lasterror = 0;
+    double lasttime = 0, speed = 0, dt = 0;
     double kp, ki, iLimit, kd;
 
     public void Open_Lid(boolean close) {
@@ -49,9 +51,15 @@ public class ShootSub {
         } else {
             setpoint = 0;
         }
+        dt = Timer.getFPGATimestamp() - lasttime;
         error = setpoint - Shooter.get_LidEncoder();
-        speed = kp * error;
+        if (Math.abs(error) < iLimit) {
+            errorSum += error * dt;
+        }
+        errorRate = (error - lasterror) / dt;
+        speed = kp * error + ki * errorSum + kd * errorRate;
         Shooter.Lid(speed);
+        lasttime = Timer.getFPGATimestamp();
     }
     
     public void Init() {
