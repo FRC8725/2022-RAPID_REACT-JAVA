@@ -73,8 +73,8 @@ public final class Constants {
     public final static class Climber {
 
         // Encoder 值
-        public final static int WINCH_FRONT_ENCODER_VICTORPG = 5; // 絞盤馬達 (前) ENCODER DIO 5 & 6
-        public final static int WINCH_BACK_ENCODER_VICTORPG = 7; // 絞盤馬達 (後) ENCODER  DIO 7 & 8
+        public final static int WINCH_FRONT_ENCODER_VICTORPG = 6; // 絞盤馬達 (前) ENCODER DIO 6 & 7
+        public final static int WINCH_BACK_ENCODER_VICTORPG = 8; // 絞盤馬達 (後) ENCODER  DIO 8 & 9
 
         // public final static int HOOK_FRONT_SPARKNEO = 1; // 前鉤子(高度控制)
         // public final static int HOOK_BACK_SPARKNEO = 2; // 後鉤子(高度控制)
