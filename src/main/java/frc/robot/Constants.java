@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+
+// All of the speed is set as default speed
 public final class Constants {
 
     public final class Driver {
@@ -24,9 +26,27 @@ public final class Constants {
 
     public static final class Shooter {
         // CAN
-        public final static int SHOOT_MOTOR[] = { 5 };
+        public final static int LEFT_SHOOT_MOTOR[] = { 5 };
+        public final static int RIGHT_SHOOT_MOTOR[] = { 6 };
+        public final static int LID_MOTOR = 8;
+        public final static int LID_ENCODER[] = { 0, 1 };
+
+        public final static int TEST_SPARK[] = { 7 };
         // Value
-        public final static double SPEED = .3;
+        public final static double SPEED = .7; // default speed
+
+        // PID
+        public final static double LID_kp = 0;
+        public final static double LID_ki = 0;
+        public final static double LID_iLimit = 0;
+        public final static double LID_kd = 0;
+    }
+
+    public static final class Hopper {
+        // CAN
+        public final static int RISER_MOTOR = 7;
+
+        public final static double RISE_SPEED = .5;
     }
 
     public final static class Pneumatic {
@@ -48,6 +68,9 @@ public final class Constants {
         public final static int LEFT_MOTOR_AXIS = 1;
         public final static int RIGHT_MOTOR_AXIS = 3;
 
+        public final static int OPEN_LID = 1;
+        public final static int CLOSE_LID = 3;
+        public final static int RISE_BUTTON = 5;
         public final static int SHOOT_BUTTON = 6;
         public final static int RELEASE_PRESSURE_BUTTON = 5;
     }
@@ -55,13 +78,15 @@ public final class Constants {
     public final class Test {
         // Motors
         public final static int MOTOR = 10;
-        public final static double MOTOR_SPEED = .5;
+        public final static double MOTOR_SPEED = .1;
         // Joystick
         public final static int SPIN_BUTTON = 5;
     }
 
     public final class DataSheet {
+        // Motors
         public final static int TALONFX_ENCODER_UNITS = 2048;
+        public final static int CIMCODER_PPR = 20;
+        public final static int REDLINE_ENCODER_CPR = 1024;
     }
-
 }
