@@ -120,6 +120,7 @@ public class Robot extends TimedRobot {
     } else if (m_Joystick.getRawButton(Constants.Joystick.CLOSE_LID)) {
       close = false;
     }
+    if (m_Joystick.getRawButton(2)) ShootSub.zero_Encoder();
     SmartDashboard.putBoolean("close", close);
     ShootSub.Open_Lid(close);
   }

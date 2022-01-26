@@ -7,7 +7,6 @@ import frc.robot.lib.Hopper;
 import frc.robot.lib.Shooter;
 import frc.robot.Constants;
 
-
 public class ShootSub {
     Hopper Hopper = new Hopper();
     Shooter Shooter = new Shooter();
@@ -17,7 +16,7 @@ public class ShootSub {
         SmartDashboard.putNumber("Shoot Speed", Constants.Shooter.SPEED);
         SmartDashboard.putNumber("Lid_kp", Constants.Shooter.LID_kp);
         SmartDashboard.putNumber("Lid_ki", Constants.Shooter.LID_ki);
-        SmartDashboard.putNumber("Lid_kiLimit", Constants.Shooter.LID_iLimit);
+        SmartDashboard.putNumber("Lid_iLimit", Constants.Shooter.LID_iLimit);
         SmartDashboard.putNumber("Lid_kd", Constants.Shooter.LID_kd);
     }
 
@@ -27,7 +26,6 @@ public class ShootSub {
         else
             Hopper.Rise(0);
     }
-    
 
     public void Shoot(boolean shoot) {
         if (shoot)
@@ -47,7 +45,7 @@ public class ShootSub {
         kd = SmartDashboard.getNumber("Lid_kd", Constants.Shooter.LID_kd);
         SmartDashboard.putNumber("LidEncoder", Shooter.get_LidEncoder());
         if (close) {
-            setpoint =  (25. / 180.) * 64;
+            setpoint = 9;
         } else {
             setpoint = 0;
         }
@@ -65,12 +63,11 @@ public class ShootSub {
         SmartDashboard.putNumber("Speed_d", speed_d);
         speed = speed_p + speed_i + speed_d;
 
-
         Shooter.Lid(speed);
         SmartDashboard.putNumber("Lid Speed", speed);
         lasttime = Timer.getFPGATimestamp();
     }
-    
+
     public void Init() {
         Hopper.Rise(0);
         Shooter.Shoot(0);

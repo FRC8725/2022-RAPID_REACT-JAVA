@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-
 // All of the speed is set as default speed
 public final class Constants {
 
@@ -33,10 +32,10 @@ public final class Constants {
 
         public final static int TEST_SPARK[] = { 7 };
         // Value
-        public final static double SPEED = .7; // default speed
+        public final static double SPEED = .45; // default speed
 
         // PID
-        public final static double LID_kp = 0;
+        public final static double LID_kp = 0.042;
         public final static double LID_ki = 0;
         public final static double LID_iLimit = 0;
         public final static double LID_kd = 0;
