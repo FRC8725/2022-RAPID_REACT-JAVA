@@ -63,4 +63,9 @@ public final class Constants {
         public final static int TALONFX_ENCODER_UNITS = 2048;
     }
 
+    public final static class Intake {
+        public final static int INTAKE_MOTOR = 13; // Neo 馬達
+        public final static double MOTOR_SPEED = 0.3; 
+    }
+
 }

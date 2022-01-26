@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 
 import frc.robot.subsystem.*;
 import frc.robot.lib.Test;
+import frc.robot.lib.Intake;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -31,6 +32,7 @@ public class Robot extends TimedRobot {
 
   DriveSub DriveSub = new DriveSub();
   Test Test = new Test();
+  Intake Intake = new Intake();
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -116,6 +118,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     DriveSub.Move(m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
         m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
+    Intake.Set_Neo(Constants.Intake.MOTOR_SPEED);
   }
 
   @Override
