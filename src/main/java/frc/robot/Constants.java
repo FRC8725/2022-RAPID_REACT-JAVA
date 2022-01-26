@@ -15,9 +15,7 @@ public final class Constants {
         public final static int LEFT_BACK_MOTOR = 2;
         public final static int RIGHT_FRONT_MOTOR = 3;
         public final static int RIGHT_BACK_MOTOR = 4;
-        // DIO
-        public final static int LEFT_ENCODER = 1; // DIO 1 & 2
-        public final static int RIGHT_ENCODER = 3; // DIO 3 & 4
+
         // Value
         public final static double SPEED = .7;
         public final static double ENCODER_PULSE = 526.;
@@ -29,6 +27,8 @@ public final class Constants {
         public final static int LEFT_SHOOT_MOTOR[] = { 5 };
         public final static int RIGHT_SHOOT_MOTOR[] = { 6 };
         public final static int LID_MOTOR = 8;
+
+        // Encoder
         public final static int LID_ENCODER[] = { 0, 1 };
 
         public final static int TEST_SPARK[] = { 7 };
@@ -75,12 +75,14 @@ public final class Constants {
         public final static int RELEASE_PRESSURE_BUTTON = 5;
     }
 
-    public final class Test {
+    public static final class Test {
         // Motors
         public final static int MOTOR = 10;
         public final static double MOTOR_SPEED = .1;
         // Joystick
         public final static int SPIN_BUTTON = 5;
+        // Encoder
+        public final static int ENCODER[] = { 2, 3 };
     }
 
     public final class DataSheet {

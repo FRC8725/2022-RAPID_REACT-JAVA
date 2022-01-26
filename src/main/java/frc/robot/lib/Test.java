@@ -24,7 +24,7 @@ public class Test {
         // SparkTest = new CANSparkMax(Constants.Test.MOTOR, MotorType.kBrushless);
         // SparkEncoder = SparkTest.getEncoder();
         VictorTest = new VictorSPX(Constants.Test.MOTOR);
-        m_Encoder = new Encoder(0, 1, false, EncodingType.k2X);
+        m_Encoder = new Encoder(Constants.Test.ENCODER[0], Constants.Test.ENCODER[1], false, EncodingType.k2X);
         m_Encoder.setMinRate(20);
         m_Encoder.setDistancePerPulse(Constants.DataSheet.CIMCODER_PPR / 360.);
     }
