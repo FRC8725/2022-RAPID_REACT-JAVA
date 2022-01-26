@@ -45,7 +45,7 @@ public class ShootSub {
         kd = SmartDashboard.getNumber("Lid_kd", Constants.Shooter.LID_kd);
         SmartDashboard.putNumber("LidEncoder", Shooter.get_LidEncoder());
         if (close) {
-            setpoint = 0.25;
+            setpoint = 25 / 180;
         } else {
             setpoint = 0;
         }
