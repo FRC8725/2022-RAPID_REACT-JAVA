@@ -19,7 +19,7 @@ public class Shooter {
         lid = new VictorSPX(Constants.Shooter.LID_MOTOR);
         lid_Encoder = new Encoder(Constants.Shooter.LID_ENCODER[0], Constants.Shooter.LID_ENCODER[1], false,
                 EncodingType.k4X);
-        lid_Encoder.setDistancePerPulse(2 / Constants.DataSheet.REDLINE_ENCODER_CPR);
+        lid_Encoder.setDistancePerPulse(2. / Constants.DataSheet.REDLINE_ENCODER_CPR);
     }
 
     public void Shoot(double speed) {

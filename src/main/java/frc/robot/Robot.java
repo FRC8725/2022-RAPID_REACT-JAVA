@@ -34,8 +34,9 @@ public class Robot extends TimedRobot {
   Joystick m_Joystick = new Joystick(Constants.Joystick.JOYSTICK_A);
 
   DriveSub DriveSub = new DriveSub();
-  // Test Test = new Test();
+  Test Test = new Test();
   ShootSub ShootSub = new ShootSub();
+
   /**
    * This function is run when the robot is first started up and should be used
    * for any
@@ -46,8 +47,8 @@ public class Robot extends TimedRobot {
     DriveSub.Drive_Stop();
     DriveSub.Encoder_Zero();
     ShootSub.Init();
-    // Test.Motor_Stop();
-    // Test.Zero_Encoder();
+    Test.Motor_Stop();
+    Test.Zero_Encoder();
   }
 
   @Override
@@ -138,8 +139,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
-    // Test.Motor_Spin(m_Joystick.getRawButton(Constants.Test.SPIN_BUTTON));
-    // SmartDashboard.putNumber("TestEncoder", Test.get_Encoder());
-    // SmartDashboard.putBoolean("Button", m_Joystick.getRawButton(Constants.Test.SPIN_BUTTON));
+    Test.Motor_Spin(m_Joystick.getRawButton(Constants.Test.SPIN_BUTTON));
+    SmartDashboard.putNumber("TestEncoder", Test.get_Encoder());
+    SmartDashboard.putBoolean("Button", m_Joystick.getRawButton(Constants.Test.SPIN_BUTTON));
   }
 }
