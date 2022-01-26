@@ -47,7 +47,7 @@ public class ShootSub {
         kd = SmartDashboard.getNumber("Lid_kd", Constants.Shooter.LID_kd);
         SmartDashboard.putNumber("LidEncoder", Shooter.get_LidEncoder());
         if (close) {
-            setpoint = 25. / 180.;
+            setpoint =  (25. / 180.) * 64;
         } else {
             setpoint = 0;
         }
@@ -57,8 +57,17 @@ public class ShootSub {
             errorSum += error * dt;
         }
         errorRate = (error - lasterror) / dt;
-        speed = kp * error + ki * errorSum + kd * errorRate;
+        double speed_p = kp * error;
+        double speed_i = ki * errorSum;
+        double speed_d = kd * errorRate;
+        SmartDashboard.putNumber("Speed_p", speed_p);
+        SmartDashboard.putNumber("Speed_i", speed_i);
+        SmartDashboard.putNumber("Speed_d", speed_d);
+        speed = speed_p + speed_i + speed_d;
+
+
         Shooter.Lid(speed);
+        SmartDashboard.putNumber("Lid Speed", speed);
         lasttime = Timer.getFPGATimestamp();
     }
     
