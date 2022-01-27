@@ -73,6 +73,7 @@ public final class Constants {
         public final static int CLOSE_LID = 3;
         public final static int RISE_BUTTON = 5;
         public final static int SHOOT_BUTTON = 6;
+        public final static int HELF_SPEED_BUTTON = 8;
     }
 
     public static final class Test {
