@@ -13,6 +13,7 @@ public class ShootSub {
 
     public ShootSub() {
         SmartDashboard.putNumber("Rise Speed", Constants.Hopper.RISE_SPEED);
+        SmartDashboard.putNumber("Intake Speed", Constants.Hopper.INTAKE_SPEED);
         SmartDashboard.putNumber("Shoot Speed", Constants.Shooter.SPEED);
         SmartDashboard.putNumber("Lid_kp", Constants.Shooter.LID_kp);
         SmartDashboard.putNumber("Lid_ki", Constants.Shooter.LID_ki);
@@ -22,9 +23,9 @@ public class ShootSub {
 
     public void Rise(boolean rise) {
         if (rise)
-            Hopper.Rise(SmartDashboard.getNumber("Rise Speed", Constants.Hopper.RISE_SPEED));
+            Hopper.Run(SmartDashboard.getNumber("Rise Speed", Constants.Hopper.RISE_SPEED), SmartDashboard.getNumber("Intake Speed", Constants.Hopper.INTAKE_SPEED));
         else
-            Hopper.Rise(0);
+            Hopper.Run(0, 0);
     }
 
     public void Shoot(boolean shoot) {
@@ -36,7 +37,7 @@ public class ShootSub {
 
     double setpoint = 0, error = 0, errorSum = 0, errorRate = 0, lasterror = 0;
     double lasttime = 0, speed = 0, dt = 0;
-    double kp, ki, iLimit, kd;
+    double kp, ki, iLimit, kd, sp, si, sd;
 
     public void Open_Lid(boolean close) {
         kp = SmartDashboard.getNumber("Lid_kp", Constants.Shooter.LID_kp);
@@ -55,13 +56,13 @@ public class ShootSub {
             errorSum += error * dt;
         }
         errorRate = (error - lasterror) / dt;
-        double speed_p = kp * error;
-        double speed_i = ki * errorSum;
-        double speed_d = kd * errorRate;
-        SmartDashboard.putNumber("Speed_p", speed_p);
-        SmartDashboard.putNumber("Speed_i", speed_i);
-        SmartDashboard.putNumber("Speed_d", speed_d);
-        speed = speed_p + speed_i + speed_d;
+        sp = kp * error;
+        si = ki * errorSum;
+        sd = kd * errorRate;
+        SmartDashboard.putNumber("Speed_p", sp);
+        SmartDashboard.putNumber("Speed_i", si);
+        SmartDashboard.putNumber("Speed_d", sd);
+        speed = sp + si + sd;
 
         Shooter.Lid(speed);
         SmartDashboard.putNumber("Lid Speed", speed);
@@ -69,7 +70,7 @@ public class ShootSub {
     }
 
     public void Init() {
-        Hopper.Rise(0);
+        Hopper.Run(0, 0);
         Shooter.Shoot(0);
     }
 

@@ -44,8 +44,10 @@ public final class Constants {
     public static final class Hopper {
         // CAN
         public final static int RISER_MOTOR = 7;
+        public final static int INTAKE_MOTOR = 13;
 
         public final static double RISE_SPEED = .5;
+        public final static double INTAKE_SPEED = .5;
     }
 
     public final static class Pneumatic {
@@ -71,7 +73,6 @@ public final class Constants {
         public final static int CLOSE_LID = 3;
         public final static int RISE_BUTTON = 5;
         public final static int SHOOT_BUTTON = 6;
-        public final static int RELEASE_PRESSURE_BUTTON = 5;
     }
 
     public static final class Test {

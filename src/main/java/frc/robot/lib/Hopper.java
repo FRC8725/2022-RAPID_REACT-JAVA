@@ -8,13 +8,14 @@ import frc.robot.Constants;
 // 775 Red line
 public class Hopper {
 
-    VictorSPX Riser;
+    VictorSPX Riser, Intake;
 
     public Hopper() {
         Riser = new VictorSPX(Constants.Hopper.RISER_MOTOR);
     }
 
-    public void Rise(double speed) {
-        Riser.set(ControlMode.PercentOutput, speed);
+    public void Run(double Riser_speed, double Intake_speed) {
+        Riser.set(ControlMode.PercentOutput, Riser_speed);
+        Intake.set(ControlMode.PercentOutput, Intake_speed);
     }
 }
