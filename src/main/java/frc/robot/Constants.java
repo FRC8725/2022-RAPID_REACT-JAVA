@@ -49,7 +49,7 @@ public final class Constants {
 
         public final static int LEFT_MOTOR_AXIS = 1;
         public final static int RIGHT_MOTOR_AXIS = 3;
-
+        public final static int INTAKE_BUTTON = 7;
         public final static int SHOOT_BUTTON = 6;
         public final static int RELEASE_PRESSURE_BUTTON = 5;
     }
