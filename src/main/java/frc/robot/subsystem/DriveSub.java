@@ -25,7 +25,7 @@ public class DriveSub {
 
     public double get_Staight() {
         double position[] = Drive.get_Position();
-        double distance = Units.inchesToMeters(position[0] / 10 * Math.PI * Constants.DataSheet.HIGRIPWHEEL_R);
+        double distance = Units.inchesToMeters(position[0] / Constants.DataSheet.BASE_GEARBOX_RATIO * Math.PI * Constants.DataSheet.HIGRIPWHEEL_R);
         return distance;
     }
 }
