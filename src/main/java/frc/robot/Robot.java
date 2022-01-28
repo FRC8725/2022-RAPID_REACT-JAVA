@@ -83,7 +83,7 @@ public class Robot extends TimedRobot {
     setpoint = SmartDashboard.getNumber("Distance setpoint", 10);
     Auto.Distance_PID_setsetpoint(setpoint);
     pid = Auto.Distance_PID(DriveSub.get_Staight());
-    if (!Auto.is_Distance(1)) {
+    if (!Auto.is_Distance(0.1)) {
       m_Timer.stop();
       SmartDashboard.putNumber("PID", pid);
       DriveSub.Move(pid, pid);

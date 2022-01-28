@@ -1,5 +1,6 @@
 package frc.robot.subsystem;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import edu.wpi.first.math.controller.PIDController;
@@ -7,6 +8,7 @@ import edu.wpi.first.math.controller.PIDController;
 public class Auto {
 
     double gyro_kp = 0, gyro_ki = 0, gyro_kd = 0, gyro_min = 0, gyro_max = 0;
+    double setpoint = 0;
     PIDController PID;
 
     public Auto() {
@@ -25,12 +27,23 @@ public class Auto {
         PID.setIntegratorRange(gyro_min, gyro_max);
     }
 
-    public void Distance_PID_setsetpoint(double setpoint) {
-        PID.setSetpoint(setpoint);
+    public void Distance_PID_setsetpoint(double _setpoint) {
+        PID.setSetpoint(_setpoint);
+        setpoint = _setpoint;
     }
 
+    double lasttime = 0, errorSum = 0, error = 0;
+
     public double Distance_PID(double measurement) {
-        return PID.calculate(measurement);
+        error = setpoint - measurement;
+        double dt = Timer.getFPGATimestamp() - lasttime;
+        errorSum += error * dt;
+        double pspeed = gyro_kp * error;
+        double ispeed = gyro_ki * errorSum;
+        lasttime = Timer.getFPGATimestamp();
+        SmartDashboard.putNumber("pspd", pspeed);
+        SmartDashboard.putNumber("ispd", ispeed);
+        return pspeed + ispeed;
     }
 
     public boolean is_Distance(double positionTolerance) {
