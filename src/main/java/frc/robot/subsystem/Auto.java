@@ -48,6 +48,7 @@ public class Auto {
         SmartDashboard.putNumber("pspd", pspeed);
         SmartDashboard.putNumber("ispd", ispeed);
         SmartDashboard.putNumber("dspd", dspeed);
+        if (distance_min > ispeed || ispeed > distance_max) ispeed = 0;
         return pspeed + ispeed + dspeed;
     }
 
