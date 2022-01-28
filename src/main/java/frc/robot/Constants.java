@@ -68,6 +68,7 @@ public final class Constants {
 
     public final class DataSheet {
         public final static int TALONFX_ENCODER_UNITS = 2048;
+        public final static int HIGRIPWHEEL_R = 6; //feet
     }
 
 }

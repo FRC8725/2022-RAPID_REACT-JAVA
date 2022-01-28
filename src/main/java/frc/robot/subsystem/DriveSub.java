@@ -1,10 +1,11 @@
 package frc.robot.subsystem;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.lib.Drive;
 import frc.robot.Constants;
 
-public class DriveSub{
+public class DriveSub {
     MotorControllerGroup m_Driver[];
     double Move_Speed = Constants.Driver.SPEED;
 
@@ -20,5 +21,11 @@ public class DriveSub{
 
     public void Drive_Stop() {
         Drive.Motor_Run(0, 0);
+    }
+
+    public double get_Staight() {
+        double position[] = Drive.get_Position();
+        double distance = Units.inchesToMeters(position[0] / 10 * Math.PI * Constants.DataSheet.HIGRIPWHEEL_R);
+        return distance;
     }
 }

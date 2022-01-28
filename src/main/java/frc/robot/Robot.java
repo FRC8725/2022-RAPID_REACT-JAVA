@@ -35,7 +35,7 @@ public class Robot extends TimedRobot {
   Auto Auto = new Auto();
   Gyro Gyro = new Gyro();
 
-  double Spin_Angle = 90;
+  double Distance = 10;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -55,13 +55,13 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    SmartDashboard.putNumber("SpinAngle", Spin_Angle);
+    SmartDashboard.putNumber("Distance setpoint", Distance);
   }
 
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putNumber("Yaw", Gyro.get_Yaw());
     SmartDashboard.putNumber("Time", m_Timer.get());
+    SmartDashboard.putNumber("Distance", DriveSub.get_Staight());
   }
 
   double startTime;
@@ -73,23 +73,23 @@ public class Robot extends TimedRobot {
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
     m_Timer.reset();
-    Auto.setup_Direction_PID();
+    Auto.setup_Distance_PID();
   }
 
-  double yaw, pid, setpoint;
+  double distance, pid, setpoint;
 
   @Override
   public void autonomousPeriodic() {
-    yaw = Gyro.get_Yaw();
-    setpoint = SmartDashboard.getNumber("SpinAngle", 90);
-    Auto.Direction_PID_setsetpoint(setpoint);
-    pid = Auto.Direction_PID(yaw);
-    if (!Auto.is_Direction(0)) {
+    setpoint = SmartDashboard.getNumber("Distance setpoint", 10);
+    Auto.Distance_PID_setsetpoint(setpoint);
+    pid = Auto.Distance_PID(DriveSub.get_Staight());
+    if (!Auto.is_Distance(1)) {
       m_Timer.stop();
       SmartDashboard.putNumber("PID", pid);
-      DriveSub.Move(pid, -pid);
+      DriveSub.Move(pid, pid);
     } else {
       m_Timer.start();
+      DriveSub.Move(0, 0);
     }
 
     // if (Math.abs(Gyro.get_Yaw()) > Constants.Auto.kangle && Gyro.get_Yaw()>1) {
