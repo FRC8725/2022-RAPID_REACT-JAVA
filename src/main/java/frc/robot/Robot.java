@@ -121,7 +121,8 @@ public class Robot extends TimedRobot {
     } else if (m_Joystick.getRawButton(Constants.Joystick.CLOSE_LID)) {
       close = false;
     }
-    if (m_Joystick.getRawButton(2)) ShootSub.zero_Encoder();
+    if (m_Joystick.getRawButton(2))
+      ShootSub.zero_Encoder();
     SmartDashboard.putBoolean("close", close);
     ShootSub.Open_Lid(close);
   }
@@ -146,4 +147,5 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("TestEncoder", Test.get_Encoder());
     SmartDashboard.putBoolean("Button", m_Joystick.getRawButton(Constants.Test.SPIN_BUTTON));
   }
+
 }

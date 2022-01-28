@@ -19,7 +19,7 @@ public class Hopper {
     }
 
     public void Run(double Riser_speed, double Intake_speed) {
-        Riser.set(ControlMode.PercentOutput, Riser_speed);
+        Riser.set(ControlMode.PercentOutput, -Riser_speed);
         Intake.set(Intake_speed);
     }
 }
