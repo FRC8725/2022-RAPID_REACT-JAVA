@@ -36,7 +36,6 @@ public class Robot extends TimedRobot {
   Gyro Gyro = new Gyro();
   Odometry Odometry;
 
-  double Distance = 10;
   int nply = 0;
 
   /**
@@ -57,9 +56,9 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    SmartDashboard.putNumber("Distance setpoint", Distance);
+    SmartDashboard.putNumber("Distance setpoint", 10);
     SmartDashboard.putNumber("NowPlaying", nply);
-    Odometry = new Odometry((int)SmartDashboard.getNumber("NowPlaying", nply));
+    Odometry = new Odometry((int) SmartDashboard.getNumber("NowPlaying", nply));
   }
 
   @Override
@@ -68,6 +67,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Distance", DriveSub.get_Staight());
     Odometry.update();
     SmartDashboard.putNumber("m_angle", Odometry.get_position().getRotation().getDegrees());
+    SmartDashboard.putNumber("m_distance",
+        Math.sqrt(Math.pow(Odometry.get_position().getX(), 2) + Math.pow(Odometry.get_position().getY(), 2)));
   }
 
   double startTime;
@@ -92,8 +93,6 @@ public class Robot extends TimedRobot {
     pid = Auto.Distance_PID(DriveSub.get_Staight());
     SmartDashboard.putNumber("PID", pid);
     DriveSub.Move(pid, pid);
-
-
 
     // if (Math.abs(Gyro.get_Yaw()) > Constants.Auto.kangle && Gyro.get_Yaw()>1) {
     // SmartDashboard.putNumber("status", 1);
