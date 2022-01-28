@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
 
 import frc.robot.subsystem.*;
-import frc.robot.lib.Test;
 import frc.robot.lib.Climber;
 
 /**
@@ -33,7 +32,6 @@ public class Robot extends TimedRobot {
   boolean joy_blue_button;
 
   DriveSub DriveSub = new DriveSub();
-  Test Test = new Test();
   Climber Climber = new Climber();
 
   /**
@@ -45,7 +43,6 @@ public class Robot extends TimedRobot {
   private void Robot_Pause() {
     DriveSub.Drive_Stop();
     DriveSub.Encoder_Zero();
-    Test.Spark_Spin(false);
   }
 
   @Override
@@ -141,6 +138,5 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
-    Test.Spark_Spin(m_Joystick.getRawButton(Constants.Test.SPIN_BUTTON));
   }
 }
