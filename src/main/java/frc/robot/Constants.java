@@ -46,8 +46,8 @@ public final class Constants {
         public final static int RISER_MOTOR = 7;
         public final static int INTAKE_MOTOR = 13;
 
-        public final static double RISE_SPEED = .5;
-        public final static double INTAKE_SPEED = .5;
+        public final static double RISE_SPEED = .7;
+        public final static double INTAKE_SPEED = 1;
     }
 
     public final static class Pneumatic {
