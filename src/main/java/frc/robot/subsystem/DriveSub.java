@@ -9,7 +9,7 @@ public class DriveSub {
     MotorControllerGroup m_Driver[];
     double Move_Speed = Constants.Driver.SPEED;
 
-    Drive Drive = new Drive("Spark");
+    private Drive Drive = new Drive("Spark");
 
     public void Move(double LSpeed, double RSpeed) {
         Drive.Motor_Run(LSpeed * Move_Speed, RSpeed * Move_Speed);

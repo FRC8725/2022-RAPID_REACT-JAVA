@@ -34,8 +34,10 @@ public class Robot extends TimedRobot {
   DriveSub DriveSub = new DriveSub();
   Auto Auto = new Auto();
   Gyro Gyro = new Gyro();
+  Odometry Odometry;
 
   double Distance = 10;
+  int nply = 0;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -56,12 +58,16 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     SmartDashboard.putNumber("Distance setpoint", Distance);
+    SmartDashboard.putNumber("NowPlaying", nply);
+    Odometry = new Odometry((int)SmartDashboard.getNumber("NowPlaying", nply));
   }
 
   @Override
   public void robotPeriodic() {
     SmartDashboard.putNumber("Time", m_Timer.get());
     SmartDashboard.putNumber("Distance", DriveSub.get_Staight());
+    Odometry.update();
+    SmartDashboard.putNumber("m_angle", Odometry.get_position().getRotation().getDegrees());
   }
 
   double startTime;
@@ -69,6 +75,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     Robot_Pause();
+    Odometry.init();
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
@@ -83,14 +90,10 @@ public class Robot extends TimedRobot {
     setpoint = SmartDashboard.getNumber("Distance setpoint", 10);
     Auto.Distance_PID_setsetpoint(setpoint);
     pid = Auto.Distance_PID(DriveSub.get_Staight());
-    if (!Auto.is_Distance(0.1)) {
-      m_Timer.stop();
-      SmartDashboard.putNumber("PID", pid);
-      DriveSub.Move(pid, pid);
-    } else {
-      m_Timer.start();
-      DriveSub.Move(0, 0);
-    }
+    SmartDashboard.putNumber("PID", pid);
+    DriveSub.Move(pid, pid);
+
+
 
     // if (Math.abs(Gyro.get_Yaw()) > Constants.Auto.kangle && Gyro.get_Yaw()>1) {
     // SmartDashboard.putNumber("status", 1);

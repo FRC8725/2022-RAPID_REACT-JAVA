@@ -7,24 +7,26 @@ import edu.wpi.first.math.controller.PIDController;
 
 public class Auto {
 
-    double gyro_kp = 0, gyro_ki = 0, gyro_kd = 0, gyro_min = 0, gyro_max = 0;
+    double distance_kp = 0, distance_ki = 0, distance_kd = 0, distance_min = 0, distance_max = 0;
     double setpoint = 0;
     PIDController PID;
 
     public Auto() {
-        SmartDashboard.putNumber("Gyro_kp", gyro_kp);
-        SmartDashboard.putNumber("Gyro_ki", gyro_ki);
-        SmartDashboard.putNumber("Gyro_kd", gyro_kd);
-        SmartDashboard.putNumber("Gyro_min", gyro_min);
-        SmartDashboard.putNumber("Gyro_max", gyro_max);
+        SmartDashboard.putNumber("Distance_kp", distance_kp);
+        SmartDashboard.putNumber("Distance_ki", distance_ki);
+        SmartDashboard.putNumber("Distance_kd", distance_kd);
+        SmartDashboard.putNumber("Distance_min", distance_min);
+        SmartDashboard.putNumber("Distance_max", distance_max);
     }
 
     public void setup_Distance_PID() {
-        gyro_kp = SmartDashboard.getNumber("Gyro_kp", 0);
-        gyro_ki = SmartDashboard.getNumber("Gyro_ki", 0);
-        gyro_kd = SmartDashboard.getNumber("Gyro_kd", 0);
-        PID = new PIDController(gyro_kp, gyro_ki, gyro_kd);
-        PID.setIntegratorRange(gyro_min, gyro_max);
+        distance_kp = SmartDashboard.getNumber("Distance_kp", 0);
+        distance_ki = SmartDashboard.getNumber("Distance_ki", 0);
+        distance_kd = SmartDashboard.getNumber("Distance_kd", 0);
+        distance_max = SmartDashboard.getNumber("Distance_max", 0);
+        distance_min = SmartDashboard.getNumber("Distance_min", 0);
+        PID = new PIDController(distance_kp, distance_ki, distance_kd);
+        PID.setIntegratorRange(distance_min, distance_max);
     }
 
     public void Distance_PID_setsetpoint(double _setpoint) {
@@ -32,18 +34,21 @@ public class Auto {
         setpoint = _setpoint;
     }
 
-    double lasttime = 0, errorSum = 0, error = 0;
+    double lasttime = 0, error = 0, lasterror = 0, errorSum = 0, errorRate = 0, dt;
 
     public double Distance_PID(double measurement) {
         error = setpoint - measurement;
-        double dt = Timer.getFPGATimestamp() - lasttime;
+        dt = Timer.getFPGATimestamp() - lasttime;
         errorSum += error * dt;
-        double pspeed = gyro_kp * error;
-        double ispeed = gyro_ki * errorSum;
+        errorRate = (error - lasterror) * dt;
+        double pspeed = distance_kp * error;
+        double ispeed = distance_ki * errorSum;
+        double dspeed = distance_kd * errorRate;
         lasttime = Timer.getFPGATimestamp();
         SmartDashboard.putNumber("pspd", pspeed);
         SmartDashboard.putNumber("ispd", ispeed);
-        return pspeed + ispeed;
+        SmartDashboard.putNumber("dspd", dspeed);
+        return pspeed + ispeed + dspeed;
     }
 
     public boolean is_Distance(double positionTolerance) {
