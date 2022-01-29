@@ -70,10 +70,14 @@ public class Climber {
     public void Front_Angle_Turn(boolean run) { // direction: (true 正轉,false 反轉)
         if (run && Angle_Front_Encoder_SparkNeo.getPosition() < 0.5 && direction_Front_Angle == true) {
             Angle_Front_SparkNeo.set(Constants.Climber.ANGLE_ENCODER_SPEED);
-            buffer_Front_Angle = false;
+            if (Angle_Front_Encoder_SparkNeo.getPosition() >= 0.5) {
+                buffer_Front_Angle = false;
+            }
         } else if (run && Angle_Front_Encoder_SparkNeo.getPosition() > 0 && direction_Front_Angle == false) {
             Angle_Front_SparkNeo.set(-Constants.Climber.ANGLE_ENCODER_SPEED);
-            buffer_Front_Angle = false;
+            if (Angle_Front_Encoder_SparkNeo.getPosition() <= 0) {
+                buffer_Front_Angle = false;
+            }
         } else if (!run && !buffer_Front_Angle) {
             Angle_Front_SparkNeo.set(0);
             direction_Front_Angle = !direction_Front_Angle;
@@ -90,10 +94,14 @@ public class Climber {
     public void Back_Angle_Turn(boolean run) { // direction: (true 正轉,false 反轉)
         if (run && Angle_Back_Encoder_SparkNeo.getPosition() < 0.5 && direction_Back_Angle == true) {
             Angle_Back_SparkNeo.set(Constants.Climber.ANGLE_ENCODER_SPEED);
-            buffer_Back_Angle = false;
+            if (Angle_Back_Encoder_SparkNeo.getPosition() >= 0.5) {
+                buffer_Back_Angle = false;
+            }
         } else if (run && Angle_Back_Encoder_SparkNeo.getPosition() > 0 && direction_Back_Angle == false) {
             Angle_Back_SparkNeo.set(-Constants.Climber.ANGLE_ENCODER_SPEED);
-            buffer_Back_Angle = false;
+            if (Angle_Back_Encoder_SparkNeo.getPosition() <= 0) {
+                buffer_Back_Angle = false;
+            }
         } else if (!run && !buffer_Back_Angle) {
             Angle_Back_SparkNeo.set(0);
             direction_Back_Angle = !direction_Back_Angle;
@@ -110,10 +118,14 @@ public class Climber {
     public void Front_Winch_Turn(boolean run) {
         if (run && Winch_Front_Encoder_VictorPG.getDistance() < 0.5 && direction_Front_Winch == true) {
             Winch_Front_VictorPG.set(Constants.Climber.WINCH_ENCODER_SPEED);
-            buffer_Front_Winch = false;
+            if (Winch_Front_Encoder_VictorPG.getDistance() >= 0.5) {
+                buffer_Front_Winch = false;
+            }
         } else if (run && Winch_Front_Encoder_VictorPG.getDistance() > 0 && direction_Front_Winch == false) {
             Winch_Front_VictorPG.set(-Constants.Climber.WINCH_ENCODER_SPEED);
-            buffer_Front_Winch = false;
+            if (Winch_Front_Encoder_VictorPG.getDistance() <= 0) {
+                buffer_Front_Winch = false;
+            }
         } else if (!run && !buffer_Front_Winch) {
             Winch_Front_VictorPG.set(0);
             direction_Front_Winch = !direction_Front_Winch;
@@ -130,10 +142,14 @@ public class Climber {
     public void Back_Winch_Turn(boolean run) {
         if (run && Winch_Back_Encoder_VictorPG.getDistance() < 0.5 && direction_Back_Winch == true) {
             Winch_Back_VictorPG.set(Constants.Climber.WINCH_ENCODER_SPEED);
-            buffer_Back_Winch = false;
+            if (Winch_Back_Encoder_VictorPG.getDistance() >= 0.5) {
+                buffer_Back_Winch = false;
+            }
         } else if (run && Winch_Back_Encoder_VictorPG.getDistance() > 0 && direction_Back_Winch == false) {
             Winch_Back_VictorPG.set(-Constants.Climber.WINCH_ENCODER_SPEED);
-            buffer_Back_Winch = false;
+            if (Winch_Back_Encoder_VictorPG.getDistance() <= 0.5) {
+                buffer_Back_Winch = false;
+            }
         } else if (!run && !buffer_Back_Winch) {
             Winch_Back_VictorPG.set(0);
             direction_Back_Winch = !direction_Back_Winch;
