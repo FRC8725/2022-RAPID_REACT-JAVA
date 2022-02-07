@@ -15,22 +15,18 @@ public class PID {
         this.kp = kp;
         this.ki = ki;
         this.kd = kd;
+        PID = new PIDController(kp, ki, kd);
     }
 
-    public void setup_moving_PID(double i_min, double i_max, double setpoint) {
+    public void setup_Distance_PID(double i_min, double i_max) {
         this.i_min = i_min;
         this.i_max = i_max;
-        this.setpoint = setpoint;
-    }
-
-    public void setup_Distance_PID() {
-        PID = new PIDController(kp, ki, kd);
         PID.setIntegratorRange(i_min, i_max);
     }
 
-    public void setSetpoint(double _setpoint) { // 初始化終點位置距離
-        PID.setSetpoint(_setpoint);
-        setpoint = _setpoint;
+    public void setSetpoint(double setpoint) { // 初始化終點位置距離
+        PID.setSetpoint(setpoint);
+        this.setpoint = setpoint;
     }
 
     double lasttime = 0, error = 0, lasterror = 0, errorSum = 0, errorRate = 0, dt;
