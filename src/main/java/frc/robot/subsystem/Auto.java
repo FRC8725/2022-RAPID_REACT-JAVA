@@ -102,7 +102,9 @@ public class Auto {
         return Angle_PID.atSetpoint();
     }
 
-    public void Angle_PID_TO_ZERO(double PID) {
-        
+    public void Angle_PID_TO_ZERO(double Angle) {
+        // if Angle >= 180:
+
     } 
 }
+// kp*error + ki*errerSum + kd*errorRate

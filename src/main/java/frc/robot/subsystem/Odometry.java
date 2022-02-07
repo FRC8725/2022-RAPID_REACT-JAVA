@@ -57,7 +57,7 @@ public class Odometry {
     public double m_angle() { // angle
         return angle;
     }   
-    /* 按下角度歸零 放在robot
+    /* 按下角度歸零 放在robot的
     if (m_Joystick.getRawButton(8))
       Odometry.angle_to_zero(Odometry.get_position().getX(), Odometry.get_position().getY(), Odometry.m_angle);  
     */
