@@ -6,15 +6,17 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.util.Units;
-
 import frc.robot.Constants;
 
 public class Odometry {
     private AHRS gyro = new AHRS(I2C.Port.kMXP);
-
     DifferentialDriveOdometry m_odometry;
 
-    double x = 0, y = 0, theta = 0; // x, y, θ--> idk
+    double x = 0;
+    double y = 0;
+    double angle = 0; 
+    double m_distance = 0; // mid distance
+
     public Odometry(int now_player) {
         // 1, 2, 3 is B1 B2 B3 
         // 4, 5, 6 is R1 R2 R3
@@ -35,10 +37,24 @@ public class Odometry {
         double right_encoder = Units.inchesToMeters(position[1] / Constants.DataSheet.BASE_GEARBOX_RATIO * Math.PI * Constants.DataSheet.HIGRIPWHEEL_R);
         m_odometry.update(Rotation2d.fromDegrees(gyro.getAngle()), left_encoder, right_encoder);
         x = get_position().getX();
-        y = get_position().getY();
+        y = get_position().getY(); 
+        angle = get_position().getRotation().getDegrees();
+        m_distance = Math.sqrt(Math.pow(get_position().getX(), 2) + Math.pow(get_position().getY(), 2));
+    }
+
+    public void angle_to_zero(double x, double y, double angle) {
+        gyro.zeroYaw();
     }
 
     public Pose2d get_position() {
         return m_odometry.getPoseMeters();
     }
+
+    public double m_distance() { // distance
+        return m_distance;
+    }
+
+    public double m_angle() { // angle
+        return angle;
+    }   
 }

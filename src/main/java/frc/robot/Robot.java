@@ -63,9 +63,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Time", m_Timer.get());
     SmartDashboard.putNumber("Distance", DriveSub.get_Staight());
     Odometry.update(DriveSub.get_Position());
-    SmartDashboard.putNumber("m_angle", Odometry.get_position().getRotation().getDegrees());
-    SmartDashboard.putNumber("m_distance",
-        Math.sqrt(Math.pow(Odometry.get_position().getX(), 2) + Math.pow(Odometry.get_position().getY(), 2)));
+    SmartDashboard.putNumber("m_angle", Odometry.m_angle());
+    SmartDashboard.putNumber("m_distance", Odometry.m_distance());
   }
 
   double startTime;
@@ -135,5 +134,10 @@ public class Robot extends TimedRobot {
       DriveSub.Move(-.5, .5);
     else
       DriveSub.Drive_Stop();
+
+    /* 按下角度歸零
+    if (m_Joystick.getRawButton(8))
+      Odometry.angle_to_zero(Odometry.get_position().getX(), Odometry.get_position().getY(), Odometry.m_angle);  
+    */
   }
 }
