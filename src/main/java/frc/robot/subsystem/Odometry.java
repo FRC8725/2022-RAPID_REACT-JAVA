@@ -43,7 +43,6 @@ public class Odometry {
     }
 
     public void angle_to_zero(double x, double y, double angle) {
-        
         gyro.zeroYaw();
     }
 

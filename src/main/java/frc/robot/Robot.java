@@ -140,9 +140,7 @@ public class Robot extends TimedRobot {
 
     /* 按下角度歸零
     if (m_Joystick.getRawButton(8))
-      Odometry.angle_to_zero(Odometry.get_position().getX(),
-        Odometry.get_position().getY(),Odometry.m_angle);
+      Odometry.angle_to_zero(Odometry.get_position().getX(), Odometry.get_position().getY(), Odometry.m_angle);  
     */
-    
   }
 }
