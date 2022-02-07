@@ -2,7 +2,7 @@ package frc.robot.subsystem;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants;
+// import frc.robot.Constants;
 import edu.wpi.first.math.controller.PIDController;
 
 public class Auto {
