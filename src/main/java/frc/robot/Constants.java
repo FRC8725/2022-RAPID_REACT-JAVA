@@ -73,11 +73,10 @@ public final class Constants {
     public final static class Climber {
 
         // Encoder 值
-        public final static int ANGLE_BACK_ENCODER_VICTORPG = 4; // 轉角馬達 (後) ENCODER  DIO 4 & 5
         public final static int WINCH_FRONT_ENCODER_VICTORPG = 6; // 絞盤馬達 (前) ENCODER DIO 6 & 7
         public final static int WINCH_BACK_ENCODER_VICTORPG = 8; // 絞盤馬達 (後) ENCODER  DIO 8 & 9
 
-        public final static int ANGLE_BACK_VICTORPG = 11; // 後邊轉角馬達
+        public final static int ANGLE_BACK_SPARKNEO = 11; // 後邊轉角馬達
 
         public final static int WINCH_FRONT_VICTORPG = 9; // 絞盤馬達 (前)
         public final static int WINCH_BACK_VICTORPG = 10; // 絞盤馬達 (後)
@@ -85,7 +84,7 @@ public final class Constants {
 
         public final static double ANGLE_ENCODER_SPEED = .3; // Angle Encoder 增加量
         public final static double WINCH_ENCODER_SPEED = .3; // Winch Encoder 增加量
-        
+
         // ANGLE_BACK_VICTORPG PID 常數
         public final static double ANGLE_BACK_VICTORPG_KP = 0;
         public final static double ANGLE_BACK_VICTORPG_KI = 0;
