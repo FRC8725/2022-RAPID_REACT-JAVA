@@ -69,7 +69,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("m_angle", Odometry.get_position().getRotation().getDegrees());
     SmartDashboard.putNumber("m_distance",
         Math.sqrt(Math.pow(Odometry.get_position().getX(), 2) + Math.pow(Odometry.get_position().getY(), 2)));
-    System.out.println(Math.sqrt(Math.pow(Odometry.get_position().getX(), 2) + Math.pow(Odometry.get_position().getY(), 2)));
   }
 
   double startTime;

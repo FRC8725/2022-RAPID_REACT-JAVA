@@ -21,5 +21,16 @@
       "/LiveWindow/Ungrouped/navX-Sensor[1]": "Gyro",
       "/SmartDashboard/Auto choices": "String Chooser"
     }
+  },
+  "NetworkTables": {
+    "FMSInfo": {
+      "open": true
+    },
+    "LiveWindow": {
+      "open": true
+    },
+    "SmartDashboard": {
+      "open": true
+    }
   }
 }
