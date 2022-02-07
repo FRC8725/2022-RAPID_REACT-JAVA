@@ -55,7 +55,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     Robot_Pause();
-    ShootSub.zero_Encoder();
     CameraServer.startAutomaticCapture();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
@@ -117,10 +116,6 @@ public class Robot extends TimedRobot {
         m_Joystick.getRawButton(Constants.Joystick.HELF_SPEED_BUTTON));
     ShootSub.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON));
     ShootSub.Intake(m_Joystick.getRawButton(Constants.Joystick.INTAKE_BUTTON));
-    if (m_Joystick.getRawButton(2))
-      ShootSub.zero_Encoder();
-    SmartDashboard.putBoolean("close", close);
-    ShootSub.Open_Lid(close);
   }
 
   @Override

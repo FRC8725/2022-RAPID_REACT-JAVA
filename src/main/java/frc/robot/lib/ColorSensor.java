@@ -10,17 +10,13 @@ public class ColorSensor {
     private final ColorSensorV3 ColorSensor = new ColorSensorV3(i2cport);
     Boolean Team_Color;
 
-    public ColorSensor(boolean Team_Color) {
-        this.Team_Color = Team_Color;
-    }
-
     public Color get_Color() {
         return ColorSensor.getColor();
     }
 
-    public boolean Ball_Color() {
+    public Color Ball_Color() {
         Color detected_Color = ColorSensor.getColor();
-        return !(Team_Color ^ (detected_Color.blue > detected_Color.red));
+        return detected_Color;
     }
 
 }
