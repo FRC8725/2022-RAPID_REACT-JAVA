@@ -11,10 +11,13 @@ public class PID {
     
     PIDController PID;
 
-    public PID(double kp, double ki, double kd, double i_min, double i_max, double setpoint) {
+    public PID(double kp, double ki, double kd) {
         this.kp = kp;
         this.ki = ki;
         this.kd = kd;
+    }
+
+    public void setup_moving_PID(double i_min, double i_max, double setpoint) {
         this.i_min = i_min;
         this.i_max = i_max;
         this.setpoint = setpoint;

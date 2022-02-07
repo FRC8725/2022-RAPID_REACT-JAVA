@@ -1,6 +1,7 @@
 package frc.robot.lib;
 
 import frc.robot.Constants;
+import frc.robot.lib.PID;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder; // Spark
@@ -135,27 +136,49 @@ public class Climber {
         }
     }
 
+
     // 後伸縮桿
     private boolean direction_Back_Winch = true; // 旋轉方向
     private boolean buffer_Back_Winch = true; // 存取方向是否已經轉換過
+    private boolean keep_turning_Back_Winch = false; // 持續運轉方向
+
+    // 建構 Winch_Back_VictorPG 的 PID (需 kp, ki, kd, ki執行範圍下限及上限, 終點位置(Setpoint)) ,常數取自 Constant     
+    PID Winch_Back_VictorPG_PID = new PID(Constants.Climber.WINCH_BACK_VICTORPG_KP, Constants.Climber.WINCH_BACK_VICTORPG_KI, Constants.Climber.WINCH_BACK_VICTORPG_KD);
 
     public void Back_Winch_Turn(boolean run) {
-        if (run && Winch_Back_Encoder_VictorPG.getDistance() < 0.5 && direction_Back_Winch == true) {
+        
+        if (run) {
+            keep_turning_Back_Winch = true;
+        }
+
+        if (keep_turning_Back_Winch && direction_Back_Winch == true) {
+            Winch_Back_VictorPG_PID.setup_moving_PID(Constants.Climber.WINCH_BACK_VICTORPG_HIGH_I_MIN, Constants.Climber.WINCH_BACK_VICTORPG_HIGH_I_MAX, Constants.Climber.WINCH_BACK_VICTORPG_HIGH_SETPOINT);
+
+
             Winch_Back_VictorPG.set(Constants.Climber.WINCH_ENCODER_SPEED);
-            if (Winch_Back_Encoder_VictorPG.getDistance() >= 0.5) {
+
+            if (Winch_Back_VictorPG_PID.is_Distance(Winch_Back_Encoder_VictorPG.getDistance()) == true) {
                 buffer_Back_Winch = false;
+                keep_turning_Back_Winch = false;
             }
-        } else if (run && Winch_Back_Encoder_VictorPG.getDistance() > 0 && direction_Back_Winch == false) {
+
+        } else if (keep_turning_Back_Winch && Winch_Back_Encoder_VictorPG.getDistance() > 0 && direction_Back_Winch == false) {
+
             Winch_Back_VictorPG.set(-Constants.Climber.WINCH_ENCODER_SPEED);
             if (Winch_Back_Encoder_VictorPG.getDistance() <= 0.5) {
                 buffer_Back_Winch = false;
             }
+
         } else if (!run && !buffer_Back_Winch) {
+
             Winch_Back_VictorPG.set(0);
             direction_Back_Winch = !direction_Back_Winch;
             buffer_Back_Winch = true;
+
         } else {
+
             Winch_Back_VictorPG.set(0);
+
         }
     }
 
