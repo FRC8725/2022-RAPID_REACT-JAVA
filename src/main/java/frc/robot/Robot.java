@@ -115,12 +115,7 @@ public class Robot extends TimedRobot {
         -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS),
         m_Joystick.getRawButton(Constants.Joystick.HELF_SPEED_BUTTON));
     ShootSub.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON));
-    ShootSub.Rise(m_Joystick.getRawButton(Constants.Joystick.RISE_BUTTON));
-    if (m_Joystick.getRawButton(Constants.Joystick.OPEN_LID)) {
-      close = true;
-    } else if (m_Joystick.getRawButton(Constants.Joystick.CLOSE_LID)) {
-      close = false;
-    }
+    ShootSub.Intake(m_Joystick.getRawButton(Constants.Joystick.RISE_BUTTON));
     if (m_Joystick.getRawButton(2))
       ShootSub.zero_Encoder();
     SmartDashboard.putBoolean("close", close);

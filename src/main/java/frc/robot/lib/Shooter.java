@@ -6,12 +6,17 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import frc.robot.Constants;
+import com.revrobotics.CANSparkMax;
 
 public class Shooter {
 
     private TalonFX Shooter_Left_TalonFalcon, Shooter_Right_TalonFalcon;
     private VictorSPX lid; // 775 Red line
     private Encoder lid_Encoder;
+
+    
+    VictorSPX Riser;
+    CANSparkMax Intake;
 
     public Shooter() {
         Shooter_Left_TalonFalcon = new TalonFX(Constants.Shooter.LEFT_SHOOT_MOTOR[0]);
@@ -42,5 +47,13 @@ public class Shooter {
 
     public double get_LidEncoder() {
         return lid_Encoder.getDistance();
+    }
+
+    public void Hopper() {
+        Riser = new VictorSPX(Constants.Shooter.RISER_MOTOR);
+    }
+
+    public void Run(double Riser_speed) {
+        Riser.set(ControlMode.PercentOutput, -Riser_speed);
     }
 }

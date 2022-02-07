@@ -39,14 +39,15 @@ public final class Constants {
         public final static double LID_ki = 0;
         public final static double LID_iLimit = 0;
         public final static double LID_kd = 0;
+
+        //Rise
+        public final static int RISER_MOTOR = 7;
+        public final static double RISE_SPEED = .7;
     }
 
-    public static final class Hopper {
+    public static final class Intake {
         // CAN
-        public final static int RISER_MOTOR = 7;
         public final static int INTAKE_MOTOR = 13;
-
-        public final static double RISE_SPEED = .7;
         public final static double INTAKE_SPEED = 1;
     }
 

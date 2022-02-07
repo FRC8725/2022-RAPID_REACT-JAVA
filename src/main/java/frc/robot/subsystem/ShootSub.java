@@ -3,36 +3,40 @@ package frc.robot.subsystem;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.robot.lib.Hopper;
+import frc.robot.lib.Intake;
 import frc.robot.lib.Shooter;
 import frc.robot.Constants;
 
 public class ShootSub {
-    Hopper Hopper = new Hopper();
+    Intake Intake = new Intake();
     Shooter Shooter = new Shooter();
 
     public ShootSub() {
-        SmartDashboard.putNumber("Rise Speed", Constants.Hopper.RISE_SPEED);
-        SmartDashboard.putNumber("Intake Speed", Constants.Hopper.INTAKE_SPEED);
+        SmartDashboard.putNumber("Rise Speed", Constants.Shooter.RISE_SPEED);
+        SmartDashboard.putNumber("Intake Speed", Constants.Intake.INTAKE_SPEED);
         SmartDashboard.putNumber("Shoot Speed", Constants.Shooter.SPEED);
         SmartDashboard.putNumber("Lid_kp", Constants.Shooter.LID_kp);
         SmartDashboard.putNumber("Lid_ki", Constants.Shooter.LID_ki);
         SmartDashboard.putNumber("Lid_iLimit", Constants.Shooter.LID_iLimit);
         SmartDashboard.putNumber("Lid_kd", Constants.Shooter.LID_kd);
     }
-
-    public void Rise(boolean rise) {
-        if (rise)
-            Hopper.Run(SmartDashboard.getNumber("Rise Speed", Constants.Hopper.RISE_SPEED), SmartDashboard.getNumber("Intake Speed", Constants.Hopper.INTAKE_SPEED));
+    
+    public void Intake(boolean rise) {
+        if (rise)  //Intake down
+            Intake.Run_Intake(SmartDashboard.getNumber("Intake Speed", Constants.Intake.INTAKE_SPEED));
         else
-            Hopper.Run(0, 0);
+            Intake.Run_Intake(0);
     }
 
     public void Shoot(boolean shoot) {
-        if (shoot)
+        if (shoot) {
+            Shooter.Run(SmartDashboard.getNumber("Rise Speed", Constants.Shooter.RISE_SPEED));
             Shooter.Shoot(SmartDashboard.getNumber("Shoot Speed", Constants.Shooter.SPEED));
-        else
+        }
+        else {
             Shooter.Shoot(0);
+            Shooter.Run(0);
+        }
     }
 
     double setpoint = 0, error = 0, errorSum = 0, errorRate = 0, lasterror = 0;
@@ -70,8 +74,9 @@ public class ShootSub {
     }
 
     public void Init() {
-        Hopper.Run(0, 0);
+        Intake.Run_Intake(0);
         Shooter.Shoot(0);
+        Shooter.Run(0);
     }
 
     public void zero_Encoder() {
