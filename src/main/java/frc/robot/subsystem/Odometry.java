@@ -8,12 +8,10 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.util.Units;
 
 import frc.robot.Constants;
-import frc.robot.lib.Drive;
 
 public class Odometry {
 
     private AHRS gyro = new AHRS(I2C.Port.kMXP);
-    private Drive Drive = new Drive("Spark");
 
     DifferentialDriveOdometry m_odometry;
 
@@ -32,8 +30,7 @@ public class Odometry {
         gyro.zeroYaw();
     }
 
-    public void update() {
-        var position = Drive.get_Position();
+    public void update(double position[]) {
         double left_encoder = Units.inchesToMeters(position[0] / Constants.DataSheet.BASE_GEARBOX_RATIO * Math.PI * Constants.DataSheet.HIGRIPWHEEL_R);
         double right_encoder = Units.inchesToMeters(position[1] / Constants.DataSheet.BASE_GEARBOX_RATIO * Math.PI * Constants.DataSheet.HIGRIPWHEEL_R);
         m_odometry.update(Rotation2d.fromDegrees(gyro.getAngle()), left_encoder, right_encoder);

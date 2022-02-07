@@ -65,7 +65,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     SmartDashboard.putNumber("Time", m_Timer.get());
     SmartDashboard.putNumber("Distance", DriveSub.get_Staight());
-    Odometry.update();
+    Odometry.update(DriveSub.get_Position());
     SmartDashboard.putNumber("m_angle", Odometry.get_position().getRotation().getDegrees());
     SmartDashboard.putNumber("m_distance",
         Math.sqrt(Math.pow(Odometry.get_position().getX(), 2) + Math.pow(Odometry.get_position().getY(), 2)));
