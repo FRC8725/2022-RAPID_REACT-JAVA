@@ -55,8 +55,7 @@ public final class Constants {
         public final static int RIGHT_MOTOR_AXIS = 3;
 
         public final static int SHOOT_BUTTON = 6;
-        public final static int RELEASE_PRESSURE_BUTTON = 5;
-        public final static int SHOOT_ANGLE_ZERO_BUTTON = 8; // 角度變0
+        public final static int AIM_BUTTON = 8;
     }
 
     public final class Test {

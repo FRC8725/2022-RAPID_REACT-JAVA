@@ -31,6 +31,7 @@ public class Robot extends TimedRobot {
 
   DriveSub DriveSub = new DriveSub();
   Auto Auto = new Auto();
+  AutoShoot AutoShoot = new AutoShoot();
   Odometry Odometry;
 
   int nply = 0;
@@ -111,8 +112,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    DriveSub.Move(-m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
+    if (m_Joystick.getRawButton(Constants.Joystick.AIM_BUTTON)) {
+      AutoShoot.Aim();
+    } else {
+      DriveSub.Move(-m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
         -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
+    }
+    
   }
 
   @Override
