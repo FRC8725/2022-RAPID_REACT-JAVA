@@ -2,6 +2,9 @@ package frc.robot.lib;
 
 import frc.robot.Constants;
 import frc.robot.lib.PID;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder; // Spark
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 // import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -13,12 +16,12 @@ public class Climber {
     private WPI_VictorSPX Winch_Front_VictorPG; // 絞盤馬達 (前)
     private WPI_VictorSPX Winch_Back_VictorPG; // 絞盤馬達 (後)
 
-    private WPI_VictorSPX Angle_Back_VictorPG; // 後邊轉角馬達
+    private CANSparkMax Angle_Back_SparkNeo; // 後邊轉角馬達
 
     private Encoder Winch_Front_Encoder_VictorPG; // 絞盤馬達 (前)
     private Encoder Winch_Back_Encoder_VictorPG; // 絞盤馬達 (後)
 
-    private Encoder Angle_Back_Encoder_VictorPG; // 後邊轉角馬達
+    private RelativeEncoder Angle_Back_Encoder_VictorPG; // 後邊轉角馬達
 
     public Climber() {
 
@@ -30,15 +33,11 @@ public class Climber {
                 Constants.Climber.WINCH_BACK_ENCODER_VICTORPG + 1, false, EncodingType.k1X);
         Winch_Back_Encoder_VictorPG.setDistancePerPulse(7. / 360); // 一次轉距
 
-        Angle_Back_Encoder_VictorPG = new Encoder(Constants.Climber.ANGLE_BACK_ENCODER_VICTORPG,
-                Constants.Climber.ANGLE_BACK_ENCODER_VICTORPG + 1, false, EncodingType.k1X);
-        Angle_Back_Encoder_VictorPG.setDistancePerPulse(7. / 360); // 一次轉距
-
 
         Winch_Front_VictorPG = new WPI_VictorSPX(Constants.Climber.WINCH_FRONT_VICTORPG);
         Winch_Back_VictorPG = new WPI_VictorSPX(Constants.Climber.WINCH_BACK_VICTORPG);
 
-        Angle_Back_VictorPG = new WPI_VictorSPX(Constants.Climber.ANGLE_BACK_VICTORPG);
+        Angle_Back_SparkNeo = new CANSparkMax(Constants.Climber.ANGLE_BACK_SPARKNEO, MotorType.kBrushless);
 
     }
 
@@ -46,7 +45,7 @@ public class Climber {
         Winch_Front_Encoder_VictorPG.reset();
         Winch_Back_Encoder_VictorPG.reset();
 
-        Angle_Back_Encoder_VictorPG.reset(); 
+        Angle_Back_Encoder_VictorPG.setPosition(0); 
 
     }
 
@@ -69,9 +68,9 @@ public class Climber {
             Angle_Back_VictorPG_PID.setup_Distance_PID(Constants.Climber.ANGLE_BACK_VICTORPG_HIGH_I_MIN, Constants.Climber.ANGLE_BACK_VICTORPG_HIGH_I_MAX);
             Angle_Back_VictorPG_PID.setSetpoint(Constants.Climber.ANGLE_BACK_VICTORPG_HIGH_SETPOINT);
 
-            Angle_Back_VictorPG.set(Angle_Back_VictorPG_PID.Distance_PID(Angle_Back_Encoder_VictorPG.getDistance()));
+            Angle_Back_SparkNeo.set(Angle_Back_VictorPG_PID.Distance_PID(Angle_Back_Encoder_VictorPG.getPosition()));
 
-            if (Angle_Back_VictorPG_PID.is_Distance(Angle_Back_Encoder_VictorPG.getDistance()) == true) {
+            if (Angle_Back_VictorPG_PID.is_Distance(Angle_Back_Encoder_VictorPG.getPosition()) == true) {
                 buffer_Back_Winch = false;
                 keep_turning_Back_Winch = false;
             }
@@ -81,22 +80,22 @@ public class Climber {
             Angle_Back_VictorPG_PID.setup_Distance_PID(Constants.Climber.ANGLE_BACK_VICTORPG_LOW_I_MIN, Constants.Climber.ANGLE_BACK_VICTORPG_LOW_I_MAX);
             Angle_Back_VictorPG_PID.setSetpoint(Constants.Climber.ANGLE_BACK_VICTORPG_LOW_SETPOINT);
 
-            Angle_Back_VictorPG.set(Angle_Back_VictorPG_PID.Distance_PID(Angle_Back_Encoder_VictorPG.getDistance()));
+            Angle_Back_SparkNeo.set(Angle_Back_VictorPG_PID.Distance_PID(Angle_Back_Encoder_VictorPG.getPosition()));
 
-            if (Angle_Back_VictorPG_PID.is_Distance(Angle_Back_Encoder_VictorPG.getDistance()) == true) {
+            if (Angle_Back_VictorPG_PID.is_Distance(Angle_Back_Encoder_VictorPG.getPosition()) == true) {
                 buffer_Back_Winch = false;
                 keep_turning_Back_Winch = false;
             }
 
         } else if (!run && !buffer_Back_Angle) {
 
-            Angle_Back_VictorPG.set(0);
+            Angle_Back_SparkNeo.set(0);
             direction_Back_Angle = !direction_Back_Angle;
             buffer_Back_Angle = true;
 
         } else {
 
-            Angle_Back_VictorPG.set(0);
+            Angle_Back_SparkNeo.set(0);
 
         }
     }
