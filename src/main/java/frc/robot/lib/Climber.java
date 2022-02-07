@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Encoder; // Victor
 import edu.wpi.first.wpilibj.CounterBase.EncodingType; // Victor
 
 public class Climber {
+
     private WPI_VictorSPX Winch_Front_VictorPG; // 絞盤馬達 (前)
     private WPI_VictorSPX Winch_Back_VictorPG; // 絞盤馬達 (後)
 
@@ -31,6 +32,7 @@ public class Climber {
     private RelativeEncoder Angle_Back_Encoder_SparkNeo; // 後邊轉角馬達
 
     public Climber() {
+        
         Winch_Front_Encoder_VictorPG = new Encoder(Constants.Climber.WINCH_FRONT_ENCODER_VICTORPG,
                 Constants.Climber.WINCH_FRONT_ENCODER_VICTORPG + 1, false, EncodingType.k1X);
         Winch_Front_Encoder_VictorPG.setDistancePerPulse(7. / 360); // 一次轉距
