@@ -13,6 +13,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 
 import frc.robot.subsystem.*;
 import frc.robot.lib.Test;
+
 // import frc.robot.lib.ColorSensor;
 
 /**
@@ -115,7 +116,7 @@ public class Robot extends TimedRobot {
         -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS),
         m_Joystick.getRawButton(Constants.Joystick.HELF_SPEED_BUTTON));
     ShootSub.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON));
-    ShootSub.Intake(m_Joystick.getRawButton(Constants.Joystick.RISE_BUTTON));
+    ShootSub.Intake(m_Joystick.getRawButton(Constants.Joystick.INTAKE_BUTTON));
     if (m_Joystick.getRawButton(2))
       ShootSub.zero_Encoder();
     SmartDashboard.putBoolean("close", close);
@@ -142,4 +143,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("TestEncoder", Test.get_Encoder());
     SmartDashboard.putBoolean("Button", m_Joystick.getRawButton(Constants.Test.SPIN_BUTTON));
   }
+
+
+
 }

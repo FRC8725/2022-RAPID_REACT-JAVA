@@ -4,15 +4,16 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import frc.robot.Constants;
 import com.revrobotics.CANSparkMax;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 public class Shooter {
 
     private TalonFX Shooter_Left_TalonFalcon, Shooter_Right_TalonFalcon;
     private VictorSPX lid; // 775 Red line
     private Encoder lid_Encoder;
+    private AnalogPotentiometer Ultrasonic;
 
     
     VictorSPX Riser;
@@ -21,10 +22,6 @@ public class Shooter {
     public Shooter() {
         Shooter_Left_TalonFalcon = new TalonFX(Constants.Shooter.LEFT_SHOOT_MOTOR[0]);
         Shooter_Right_TalonFalcon = new TalonFX(Constants.Shooter.RIGHT_SHOOT_MOTOR[0]);
-        lid = new VictorSPX(Constants.Shooter.LID_MOTOR);
-        lid_Encoder = new Encoder(Constants.Shooter.LID_ENCODER[0], Constants.Shooter.LID_ENCODER[1], false,
-                EncodingType.k4X);
-        lid_Encoder.setDistancePerPulse(2. / Constants.DataSheet.REDLINE_ENCODER_CPR);
     }
 
     public void Shoot(double speed) {
@@ -55,5 +52,10 @@ public class Shooter {
 
     public void Run(double Riser_speed) {
         Riser.set(ControlMode.PercentOutput, -Riser_speed);
+    }
+    
+    public double get_Ultrasonic() {
+        Ultrasonic = new AnalogPotentiometer(0, 4000, 30);
+        return Ultrasonic.get();
     }
 }

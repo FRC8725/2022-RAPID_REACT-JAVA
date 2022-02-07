@@ -21,11 +21,12 @@ public class ShootSub {
         SmartDashboard.putNumber("Lid_kd", Constants.Shooter.LID_kd);
     }
     
-    public void Intake(boolean rise) {
-        if (rise)  //Intake down
+    public void Intake(boolean run) {
+        if (run) {  //Intake down
             Intake.Run_Intake(SmartDashboard.getNumber("Intake Speed", Constants.Intake.INTAKE_SPEED));
-        else
+        } else {
             Intake.Run_Intake(0);
+        }
     }
 
     public void Shoot(boolean shoot) {
@@ -34,8 +35,12 @@ public class ShootSub {
             Shooter.Shoot(SmartDashboard.getNumber("Shoot Speed", Constants.Shooter.SPEED));
         }
         else {
+            if (Shooter.get_Ultrasonic() > 32) {
+                Shooter.Run(SmartDashboard.getNumber("Rise Speed", Constants.Shooter.RISE_SPEED));
+            } else {
+                Shooter.Run(0);
+            }
             Shooter.Shoot(0);
-            Shooter.Run(0);
         }
     }
 
