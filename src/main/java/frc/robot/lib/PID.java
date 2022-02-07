@@ -1,4 +1,4 @@
-package frc.robot.subsystem;
+package frc.robot.lib;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -6,10 +6,19 @@ import edu.wpi.first.math.controller.PIDController;
 
 public class PID {
     double kp, ki, kd;
-    double i_min, i_max, encoder; // i_min, i_max 標出執行 kI 動作的位置範圍
+    double i_min, i_max; // i_min, i_max 標出執行 kI 動作的位置範圍
     double setpoint = 0;
     
     PIDController PID;
+
+    public PID(double kp, double ki, double kd, double i_min, double i_max, double setpoint) {
+        this.kp = kp;
+        this.ki = ki;
+        this.kd = kd;
+        this.i_min = i_min;
+        this.i_max = i_max;
+        this.setpoint = setpoint;
+    }
 
     public void setup_Distance_PID() {
         PID = new PIDController(kp, ki, kd);
@@ -37,7 +46,7 @@ public class PID {
         SmartDashboard.putNumber("ispd", i_speed);
         SmartDashboard.putNumber("dspd", d_speed);
 
-        if (i_min > encoder || encoder > i_max) {
+        if (i_min > error || error > i_max) { // 如果現在位置在可執行 kI 的範圍外，就將積值與速度歸零
             i_speed = 0; 
             errorSum = 0;
         }
