@@ -15,9 +15,9 @@ public class Odometry {
     double x = 0;
     double y = 0;
     double angle = 0; 
-    double m_distance = 0; // mid distance
+    double distance = 0; 
 
-    public Odometry(int now_player) {
+    public Odometry() {
         // 1, 2, 3 is B1 B2 B3 
         // 4, 5, 6 is R1 R2 R3
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(gyro.getAngle()), new Pose2d(0, -3, new Rotation2d()));
@@ -32,29 +32,30 @@ public class Odometry {
         gyro.zeroYaw();
     }
 
-    public void update(double position[]) {    
+    public void update() {
+        var position = DriveSub.get_Position();    
         double left_encoder = Units.inchesToMeters(position[0] / Constants.DataSheet.BASE_GEARBOX_RATIO * Math.PI * Constants.DataSheet.HIGRIPWHEEL_R);
         double right_encoder = Units.inchesToMeters(position[1] / Constants.DataSheet.BASE_GEARBOX_RATIO * Math.PI * Constants.DataSheet.HIGRIPWHEEL_R);
         m_odometry.update(Rotation2d.fromDegrees(gyro.getAngle()), left_encoder, right_encoder);
         x = get_position().getX();
         y = get_position().getY(); 
         angle = get_position().getRotation().getDegrees();
-        m_distance = Math.sqrt(Math.pow(get_position().getX(), 2) + Math.pow(get_position().getY(), 2));
+        distance = Math.sqrt(Math.pow(get_position().getX(), 2) + Math.pow(get_position().getY(), 2));
     }
 
     public void angle_to_zero(double x, double y, double angle) {
         gyro.zeroYaw();
     }
 
-    public Pose2d get_position() {
+    private Pose2d get_position() {
         return m_odometry.getPoseMeters();
     }
 
-    public double m_distance() { // distance
-        return m_distance;
+    public double get_distance() { // distance
+        return distance;
     }
 
-    public double m_angle() { // angle
+    public double get_angle() { // angle
         return angle;
     }   
     /* 按下角度歸零 放在robot的

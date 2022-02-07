@@ -5,12 +5,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import frc.robot.Constants;
 import edu.wpi.first.math.controller.PIDController;
 
-public class Auto {
+public class Auto extends DriveSub{ 
     double distance_kp = 0, distance_ki = 0, distance_kd = 0, distance_min = 0, distance_max = 0;
     double setpoint = 0;
     double angle_kp = 0, angle_ki = 0, angle_kd = 0, angle_min = 0, angle_max = 0;
 
     PIDController PID, Angle_PID;
+    Timer m_Timer;
 
     public Auto() {
         SmartDashboard.putNumber("Distance_kp", distance_kp);
@@ -23,6 +24,16 @@ public class Auto {
         SmartDashboard.putNumber("angle_kd", angle_kd);
         SmartDashboard.putNumber("angle_min", angle_min);
         SmartDashboard.putNumber("angle_max", angle_max);
+        m_Timer = new Timer();
+    }
+
+    public void Action() {
+        // Some actions will be done within auto mode 
+        m_Timer.reset();
+        m_Timer.start();
+        while (m_Timer.get() < 5) {
+            Move(.1, .1);
+        }
     }
 
     public void setup_Distance_PID() {

@@ -5,11 +5,11 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.lib.Drive;
 import frc.robot.Constants;
 
-public class DriveSub {
+public class DriveSub{
     MotorControllerGroup m_Driver[];
-    double Move_Speed = Constants.Driver.SPEED;
+    static final double Move_Speed = Constants.Driver.SPEED;
 
-    private Drive Drive = new Drive("Spark");
+    private static Drive Drive = new Drive("Spark");
 
     public void Move(double LSpeed, double RSpeed) {
         Drive.Motor_Run(LSpeed * Move_Speed, RSpeed * Move_Speed);
@@ -23,7 +23,7 @@ public class DriveSub {
         Drive.Motor_Run(0, 0);
     }
 
-    public double[] get_Position() {
+    public static double[] get_Position() {
         return Drive.get_Position();
     }
 

@@ -24,7 +24,6 @@ import frc.robot.subsystem.*;
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
-  private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   Joystick m_Joystick = new Joystick(Constants.Joystick.JOYSTICK_A);
@@ -55,16 +54,16 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
     SmartDashboard.putNumber("Distance setpoint", 10);
     SmartDashboard.putNumber("NowPlaying", nply);
-    Odometry = new Odometry((int) SmartDashboard.getNumber("NowPlaying", nply));
+    Odometry = new Odometry();
   }
 
   @Override
   public void robotPeriodic() {
     SmartDashboard.putNumber("Time", m_Timer.get());
     SmartDashboard.putNumber("Distance", DriveSub.get_Staight());
-    Odometry.update(DriveSub.get_Position());
-    SmartDashboard.putNumber("m_angle", Odometry.m_angle());
-    SmartDashboard.putNumber("m_distance", Odometry.m_distance());
+    Odometry.update();
+    SmartDashboard.putNumber("m_angle", Odometry.get_angle());
+    SmartDashboard.putNumber("m_distance", Odometry.get_distance());
   }
 
   double startTime;
@@ -73,23 +72,25 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     Robot_Pause();
     Odometry.init();
-    m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-    System.out.println("Auto selected: " + m_autoSelected);
     m_Timer.reset();
     Auto.setup_Distance_PID();
+    Auto.Action();
   }
 
   double distance, pid, setpoint;
 
   @Override
   public void autonomousPeriodic() {
-    setpoint = SmartDashboard.getNumber("Distance setpoint", 10);
-    Auto.Distance_PID_setsetpoint(setpoint);
-    pid = Auto.Distance_PID(DriveSub.get_Staight());
-    SmartDashboard.putNumber("PID", pid);
-    DriveSub.Move(pid, pid);
-
+    // PID Test
+    // setpoint = SmartDashboard.getNumber("Distance setpoint", 10);
+    // Auto.Distance_PID_setsetpoint(setpoint);
+    // pid = Auto.Distance_PID(DriveSub.get_Staight());
+    // SmartDashboard.putNumber("PID", pid);
+    // DriveSub.Move(pid, pid);
+    //
+    // ---------------------------------------------------------- //
+    //
     // if (Math.abs(Gyro.get_Yaw()) > Constants.Auto.kangle && Gyro.get_Yaw()>1) {
     // SmartDashboard.putNumber("status", 1);
     // } else {
