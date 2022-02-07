@@ -142,7 +142,7 @@ public class Climber {
     private boolean buffer_Back_Winch = true; // 存取方向是否已經轉換過
     private boolean keep_turning_Back_Winch = false; // 持續運轉方向
 
-    // 建構 Winch_Back_VictorPG 的 PID (需 kp, ki, kd, ki執行範圍下限及上限, 終點位置(Setpoint)) ,常數取自 Constant     
+    // 建構 Winch_Back_VictorPG 的 PID (需 kp, ki, kd) ,常數取自 Constant     
     PID Winch_Back_VictorPG_PID = new PID(Constants.Climber.WINCH_BACK_VICTORPG_KP, Constants.Climber.WINCH_BACK_VICTORPG_KI, Constants.Climber.WINCH_BACK_VICTORPG_KD);
 
     public void Back_Winch_Turn(boolean run) {
