@@ -134,7 +134,5 @@ public class Robot extends TimedRobot {
       DriveSub.Move(-.5, .5);
     else
       DriveSub.Drive_Stop();
-
-    
   }
 }
