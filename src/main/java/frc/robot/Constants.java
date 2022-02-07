@@ -96,7 +96,7 @@ public final class Constants {
         public final static double ANGLE_FRONT_SPARKNEO_HIGH_I_MIN = 0.5;
         public final static double ANGLE_FRONT_SPARKNEO_HIGH_I_MAX = 0.7;
         public final static double ANGLE_FRONT_SPARKNEO_LOW_I_MIN = -0.1;
-        public final static double ANGLE_FRONT_SPARKNEOLOW_I_MAX = 0.1;
+        public final static double ANGLE_FRONT_SPARKNEO_LOW_I_MAX = 0.1;
         public final static double ANGLE_FRONT_SPARKNEO_HIGH_SETPOINT = 0.6;
         public final static double ANGLE_FRONT_SPARKNEO_LOW_SETPOINT = 0;
 
@@ -107,7 +107,7 @@ public final class Constants {
         public final static double ANGLE_BACK_SPARKNEO_HIGH_I_MIN = 0.5;
         public final static double ANGLE_BACK_SPARKNEO_HIGH_I_MAX = 0.7;
         public final static double ANGLE_BACK_SPARKNEO_LOW_I_MIN = -0.1;
-        public final static double ANGLE_BACK_SPARKNEOLOW_I_MAX = 0.1;
+        public final static double ANGLE_BACK_SPARKNEO_LOW_I_MAX = 0.1;
         public final static double ANGLE_BACK_SPARKNEO_HIGH_SETPOINT = 0.6;
         public final static double ANGLE_BACK_SPARKNEO_LOW_SETPOINT = 0;
 
