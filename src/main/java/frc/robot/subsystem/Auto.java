@@ -6,10 +6,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.controller.PIDController;
 
 public class Auto {
-
     double distance_kp = 0, distance_ki = 0, distance_kd = 0, distance_min = 0, distance_max = 0;
     double setpoint = 0;
-    PIDController PID;
+    double angle_kp = 0, angle_ki = 0, angle_kd = 0, angle_min = 0, angle_max = 0;
+
+    PIDController PID, Angle_PID;
 
     public Auto() {
         SmartDashboard.putNumber("Distance_kp", distance_kp);
@@ -17,6 +18,11 @@ public class Auto {
         SmartDashboard.putNumber("Distance_kd", distance_kd);
         SmartDashboard.putNumber("Distance_min", distance_min);
         SmartDashboard.putNumber("Distance_max", distance_max);
+        SmartDashboard.putNumber("angle_kp", angle_kp);
+        SmartDashboard.putNumber("angle_ki", angle_ki);
+        SmartDashboard.putNumber("angle_kd", angle_kd);
+        SmartDashboard.putNumber("angle_min", angle_min);
+        SmartDashboard.putNumber("angle_max", angle_max);
     }
 
     public void setup_Distance_PID() {
@@ -55,5 +61,44 @@ public class Auto {
     public boolean is_Distance(double positionTolerance) {
         PID.setTolerance(positionTolerance);
         return PID.atSetpoint();
+    }
+
+    // Angle
+    public void setup_Angle_PID() {
+        angle_kp = SmartDashboard.getNumber("Angle_kp", 0);
+        angle_ki = SmartDashboard.getNumber("Angle_ki", 0);
+        angle_kd = SmartDashboard.getNumber("Angle_kd", 0);
+        angle_max = SmartDashboard.getNumber("Angle_max", 0);
+        angle_min = SmartDashboard.getNumber("Angle_min", 0);
+        Angle_PID = new PIDController(angle_kp, angle_ki, angle_kd);
+        Angle_PID.setIntegratorRange(angle_min, angle_max);
+    }
+
+    public void Angle_PID_setsetpoint(double _setpoint) {
+        Angle_PID.setSetpoint(_setpoint);
+        setpoint = _setpoint;
+    }
+
+    double Angle_lasttime = 0, Angle_error = 0, Angle_lasterror = 0, Angle_errorSum = 0, Angle_errorRate = 0, Angle_dt;
+
+    public double Angle_PID(double measurement) {
+        Angle_error = setpoint - measurement;
+        Angle_dt = Timer.getFPGATimestamp() - Angle_lasttime;
+        Angle_errorSum += Angle_error * Angle_dt;
+        Angle_errorRate = (Angle_error - Angle_lasterror) * Angle_dt;
+        double Angle_pspeed = angle_kp * Angle_error;
+        double Angle_ispeed = angle_ki * Angle_errorSum;
+        double Angle_dspeed = angle_kd * Angle_errorRate;
+        Angle_lasttime = Timer.getFPGATimestamp();
+        SmartDashboard.putNumber("Angle_pspd", Angle_pspeed);
+        SmartDashboard.putNumber("Angle_ispd", Angle_ispeed);
+        SmartDashboard.putNumber("Angle_dspd", Angle_dspeed);
+        if (angle_min > Angle_ispeed || Angle_ispeed > angle_max) Angle_ispeed = 0;
+        return Angle_pspeed + Angle_ispeed + Angle_dspeed;
+    }
+
+    public boolean is_Angle(double positionTolerance) {
+        Angle_PID.setTolerance(positionTolerance);
+        return Angle_PID.atSetpoint();
     }
 }
