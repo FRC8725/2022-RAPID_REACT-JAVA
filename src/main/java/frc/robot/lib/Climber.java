@@ -152,21 +152,25 @@ public class Climber {
         }
 
         if (keep_turning_Back_Winch && direction_Back_Winch == true) {
-            Winch_Back_VictorPG_PID.setup_moving_PID(Constants.Climber.WINCH_BACK_VICTORPG_HIGH_I_MIN, Constants.Climber.WINCH_BACK_VICTORPG_HIGH_I_MAX, Constants.Climber.WINCH_BACK_VICTORPG_HIGH_SETPOINT);
+            Winch_Back_VictorPG_PID.setup_Distance_PID(Constants.Climber.WINCH_BACK_VICTORPG_HIGH_I_MIN, Constants.Climber.WINCH_BACK_VICTORPG_HIGH_I_MAX);
+            Winch_Back_VictorPG_PID.setSetpoint(Constants.Climber.WINCH_BACK_VICTORPG_HIGH_SETPOINT);
 
-
-            Winch_Back_VictorPG.set(Constants.Climber.WINCH_ENCODER_SPEED);
+            Winch_Back_VictorPG.set(Winch_Back_VictorPG_PID.Distance_PID(Winch_Back_Encoder_VictorPG.getDistance()));
 
             if (Winch_Back_VictorPG_PID.is_Distance(Winch_Back_Encoder_VictorPG.getDistance()) == true) {
                 buffer_Back_Winch = false;
                 keep_turning_Back_Winch = false;
             }
 
-        } else if (keep_turning_Back_Winch && Winch_Back_Encoder_VictorPG.getDistance() > 0 && direction_Back_Winch == false) {
+        } else if (keep_turning_Back_Winch && direction_Back_Winch == false) {
+            Winch_Back_VictorPG_PID.setup_Distance_PID(Constants.Climber.WINCH_BACK_VICTORPG_LOW_I_MIN, Constants.Climber.WINCH_BACK_VICTORPG_LOW_I_MAX);
+            Winch_Back_VictorPG_PID.setSetpoint(Constants.Climber.WINCH_BACK_VICTORPG_LOW_SETPOINT);
 
-            Winch_Back_VictorPG.set(-Constants.Climber.WINCH_ENCODER_SPEED);
-            if (Winch_Back_Encoder_VictorPG.getDistance() <= 0.5) {
+            Winch_Back_VictorPG.set(Winch_Back_VictorPG_PID.Distance_PID(Winch_Back_Encoder_VictorPG.getDistance()));
+
+            if (Winch_Back_VictorPG_PID.is_Distance(Winch_Back_Encoder_VictorPG.getDistance()) == true) {
                 buffer_Back_Winch = false;
+                keep_turning_Back_Winch = false;
             }
 
         } else if (!run && !buffer_Back_Winch) {
