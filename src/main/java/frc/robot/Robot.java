@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
 
 import frc.robot.subsystem.*;
-import frc.robot.lib.Gyro;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -33,7 +32,6 @@ public class Robot extends TimedRobot {
 
   DriveSub DriveSub = new DriveSub();
   Auto Auto = new Auto();
-  Gyro Gyro = new Gyro();
   Odometry Odometry;
 
   int nply = 0;
@@ -47,7 +45,6 @@ public class Robot extends TimedRobot {
   private void Robot_Pause() {
     DriveSub.Drive_Stop();
     DriveSub.Encoder_Zero();
-    Gyro.zero_Yaw();
   }
 
   @Override
