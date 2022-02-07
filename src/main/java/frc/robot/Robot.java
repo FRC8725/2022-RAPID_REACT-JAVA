@@ -138,9 +138,6 @@ public class Robot extends TimedRobot {
     else
       DriveSub.Drive_Stop();
 
-    /* 按下角度歸零
-    if (m_Joystick.getRawButton(8))
-      Odometry.angle_to_zero(Odometry.get_position().getX(), Odometry.get_position().getY(), Odometry.m_angle);  
-    */
+    
   }
 }
