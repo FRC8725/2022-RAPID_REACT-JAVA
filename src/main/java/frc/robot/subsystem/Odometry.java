@@ -10,7 +10,6 @@ import edu.wpi.first.math.util.Units;
 import frc.robot.Constants;
 
 public class Odometry {
-
     private AHRS gyro = new AHRS(I2C.Port.kMXP);
 
     DifferentialDriveOdometry m_odometry;
