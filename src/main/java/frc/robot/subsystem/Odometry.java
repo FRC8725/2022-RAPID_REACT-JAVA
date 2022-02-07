@@ -29,7 +29,6 @@ public class Odometry {
     }
     
     public void zeroYaw() {
-        
         gyro.zeroYaw();
     }
 
@@ -58,7 +57,5 @@ public class Odometry {
 
     public double m_angle() { // angle
         return angle;
-    }
-
-    
+    }   
 }
