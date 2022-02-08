@@ -86,15 +86,15 @@ public final class Constants {
         public final static double WINCH_ENCODER_SPEED = .3; // Winch Encoder 增加量
 
         // ANGLE_BACK_VICTORPG PID 常數
-        public final static double ANGLE_BACK_VICTORPG_KP = 0;
-        public final static double ANGLE_BACK_VICTORPG_KI = 0;
-        public final static double ANGLE_BACK_VICTORPG_KD = 0;
-        public final static double ANGLE_BACK_VICTORPG_HIGH_I_MIN = 0.5;
-        public final static double ANGLE_BACK_VICTORPG_HIGH_I_MAX = 0.7;
-        public final static double ANGLE_BACK_VICTORPG_LOW_I_MIN = -0.1;
-        public final static double ANGLE_BACK_VICTORPG_LOW_I_MAX = 0.1;
-        public final static double ANGLE_BACK_VICTORPG_HIGH_SETPOINT = 0.6;
-        public final static double ANGLE_BACK_VICTORPG_LOW_SETPOINT = 0;
+        public final static double ANGLE_BACK_SPARKNEO_KP = 0;
+        public final static double ANGLE_BACK_SPARKNEO_KI = 0;
+        public final static double ANGLE_BACK_SPARKNEO_KD = 0;
+        public final static double ANGLE_BACK_SPARKNEO_HIGH_I_MIN = 0.5;
+        public final static double ANGLE_BACK_SPARKNEO_HIGH_I_MAX = 0.7;
+        public final static double ANGLE_BACK_SPARKNEO_LOW_I_MIN = -0.1;
+        public final static double ANGLE_BACK_SPARKNEO_LOW_I_MAX = 0.1;
+        public final static double ANGLE_BACK_SPARKNEO_HIGH_SETPOINT = 0.6;
+        public final static double ANGLE_BACK_SPARKNEO_LOW_SETPOINT = 0;
 
         // WINCH_FRONT_VICTORPG PID 常數
         public final static double WINCH_FRONT_VICTORPG_KP = 0;
