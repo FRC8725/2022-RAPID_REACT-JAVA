@@ -48,7 +48,7 @@ public final class Constants {
         // CAN
         public final static int LIFT_MOTOR = 12;
         public final static int INTAKE_MOTOR = 13;
-        public final static double INTAKE_SPEED = .5;
+        public final static double INTAKE_SPEED = .7;
         // DIO
         public final static int LIFT_SWITCH = 0;
     }
