@@ -77,7 +77,6 @@ public final class Constants {
         public final static int INTAKE_BUTTON = 5;
         public final static int SHOOT_BUTTON = 6;
         public final static int HELF_SPEED_BUTTON = 7;
-        public final static int INTAKE_LIFT_BUTTON = 8;
     }
 
     public static final class Test {

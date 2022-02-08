@@ -22,6 +22,7 @@ public class Intake {
     }
 
     public void Run_Intake(double Intake_speed) {
+        if (get_is_upper() == true) Intake_Lift(true);
         Intake.set(Intake_speed);
     }
 

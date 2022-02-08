@@ -116,7 +116,6 @@ public class Robot extends TimedRobot {
         m_Joystick.getRawButton(Constants.Joystick.HELF_SPEED_BUTTON));
     ShootSub.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON));
     ShootSub.Intake(m_Joystick.getRawButton(Constants.Joystick.INTAKE_BUTTON));
-    ShootSub.Intake_Lift(m_Joystick.getRawButton(Constants.Joystick.INTAKE_LIFT_BUTTON));
   }
 
   @Override
