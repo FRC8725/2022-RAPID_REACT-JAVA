@@ -21,6 +21,9 @@ public class ShootSub {
         SmartDashboard.putNumber("Lid_ki", Constants.Shooter.LID_ki);
         SmartDashboard.putNumber("Lid_iLimit", Constants.Shooter.LID_iLimit);
         SmartDashboard.putNumber("Lid_kd", Constants.Shooter.LID_kd);
+        if (Intake.get_is_upper() == false) {
+            Intake_Lift(true);
+        }
     }
 
     public void Intake(boolean run) {

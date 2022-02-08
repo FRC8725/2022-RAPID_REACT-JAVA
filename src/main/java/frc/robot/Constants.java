@@ -49,7 +49,8 @@ public final class Constants {
         public final static int LIFT_MOTOR = 12;
         public final static int INTAKE_MOTOR = 13;
         public final static double INTAKE_SPEED = 1;
-
+        // DIO
+        public final static int LIFT_SWITCH = 0;
     }
 
     public final static class Pneumatic {
