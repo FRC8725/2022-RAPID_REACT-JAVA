@@ -10,7 +10,7 @@ import edu.wpi.first.math.util.Units;
 import frc.robot.Constants;
 
 public class Odometry {
-    private AHRS gyro = new AHRS(SPI.Port.kMXP);
+    public AHRS ahrs;
     DifferentialDriveOdometry m_odometry;
 
     double x = 0;
@@ -22,15 +22,16 @@ public class Odometry {
     public Odometry() {
         // 1, 2, 3 is B1 B2 B3
         // 4, 5, 6 is R1 R2 R3
-        gyro.calibrate();
-        m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(gyro.getAngle()),
+        ahrs = new AHRS(SPI.Port.kMXP);
+        m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(ahrs.getAngle()),
                 new Pose2d(0, -3, new Rotation2d()));
 
     }
 
     public void init() {
+        ahrs.reset();
         m_odometry.resetPosition(new Pose2d(0, -3, new Rotation2d()),
-                Rotation2d.fromDegrees(gyro.getAngle() - begin_angle));
+                Rotation2d.fromDegrees(ahrs.getAngle() - begin_angle));
     }
 
     public void update() {
@@ -39,12 +40,12 @@ public class Odometry {
                 position[0] / Constants.DataSheet.BASE_GEARBOX_RATIO * Math.PI * Constants.DataSheet.HIGRIPWHEEL_R);
         double right_encoder = Units.inchesToMeters(
                 position[1] / Constants.DataSheet.BASE_GEARBOX_RATIO * Math.PI * Constants.DataSheet.HIGRIPWHEEL_R);
-        m_odometry.update(Rotation2d.fromDegrees(gyro.getAngle()), left_encoder, right_encoder);
+        m_odometry.update(Rotation2d.fromDegrees(ahrs.getAngle()), left_encoder, right_encoder);
         x = get_position().getX();
         y = get_position().getY();
         angle = get_position().getRotation().getDegrees();
         distance = Math.sqrt(Math.pow(get_position().getX(), 2) + Math.pow(get_position().getY(), 2));
-        SmartDashboard.putNumber("Gyro", gyro.getAngle());
+        SmartDashboard.putNumber("Gyro", ahrs.getAngle());
         SmartDashboard.putNumber("Begin", begin_angle);
     }
 
