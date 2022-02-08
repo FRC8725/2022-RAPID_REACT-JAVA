@@ -31,6 +31,10 @@ public class ShootSub {
         }
     }
 
+    public void Intake_Lift(boolean Lift) {
+        Intake.Intake_Lift(Lift);
+    }
+
     public void Shoot(boolean shoot) {
         if (shoot) {
             Shooter.Run(SmartDashboard.getNumber("Rise Speed", Constants.Shooter.RISE_SPEED));

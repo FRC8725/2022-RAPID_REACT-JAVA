@@ -46,6 +46,7 @@ public final class Constants {
 
     public static final class Intake {
         // CAN
+        public final static int LIFT_MOTOR = 12;
         public final static int INTAKE_MOTOR = 13;
         public final static double INTAKE_SPEED = 1;
 
@@ -75,6 +76,7 @@ public final class Constants {
         public final static int INTAKE_BUTTON = 5;
         public final static int SHOOT_BUTTON = 6;
         public final static int HELF_SPEED_BUTTON = 7;
+        public final static int INTAKE_LIFT_BUTTON = 8;
     }
 
     public static final class Test {
