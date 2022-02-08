@@ -56,6 +56,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Distance setpoint", 10);
     SmartDashboard.putNumber("NowPlaying", nply);
     Odometry = new Odometry();
+    Odometry.init();
   }
 
   @Override
@@ -113,7 +114,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     if (m_Joystick.getRawButton(Constants.Joystick.AIM_BUTTON)) {
-      AutoShoot.Aim();
+      AutoShoot.Aim(Odometry.get_angle());
     } else {
       DriveSub.Move(-m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
         -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
