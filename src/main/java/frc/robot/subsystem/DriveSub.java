@@ -1,24 +1,17 @@
 package frc.robot.subsystem;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.lib.Drive;
 import frc.robot.Constants;
 
-public class DriveSub extends SubsystemBase {
-    static MotorControllerGroup m_Driver[];
-    static double Move_Speed = Constants.Driver.SPEED;
+public class DriveSub{
+    MotorControllerGroup m_Driver[];
+    static final double Move_Speed = Constants.Driver.SPEED;
 
-    Drive Drive = new Drive("Spark");
+    private static Drive Drive = new Drive("Spark");
 
-    public DriveSub() {
-        SmartDashboard.putNumber("Drive Speed", Move_Speed);
-    }
-
-    public void Move(double LSpeed, double RSpeed, boolean helf) {
-        Move_Speed = SmartDashboard.getNumber("Drive Speed", Move_Speed);
-        if (helf) Move_Speed *= 0.5;
+    public void Move(double LSpeed, double RSpeed) {
         Drive.Motor_Run(LSpeed * Move_Speed, RSpeed * Move_Speed);
     }
 
@@ -28,5 +21,15 @@ public class DriveSub extends SubsystemBase {
 
     public void Drive_Stop() {
         Drive.Motor_Run(0, 0);
+    }
+
+    public static double[] get_Position() {
+        return Drive.get_Position();
+    }
+
+    public double get_Staight() {
+        double position[] = Drive.get_Position();
+        double distance = Units.inchesToMeters(position[0] / Constants.DataSheet.BASE_GEARBOX_RATIO * Math.PI * Constants.DataSheet.HIGRIPWHEEL_R);
+        return distance;
     }
 }

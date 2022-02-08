@@ -5,16 +5,12 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
-// import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.cameraserver.CameraServer;
 
 import frc.robot.subsystem.*;
-import frc.robot.lib.Test;
-
-// import frc.robot.lib.ColorSensor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,15 +24,17 @@ import frc.robot.lib.Test;
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
-  private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-  private final SendableChooser<Boolean> m_Chooser_Color = new SendableChooser<>();
 
   Joystick m_Joystick = new Joystick(Constants.Joystick.JOYSTICK_A);
+  Timer m_Timer = new Timer();
 
   DriveSub DriveSub = new DriveSub();
-  Test Test = new Test();
-  ShootSub ShootSub = new ShootSub();
+  Auto Auto = new Auto();
+  AutoShoot AutoShoot = new AutoShoot();
+  Odometry Odometry;
+
+  int nply = 0;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -47,58 +45,63 @@ public class Robot extends TimedRobot {
   private void Robot_Pause() {
     DriveSub.Drive_Stop();
     DriveSub.Encoder_Zero();
-    ShootSub.Init();
-    Test.Motor_Stop();
-    Test.Zero_Encoder();
   }
 
   @Override
   public void robotInit() {
     Robot_Pause();
-    CameraServer.startAutomaticCapture();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
-    m_Chooser_Color.setDefaultOption("Blue", true);
-    m_Chooser_Color.addOption("Red", false);
-    SmartDashboard.putData("Team_Color", m_Chooser_Color);
     SmartDashboard.putData("Auto choices", m_chooser);
+    SmartDashboard.putNumber("Distance setpoint", 10);
+    SmartDashboard.putNumber("NowPlaying", nply);
+    Odometry = new Odometry();
   }
 
-  /**
-   * This function is called every robot packet, no matter the mode. Use this for
-   * items like
-   * diagnostics that you want ran during disabled, autonomous, teleoperated and
-   * test.
-   *
-   * <p>
-   * This runs after the mode specific periodic functions, but before LiveWindow
-   * and
-   * SmartDashboard integrated updating.
-   */
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putNumber("Time", m_Timer.get());
+    SmartDashboard.putNumber("Distance", DriveSub.get_Staight());
+    Odometry.update();
+    SmartDashboard.putNumber("m_angle", Odometry.get_angle());
+    SmartDashboard.putNumber("m_distance", Odometry.get_distance());
   }
+
+  double startTime;
 
   @Override
   public void autonomousInit() {
     Robot_Pause();
-    m_autoSelected = m_chooser.getSelected();
+    Odometry.init();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-    System.out.println("Auto selected: " + m_autoSelected);
+    m_Timer.reset();
+    Auto.setup_Distance_PID();
+    Auto.Action();
   }
 
-  /** This function is called periodically during autonomous. */
+  double distance, pid, setpoint;
+
   @Override
   public void autonomousPeriodic() {
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
-    }
+    // PID Test
+    // setpoint = SmartDashboard.getNumber("Distance setpoint", 10);
+    // Auto.Distance_PID_setsetpoint(setpoint);
+    // pid = Auto.Distance_PID(DriveSub.get_Staight());
+    // SmartDashboard.putNumber("PID", pid);
+    // DriveSub.Move(pid, pid);
+    //
+    // ---------------------------------------------------------- //
+    //
+    // if (Math.abs(Gyro.get_Yaw()) > Constants.Auto.kangle && Gyro.get_Yaw()>1) {
+    // SmartDashboard.putNumber("status", 1);
+    // } else {
+    // SmartDashboard.putNumber("status", 0);
+    // if (time - startTime < 30) {
+    // DriveSub.Move(.3, .3);
+    // } else {
+    // DriveSub.Move(0, 0);
+    // }
+    // }
   }
 
   @Override
@@ -107,16 +110,15 @@ public class Robot extends TimedRobot {
     Robot_Pause();
   }
 
-  boolean close = false;
-
   @Override
   public void teleopPeriodic() {
-    DriveSub.Move(-m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
-        -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS),
-        m_Joystick.getRawButton(Constants.Joystick.HELF_SPEED_BUTTON));
-    ShootSub.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON));
-    ShootSub.Intake(m_Joystick.getRawButton(Constants.Joystick.INTAKE_BUTTON));
-    ShootSub.Intake_Lift(m_Joystick.getRawButton(Constants.Joystick.INTAKE_LIFT_BUTTON));
+    if (m_Joystick.getRawButton(Constants.Joystick.AIM_BUTTON)) {
+      AutoShoot.Aim();
+    } else {
+      DriveSub.Move(-m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
+        -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
+    }
+    
   }
 
   @Override
@@ -135,11 +137,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
-    Test.Motor_Spin(m_Joystick.getRawButton(Constants.Test.SPIN_BUTTON));
-    SmartDashboard.putNumber("TestEncoder", Test.get_Encoder());
-    SmartDashboard.putBoolean("Button", m_Joystick.getRawButton(Constants.Test.SPIN_BUTTON));
+    if (m_Joystick.getRawButton(4))
+      DriveSub.Move(-.5, .5);
+    else
+      DriveSub.Drive_Stop();
   }
-
-
-
 }
