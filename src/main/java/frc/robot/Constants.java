@@ -27,12 +27,11 @@ public final class Constants {
         public final static int RIGHT_SHOOT_MOTOR[] = { 6 };
         public final static int LID_MOTOR = 8;
 
-        // Encoder
-        public final static int LID_ENCODER[] = { 0, 1 };
+        // Riser_Ultrasonic
+        public final static int ULTRASONIC = 0;
 
-        public final static int TEST_SPARK[] = { 7 };
         // Value
-        public final static double SPEED = .45; // default speed
+        public final static double SPEED = .4; // default speed
 
         // PID
         public final static double LID_kp = 0.042;
@@ -40,15 +39,18 @@ public final class Constants {
         public final static double LID_iLimit = 0;
         public final static double LID_kd = 0;
 
-        //Rise
+        // Rise
         public final static int RISER_MOTOR = 7;
-        public final static double RISE_SPEED = .7;
+        public final static double RISE_SPEED = .2;
     }
 
     public static final class Intake {
         // CAN
+        public final static int LIFT_MOTOR = 12;
         public final static int INTAKE_MOTOR = 13;
-        public final static double INTAKE_SPEED = 1;
+        public final static double INTAKE_SPEED = .7;
+        // DIO
+        public final static int LIFT_SWITCH = 0;
     }
 
     public final static class Pneumatic {
@@ -72,9 +74,9 @@ public final class Constants {
 
         public final static int OPEN_LID = 1;
         public final static int CLOSE_LID = 3;
-        public final static int RISE_BUTTON = 5;
+        public final static int INTAKE_BUTTON = 5;
         public final static int SHOOT_BUTTON = 6;
-        public final static int HELF_SPEED_BUTTON = 8;
+        public final static int HELF_SPEED_BUTTON = 7;
     }
 
     public static final class Test {

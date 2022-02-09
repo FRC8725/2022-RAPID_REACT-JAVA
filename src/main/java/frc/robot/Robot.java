@@ -14,6 +14,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import frc.robot.subsystem.*;
 import frc.robot.lib.Test;
 import frc.robot.lib.Limelight;
+
 // import frc.robot.lib.ColorSensor;
 
 /**
@@ -34,7 +35,6 @@ public class Robot extends TimedRobot {
 
   Joystick m_Joystick = new Joystick(Constants.Joystick.JOYSTICK_A);
 
-  DriveSub DriveSub = new DriveSub();
   Test Test = new Test();
   ShootSub ShootSub = new ShootSub();
   Limelight Limelight = new Limelight();
@@ -56,7 +56,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     Robot_Pause();
-    ShootSub.zero_Encoder();
     CameraServer.startAutomaticCapture();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
@@ -117,14 +116,10 @@ public class Robot extends TimedRobot {
         -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS),
         m_Joystick.getRawButton(Constants.Joystick.HELF_SPEED_BUTTON));
     ShootSub.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON));
-    ShootSub.Intake(m_Joystick.getRawButton(Constants.Joystick.RISE_BUTTON));
-    if (m_Joystick.getRawButton(2))
-      ShootSub.zero_Encoder();
-    else if (m_Joystick.getRawButton(8)) {
+    if (m_Joystick.getRawButton(8)) {
       Limelight.aim_target();
     }
-    SmartDashboard.putBoolean("close", close);
-    ShootSub.Open_Lid(close);
+    ShootSub.Intake(m_Joystick.getRawButton(Constants.Joystick.INTAKE_BUTTON));
   }
 
   @Override
@@ -147,4 +142,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("TestEncoder", Test.get_Encoder());
     SmartDashboard.putBoolean("Button", m_Joystick.getRawButton(Constants.Test.SPIN_BUTTON));
   }
+
+
+
 }

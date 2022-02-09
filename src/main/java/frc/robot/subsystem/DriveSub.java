@@ -22,11 +22,11 @@ public class DriveSub extends SubsystemBase {
         Drive.Motor_Run(LSpeed * Move_Speed, RSpeed * Move_Speed);
     }
 
-    public void Encoder_Zero() {
+    static public void Encoder_Zero() {
         Drive.Encoder_Zero();
     }
 
-    public void Drive_Stop() {
+    static public void Drive_Stop() {
         Drive.Motor_Run(0, 0);
     }
 }

@@ -5,11 +5,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.lib.Intake;
 import frc.robot.lib.Shooter;
+import frc.robot.lib.ColorSensor;
 import frc.robot.Constants;
 
 public class ShootSub {
     Intake Intake = new Intake();
     Shooter Shooter = new Shooter();
+    ColorSensor ColorSensor = new ColorSensor();
 
     public ShootSub() {
         SmartDashboard.putNumber("Rise Speed", Constants.Shooter.RISE_SPEED);
@@ -19,58 +21,37 @@ public class ShootSub {
         SmartDashboard.putNumber("Lid_ki", Constants.Shooter.LID_ki);
         SmartDashboard.putNumber("Lid_iLimit", Constants.Shooter.LID_iLimit);
         SmartDashboard.putNumber("Lid_kd", Constants.Shooter.LID_kd);
+        if (Intake.get_is_upper() == false) {
+            Intake_Lift(true);
+        }
     }
 
-    public void Intake(boolean rise) {
-        if (rise)  //Intake down
+    public void Intake(boolean run) {
+        if (run) { // Intake down
             Intake.Run_Intake(SmartDashboard.getNumber("Intake Speed", Constants.Intake.INTAKE_SPEED));
-        else
+        } else {
             Intake.Run_Intake(0);
+        }
+    }
+
+    public void Intake_Lift(boolean Lift) {
+        Intake.Intake_Lift(Lift);
     }
 
     public void Shoot(boolean shoot) {
         if (shoot) {
             Shooter.Run(SmartDashboard.getNumber("Rise Speed", Constants.Shooter.RISE_SPEED));
             Shooter.Shoot(SmartDashboard.getNumber("Shoot Speed", Constants.Shooter.SPEED));
-        }
-        else {
-            Shooter.Shoot(0);
-            Shooter.Run(0);
-        }
-    }
-
-    double setpoint = 0, error = 0, errorSum = 0, errorRate = 0, lasterror = 0;
-    double lasttime = 0, speed = 0, dt = 0;
-    double kp, ki, iLimit, kd, sp, si, sd;
-
-    public void Open_Lid(boolean close) {
-        kp = SmartDashboard.getNumber("Lid_kp", Constants.Shooter.LID_kp);
-        ki = SmartDashboard.getNumber("Lid_ki", Constants.Shooter.LID_ki);
-        iLimit = SmartDashboard.getNumber("Lid_iLimit", Constants.Shooter.LID_iLimit);
-        kd = SmartDashboard.getNumber("Lid_kd", Constants.Shooter.LID_kd);
-        SmartDashboard.putNumber("LidEncoder", Shooter.get_LidEncoder());
-        if (close) {
-            setpoint = 9;
         } else {
-            setpoint = 0;
+            if (ColorSensor.get_Color().blue > .3 || ColorSensor.get_Color().red > .3) {
+                Shooter.Run(0);
+            } else {
+                Shooter.Run(SmartDashboard.getNumber("Rise Speed", Constants.Shooter.RISE_SPEED));
+            }
+            Shooter.Shoot(0);
         }
-        dt = Timer.getFPGATimestamp() - lasttime;
-        error = setpoint - Shooter.get_LidEncoder();
-        if (Math.abs(error) < iLimit) {
-            errorSum += error * dt;
-        }
-        errorRate = (error - lasterror) / dt;
-        sp = kp * error;
-        si = ki * errorSum;
-        sd = kd * errorRate;
-        SmartDashboard.putNumber("Speed_p", sp);
-        SmartDashboard.putNumber("Speed_i", si);
-        SmartDashboard.putNumber("Speed_d", sd);
-        speed = sp + si + sd;
-
-        Shooter.Lid(speed);
-        SmartDashboard.putNumber("Lid Speed", speed);
-        lasttime = Timer.getFPGATimestamp();
+        SmartDashboard.putNumber("Blue", ColorSensor.get_Color().blue);
+        SmartDashboard.putNumber("Red", ColorSensor.get_Color().red);
     }
 
     public void Init() {
@@ -78,11 +59,4 @@ public class ShootSub {
         Shooter.Shoot(0);
         Shooter.Run(0);
     }
-
-    public void zero_Encoder() {
-        Shooter.zero_LidEncoder();
-    }
-
-    
-
 }
