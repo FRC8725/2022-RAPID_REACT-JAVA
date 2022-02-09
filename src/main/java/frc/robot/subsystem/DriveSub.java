@@ -10,13 +10,13 @@ public class DriveSub extends SubsystemBase {
     static MotorControllerGroup m_Driver[];
     static double Move_Speed = Constants.Driver.SPEED;
 
-    Drive Drive = new Drive("Spark");
+    static Drive Drive = new Drive("Spark");
 
     public DriveSub() {
         SmartDashboard.putNumber("Drive Speed", Move_Speed);
     }
 
-    public void Move(double LSpeed, double RSpeed, boolean helf) {
+    static public void Move(double LSpeed, double RSpeed, boolean helf) {
         Move_Speed = SmartDashboard.getNumber("Drive Speed", Move_Speed);
         if (helf) Move_Speed *= 0.5;
         Drive.Motor_Run(LSpeed * Move_Speed, RSpeed * Move_Speed);

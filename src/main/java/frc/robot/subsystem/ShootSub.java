@@ -20,7 +20,7 @@ public class ShootSub {
         SmartDashboard.putNumber("Lid_iLimit", Constants.Shooter.LID_iLimit);
         SmartDashboard.putNumber("Lid_kd", Constants.Shooter.LID_kd);
     }
-    
+
     public void Intake(boolean rise) {
         if (rise)  //Intake down
             Intake.Run_Intake(SmartDashboard.getNumber("Intake Speed", Constants.Intake.INTAKE_SPEED));
@@ -82,5 +82,7 @@ public class ShootSub {
     public void zero_Encoder() {
         Shooter.zero_LidEncoder();
     }
+
+    
 
 }

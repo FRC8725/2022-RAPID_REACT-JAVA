@@ -13,6 +13,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 
 import frc.robot.subsystem.*;
 import frc.robot.lib.Test;
+import frc.robot.lib.Limelight;
 // import frc.robot.lib.ColorSensor;
 
 /**
@@ -36,6 +37,7 @@ public class Robot extends TimedRobot {
   DriveSub DriveSub = new DriveSub();
   Test Test = new Test();
   ShootSub ShootSub = new ShootSub();
+  Limelight Limelight = new Limelight();
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -118,6 +120,9 @@ public class Robot extends TimedRobot {
     ShootSub.Intake(m_Joystick.getRawButton(Constants.Joystick.RISE_BUTTON));
     if (m_Joystick.getRawButton(2))
       ShootSub.zero_Encoder();
+    else if (m_Joystick.getRawButton(8)) {
+      Limelight.aim_target();
+    }
     SmartDashboard.putBoolean("close", close);
     ShootSub.Open_Lid(close);
   }
