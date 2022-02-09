@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
-
 import frc.robot.subsystem.*;
 
 /**
@@ -32,7 +31,8 @@ public class Robot extends TimedRobot {
   DriveSub DriveSub = new DriveSub();
   Auto Auto = new Auto();
   AutoShoot AutoShoot = new AutoShoot();
-  Odometry Odometry;
+  Odometry Odometry; 
+  Simulation simulation;
 
   int nply = 0;
 
@@ -56,6 +56,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Distance setpoint", 10);
     SmartDashboard.putNumber("NowPlaying", nply);
     Odometry = new Odometry();
+    
   }
 
   @Override
@@ -65,6 +66,7 @@ public class Robot extends TimedRobot {
     Odometry.update();
     SmartDashboard.putNumber("m_angle", Odometry.get_angle());
     SmartDashboard.putNumber("m_distance", Odometry.get_distance());
+    simulation.periodic();
   }
 
   double startTime;
@@ -142,4 +144,11 @@ public class Robot extends TimedRobot {
     else
       DriveSub.Drive_Stop();
   }
+
+  @Override
+  public void simulationPeriodic(){
+    simulation.simulationPeriodic();
+  }
+
+  
 }
