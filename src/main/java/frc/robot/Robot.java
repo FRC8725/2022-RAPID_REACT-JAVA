@@ -9,15 +9,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import java.io.IOException;
-import java.nio.file.Path;
-
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryUtil;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
-
 import frc.robot.subsystem.*;
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -37,10 +29,10 @@ public class Robot extends TimedRobot {
   Timer m_Timer = new Timer();
 
   DriveSub DriveSub = new DriveSub();
+  Pathwave Pathwave = new Pathwave();
   Auto Auto = new Auto();
   AutoShoot AutoShoot = new AutoShoot();
   Odometry Odometry;
-
   int nply = 0;
 
   /**
@@ -54,11 +46,14 @@ public class Robot extends TimedRobot {
     DriveSub.Encoder_Zero();
   }
 
+  private void Pathwave() {
+    Pathwave();
+  }
+
   @Override
   public void robotInit() {
-    String trajectoryJSON = "paths/Pathweaver.wpilib.json";
-    Trajectory trajectory = new Trajectory();
     Robot_Pause();
+    Pathwave();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
@@ -66,12 +61,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("NowPlaying", nply);
     Odometry = new Odometry();
     Odometry.init();
-    try {
-      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-    } catch (IOException ex) {
-      DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
-    }
   }
 
   @Override
