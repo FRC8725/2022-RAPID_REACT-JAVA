@@ -73,29 +73,21 @@ public class Climber {
         }
     }
     // 前伸縮桿
-    private boolean direction_Front_Winch = true; // 旋轉方向
-    private boolean buffer_Front_Winch = true; // 存取方向是否已經轉換過
-    public void Front_Winch_Turn(boolean run) {
-        if (run && Winch_Front_Encoder_VictorPG.getDistance() < 0.5 && direction_Front_Winch == true) {
+    public void Front_Winch_Turn_Up(boolean run) {
+        Winch_Front_Encoder_VictorPG.getDistance();
+        if (run) {
             Winch_Front_VictorPG.set(Constants.Climber.WINCH_ENCODER_SPEED);
-            buffer_Front_Winch = false;
-            if (Winch_Front_Encoder_VictorPG.getDistance() >= 0.5) {
-                buffer_Front_Winch = false;
-            }
-        } else if (run && Winch_Front_Encoder_VictorPG.getDistance() > 0 && direction_Front_Winch == false) {
-            Winch_Front_VictorPG.set(-Constants.Climber.WINCH_ENCODER_SPEED);
-            buffer_Front_Winch = false;
-            if (Winch_Front_Encoder_VictorPG.getDistance() <= 0) {
-                buffer_Front_Winch = false;
-            }
-        } else if (!run && !buffer_Front_Winch) {
-            Winch_Front_VictorPG.set(0);
-            direction_Front_Winch = !direction_Front_Winch;
-            buffer_Front_Winch = true;
-        } else {
-            Winch_Front_VictorPG.set(0);
         }
     }
+
+    public void Front_Winch_Turn_Down(boolean run) {
+        Winch_Front_Encoder_VictorPG.getDistance();
+        if (run) {
+            Winch_Front_VictorPG.set(- Constants.Climber.WINCH_ENCODER_SPEED);
+        }
+    }
+
+
     // 後伸縮桿
     private boolean direction_Back_Winch = true; // 旋轉方向
     private boolean buffer_Back_Winch = true; // 存取方向是否已經轉換過

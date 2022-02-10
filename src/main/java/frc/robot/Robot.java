@@ -119,7 +119,12 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     DriveSub.Move(m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
         m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
-    Climber.Back_Winch_Turn(m_Joystick.getRawButton(2));
+    if (m_Joystick.getRawButton(4)) {
+        Climber.Front_Winch_Turn_Up(m_Joystick.getRawButton(4));
+    } else {
+        Climber.Front_Winch_Turn_Up(m_Joystick.getRawButton(1));
+    }
+    
   }
 
   @Override
