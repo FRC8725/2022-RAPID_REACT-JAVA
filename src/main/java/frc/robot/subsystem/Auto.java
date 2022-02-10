@@ -113,9 +113,6 @@ public class Auto extends DriveSub{
         return Angle_PID.atSetpoint();
     }
 
-    public void Angle_PID_TO_ZERO(double Angle) {
-        // if Angle >= 180:
-
-    } 
+    
 }
 // kp*error + ki*errerSum + kd*errorRate

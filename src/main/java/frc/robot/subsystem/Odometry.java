@@ -25,7 +25,6 @@ public class Odometry {
         ahrs = new AHRS(SPI.Port.kMXP);
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(ahrs.getAngle()),
                 new Pose2d(0, -3, new Rotation2d()));
-
     }
 
     public void init() {
@@ -33,6 +32,9 @@ public class Odometry {
         m_odometry.resetPosition(new Pose2d(0, -3, new Rotation2d()),
                 Rotation2d.fromDegrees(ahrs.getAngle() - begin_angle));
     }
+
+    // Angle PID
+    double angle_kp = 0, angle_ki = 0, angle_kd = 0; // IDK
 
     public void update() {
         var position = DriveSub.get_Position();
@@ -47,6 +49,8 @@ public class Odometry {
         distance = Math.sqrt(Math.pow(get_position().getX(), 2) + Math.pow(get_position().getY(), 2));
         SmartDashboard.putNumber("Gyro", ahrs.getAngle());
         SmartDashboard.putNumber("Begin", begin_angle);
+        SmartDashboard.putNumber("angle", angle);
+        SmartDashboard.putNumber("distance", distance);
     }
 
     private Pose2d get_position() {
@@ -60,10 +64,20 @@ public class Odometry {
     public double get_angle() { // angle
         return angle;
     }
+
+    public void angle_to_zero() {
+        
+    }
+
     /*
      * 按下角度歸零 放在robot的
      * if (m_Joystick.getRawButton(8))
-     * Odometry.angle_to_zero(Odometry.get_position().getX(),
-     * Odometry.get_position().getY(), Odometry.m_angle);
+     * Odometry.angle_to_zero();
      */
 }
+
+/* 
+kS: Volts 位移 
+kV: Volts * Seconds / Meters 速度
+kA: Volts * Seconds^2 / Meters 加速度
+*/
