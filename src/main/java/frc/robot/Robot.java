@@ -119,7 +119,6 @@ public class Robot extends TimedRobot {
       DriveSub.Move(-m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
         -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
     }
-    
   }
 
   @Override

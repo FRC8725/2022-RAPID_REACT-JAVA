@@ -51,6 +51,8 @@ public class Odometry {
         SmartDashboard.putNumber("Begin", begin_angle);
         SmartDashboard.putNumber("angle", angle);
         SmartDashboard.putNumber("distance", distance);
+        SmartDashboard.putNumber("X", x);
+        SmartDashboard.putNumber("Y", y);
     }
 
     private Pose2d get_position() {
@@ -65,7 +67,7 @@ public class Odometry {
         return angle;
     }
 
-    public void angle_to_zero() {
+    public void reset_angle() { 
         
     }
 
