@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 
 public class PathWeaver {
-    String trajectoryJSON = "paths/YourPath.wpilib.json";
+    String trajectoryJSON = "paths/circle.wpilib.json";
     Trajectory trajectory = new Trajectory();
 
     public PathWeaver() {
