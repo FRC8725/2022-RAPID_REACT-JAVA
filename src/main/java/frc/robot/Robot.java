@@ -29,7 +29,7 @@ public class Robot extends TimedRobot {
   Timer m_Timer = new Timer();
 
   DriveSub DriveSub = new DriveSub();
-  Pathwave Pathwave = new Pathwave();
+  PathWeaver PathWeaver = new PathWeaver();
   Auto Auto = new Auto();
   AutoShoot AutoShoot = new AutoShoot();
   Odometry Odometry;
@@ -46,14 +46,14 @@ public class Robot extends TimedRobot {
     DriveSub.Encoder_Zero();
   }
 
-  private void Pathwave() {
-    Pathwave();
+  private void PathWeaver() {
+    PathWeaver();
   }
 
   @Override
   public void robotInit() {
     Robot_Pause();
-    Pathwave();
+    PathWeaver();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
