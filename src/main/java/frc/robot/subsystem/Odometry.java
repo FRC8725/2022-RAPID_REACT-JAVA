@@ -28,7 +28,7 @@ public class Odometry {
     }
 
     public void init() {
-        ahrs.reset();
+        begin_angle = ahrs.getAngle();
         m_odometry.resetPosition(new Pose2d(0, -3, new Rotation2d()),
                 Rotation2d.fromDegrees(ahrs.getAngle() - begin_angle));
     }
@@ -42,7 +42,7 @@ public class Odometry {
                 position[0] / Constants.DataSheet.BASE_GEARBOX_RATIO * Math.PI * Constants.DataSheet.HIGRIPWHEEL_R);
         double right_encoder = Units.inchesToMeters(
                 position[1] / Constants.DataSheet.BASE_GEARBOX_RATIO * Math.PI * Constants.DataSheet.HIGRIPWHEEL_R);
-        m_odometry.update(Rotation2d.fromDegrees(ahrs.getAngle()), left_encoder, right_encoder);
+        m_odometry.update(Rotation2d.fromDegrees(ahrs.getAngle() - begin_angle), left_encoder, right_encoder);
         x = get_position().getX();
         y = get_position().getY();
         angle = get_position().getRotation().getDegrees();
