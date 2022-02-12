@@ -12,7 +12,7 @@ public class PathWeaver {
     String trajectoryJSON = "paths/circle.wpilib.json";
     Trajectory trajectory = new Trajectory();
 
-    public PathWeaver() {
+    public void init() {
         try {
             Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
             trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);

@@ -46,14 +46,9 @@ public class Robot extends TimedRobot {
     DriveSub.Encoder_Zero();
   }
 
-  private void PathWeaver() {
-    PathWeaver();
-  }
-
   @Override
   public void robotInit() {
-    Robot_Pause();
-    PathWeaver();
+    PathWeaver.init();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
