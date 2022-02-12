@@ -50,8 +50,15 @@ public final class Constants {
         public final static int LEFT_MOTOR_AXIS = 1;
         public final static int RIGHT_MOTOR_AXIS = 3;
 
+        public final static int CLIMBER_ANGLE_POV = 0; // 懸掛較度控制
+
         public final static int SHOOT_BUTTON = 6;
         public final static int RELEASE_PRESSURE_BUTTON = 5;
+
+        public final static int CLIMBER_FRONT_UP_BUTTON = 4;
+        public final static int CLIMBER_FRONT_DOWN_BUTTON = 1;
+        public final static int CLIMBER_BACK_UP_BUTTON = 2;
+        public final static int CLIMBER_BACK_DOWN_BUTTON = 3;
 
         public final static int CLIMBER_WINTH_BUTTON = 1;
 
@@ -82,41 +89,8 @@ public final class Constants {
         public final static int WINCH_BACK_VICTORPG = 10; // 絞盤馬達 (後)
 
 
-        public final static double ANGLE_ENCODER_SPEED = .3; // Angle Encoder 增加量
-        public final static double WINCH_ENCODER_SPEED = .3; // Winch Encoder 增加量
-
-        // ANGLE_BACK_VICTORPG PID 常數
-        public final static double ANGLE_BACK_SPARKNEO_KP = 0;
-        public final static double ANGLE_BACK_SPARKNEO_KI = 0;
-        public final static double ANGLE_BACK_SPARKNEO_KD = 0;
-        public final static double ANGLE_BACK_SPARKNEO_HIGH_I_MIN = 0.5;
-        public final static double ANGLE_BACK_SPARKNEO_HIGH_I_MAX = 0.7;
-        public final static double ANGLE_BACK_SPARKNEO_LOW_I_MIN = -0.1;
-        public final static double ANGLE_BACK_SPARKNEO_LOW_I_MAX = 0.1;
-        public final static double ANGLE_BACK_SPARKNEO_HIGH_SETPOINT = 0.6;
-        public final static double ANGLE_BACK_SPARKNEO_LOW_SETPOINT = 0;
-
-        // WINCH_FRONT_VICTORPG PID 常數
-        public final static double WINCH_FRONT_VICTORPG_KP = 0;
-        public final static double WINCH_FRONT_VICTORPG_KI = 0;
-        public final static double WINCH_FRONT_VICTORPG_KD = 0;
-        public final static double WINCH_FRONT_VICTORPG_HIGH_I_MIN = 0.5;
-        public final static double WINCH_FRONT_VICTORPG_HIGH_I_MAX = 0.7;
-        public final static double WINCH_FRONT_VICTORPG_LOW_I_MIN = -0.1;
-        public final static double WINCH_FRONT_VICTORPG_LOW_I_MAX = 0.1;
-        public final static double WINCH_FRONT_VICTORPG_HIGH_SETPOINT = 0.6;
-        public final static double WINCH_FRONT_VICTORPG_LOW_SETPOINT = 0;
-
-        // WINCH_BACK_VICTORPG PID 常數
-        public final static double WINCH_BACK_VICTORPG_KP = 0;
-        public final static double WINCH_BACK_VICTORPG_KI = 0;
-        public final static double WINCH_BACK_VICTORPG_KD = 0;
-        public final static double WINCH_BACK_VICTORPG_HIGH_I_MIN = 0.5;
-        public final static double WINCH_BACK_VICTORPG_HIGH_I_MAX = 0.7;
-        public final static double WINCH_BACK_VICTORPG_LOW_I_MIN = -0.1;
-        public final static double WINCH_BACK_VICTORPG_LOW_I_MAX = 0.1;
-        public final static double WINCH_BACK_VICTORPG_HIGH_SETPOINT = 0.6;
-        public final static double WINCH_BACK_VICTORPG_LOW_SETPOINT = 0;
+        public final static double ANGLE_ENCODER_SPEED = .5; // Angle Encoder 增加量
+        public final static double WINCH_ENCODER_SPEED = 1; // Winch Encoder 增加量
     }
 
 }

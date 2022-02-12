@@ -49,29 +49,22 @@ public class Climber {
     }
 
     // 後桿轉角
-    private boolean direction_Back_Angle = true; // 旋轉方向
-    private boolean buffer_Back_Angle = true; // 存取方向是否已經轉換過
-    public void Back_Angle_Turn(boolean run) { // direction: (true 正轉,false 反轉)
-        if (run && Angle_Back_Encoder_SparkNeo.getPosition() < 0.5 && direction_Back_Angle == true) {
+    public void Back_Angle_Turn_Clockwise(boolean run) { // direction: (true 正轉,false 反轉)
+        if (run) {
             Angle_Back_SparkNeo.set(Constants.Climber.ANGLE_ENCODER_SPEED);
-            buffer_Back_Angle = false;
-            if (Angle_Back_Encoder_SparkNeo.getPosition() >= 0.5) {
-                buffer_Back_Angle = false;
-            }
-        } else if (run && Angle_Back_Encoder_SparkNeo.getPosition() > 0 && direction_Back_Angle == false) {
-            Angle_Back_SparkNeo.set(-Constants.Climber.ANGLE_ENCODER_SPEED);
-            buffer_Back_Angle = false;
-            if (Angle_Back_Encoder_SparkNeo.getPosition() <= 0) {
-                buffer_Back_Angle = false;
-            }
-        } else if (!run && !buffer_Back_Angle) {
-            Angle_Back_SparkNeo.set(0);
-            direction_Back_Angle = !direction_Back_Angle;
-            buffer_Back_Angle = true;
         } else {
             Angle_Back_SparkNeo.set(0);
         }
     }
+
+    public void Back_Angle_Turn_Unlockwise(boolean run) { // direction: (true 正轉,false 反轉)
+        if (run) {
+            Angle_Back_SparkNeo.set( - Constants.Climber.ANGLE_ENCODER_SPEED);
+        } else {
+            Angle_Back_SparkNeo.set(0);
+        }
+    }
+
     // 前伸縮桿
     public void Front_Winch_Turn_Up(boolean run) {
         Winch_Front_Encoder_VictorPG.getDistance();
@@ -93,25 +86,19 @@ public class Climber {
 
 
     // 後伸縮桿
-    private boolean direction_Back_Winch = true; // 旋轉方向
-    private boolean buffer_Back_Winch = true; // 存取方向是否已經轉換過
-    public void Back_Winch_Turn(boolean run) {
-        if (run && Winch_Back_Encoder_VictorPG.getDistance() < 0.5 && direction_Back_Winch == true) {
+    public void Back_Winch_Turn_Up(boolean run) {
+        Winch_Back_Encoder_VictorPG.getDistance();
+        if (run) {
             Winch_Back_VictorPG.set(Constants.Climber.WINCH_ENCODER_SPEED);
-            buffer_Back_Winch = false;
-            if (Winch_Back_Encoder_VictorPG.getDistance() >= 0.5) {
-                buffer_Back_Winch = false;
-            }
-        } else if (run && Winch_Back_Encoder_VictorPG.getDistance() > 0 && direction_Back_Winch == false) {
-            Winch_Back_VictorPG.set(-Constants.Climber.WINCH_ENCODER_SPEED);
-            buffer_Back_Winch = false;
-            if (Winch_Back_Encoder_VictorPG.getDistance() <= 0.5) {
-                buffer_Back_Winch = false;
-            }
-        } else if (!run && !buffer_Back_Winch) {
+        } else {
             Winch_Back_VictorPG.set(0);
-            direction_Back_Winch = !direction_Back_Winch;
-            buffer_Back_Winch = true;
+        }
+    }
+
+    public void Back_Winch_Turn_Down(boolean run) {
+        Winch_Back_Encoder_VictorPG.getDistance();
+        if (run) {
+            Winch_Back_VictorPG.set(- Constants.Climber.WINCH_ENCODER_SPEED);
         } else {
             Winch_Back_VictorPG.set(0);
         }

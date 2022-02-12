@@ -119,10 +119,29 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     DriveSub.Move(m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
         m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
-    if (m_Joystick.getRawButton(4)) {
-        Climber.Front_Winch_Turn_Up(m_Joystick.getRawButton(4));
+
+    // Climb
+    if (m_Joystick.getRawButton(Constants.Joystick.CLIMBER_FRONT_UP_BUTTON)) {
+        Climber.Front_Winch_Turn_Up(m_Joystick.getRawButton(Constants.Joystick.CLIMBER_FRONT_UP_BUTTON));
     } else {
-        Climber.Front_Winch_Turn_Down(m_Joystick.getRawButton(1));
+        Climber.Front_Winch_Turn_Down(m_Joystick.getRawButton(Constants.Joystick.CLIMBER_FRONT_DOWN_BUTTON));
+    }
+
+    if (m_Joystick.getRawButton(Constants.Joystick.CLIMBER_BACK_UP_BUTTON)) {
+        Climber.Back_Winch_Turn_Up(m_Joystick.getRawButton(Constants.Joystick.CLIMBER_BACK_UP_BUTTON));
+    } else {
+        Climber.Back_Winch_Turn_Down(m_Joystick.getRawButton(Constants.Joystick.CLIMBER_BACK_DOWN_BUTTON));
+    }
+
+    if (m_Joystick.getPOV(Constants.Joystick.CLIMBER_ANGLE_POV) == 90) { // 右側
+      Climber.Back_Angle_Turn_Clockwise(true);
+      Climber.Back_Angle_Turn_Unlockwise(false);
+    } else if (m_Joystick.getPOV(Constants.Joystick.CLIMBER_ANGLE_POV) == 270) {
+      Climber.Back_Angle_Turn_Clockwise(false);
+      Climber.Back_Angle_Turn_Unlockwise(true);
+    } else if (m_Joystick.getPOV(Constants.Joystick.CLIMBER_ANGLE_POV) == -1) {
+      Climber.Back_Angle_Turn_Clockwise(false);
+      Climber.Back_Angle_Turn_Unlockwise(false);
     }
     
   }
