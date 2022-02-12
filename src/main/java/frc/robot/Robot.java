@@ -111,6 +111,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     DriveSub.Encoder_Zero();
+
     Robot_Pause();
   }
 
@@ -119,7 +120,9 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     DriveSub.Move(m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
         m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
-
+    
+    Climber.print_Encoders();
+    
     // Climber 前伸縮
     if (m_Joystick.getRawButton(Constants.Joystick.CLIMBER_FRONT_UP_BUTTON)) {
         Climber.Front_Winch_Turn_Up(true);

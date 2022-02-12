@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 // import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.Encoder; // Victor
 import edu.wpi.first.wpilibj.CounterBase.EncodingType; // Victor
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Climber {
 
@@ -46,6 +47,12 @@ public class Climber {
 
         Angle_Back_Encoder_SparkNeo.setPosition(0); 
 
+    }
+
+    public void print_Encoders() {
+        SmartDashboard.putNumber("Winch_Front", Winch_Front_Encoder_VictorPG.getDistance());
+        SmartDashboard.putNumber("Winch_Back", Winch_Back_Encoder_VictorPG.getDistance());
+        SmartDashboard.putNumber("Angle_Back", Angle_Back_Encoder_SparkNeo.getPosition());
     }
 
     // 後桿轉角
