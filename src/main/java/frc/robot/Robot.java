@@ -113,12 +113,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    DriveSub.Move(-m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
-        -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS),
-        m_Joystick.getRawButton(Constants.Joystick.HELF_SPEED_BUTTON));
     ShootSub.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON));
     if (m_Joystick.getRawButton(8)) {
-      Limelight.aim_target();
+      Limelight.update();
+    } else {
+      DriveSub.Move(-m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
+      -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS),
+      m_Joystick.getRawButton(Constants.Joystick.HELF_SPEED_BUTTON));
     }
     ShootSub.Intake(m_Joystick.getRawButton(Constants.Joystick.INTAKE_BUTTON));
   }

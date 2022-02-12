@@ -40,13 +40,13 @@ public class ShootSub {
 
     public void Shoot(boolean shoot) {
         if (shoot) {
-            Shooter.Run(SmartDashboard.getNumber("Rise Speed", Constants.Shooter.RISE_SPEED));
-            Shooter.Shoot(SmartDashboard.getNumber("Shoot Speed", Constants.Shooter.SPEED));
+            Shooter.Run(SmartDashboard.getNumber("Rise Speed", 0));
+            Shooter.Shoot(SmartDashboard.getNumber("Shoot Speed", 0));
         } else {
             if (ColorSensor.get_Color().blue > .3 || ColorSensor.get_Color().red > .3) {
                 Shooter.Run(0);
             } else {
-                Shooter.Run(SmartDashboard.getNumber("Rise Speed", Constants.Shooter.RISE_SPEED));
+                Shooter.Run(SmartDashboard.getNumber("Rise Speed", 0));
             }
             Shooter.Shoot(0);
         }
