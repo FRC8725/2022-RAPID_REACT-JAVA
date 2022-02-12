@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
     SmartDashboard.putNumber("Distance setpoint", 10);
     SmartDashboard.putNumber("NowPlaying", nply);
-    Odometry = new Odometry();
+    Odometry Odometry = new Odometry();
     Odometry.init();
   }
 
