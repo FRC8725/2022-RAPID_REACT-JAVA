@@ -120,19 +120,31 @@ public class Robot extends TimedRobot {
     DriveSub.Move(m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
         m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
 
-    // Climb
+    // Climber 前伸縮
     if (m_Joystick.getRawButton(Constants.Joystick.CLIMBER_FRONT_UP_BUTTON)) {
-        Climber.Front_Winch_Turn_Up(m_Joystick.getRawButton(Constants.Joystick.CLIMBER_FRONT_UP_BUTTON));
+        Climber.Front_Winch_Turn_Up(true);
+        Climber.Front_Winch_Turn_Down(false);
+    } else if (m_Joystick.getRawButton(Constants.Joystick.CLIMBER_FRONT_DOWN_BUTTON)) {
+        Climber.Front_Winch_Turn_Up(false);  
+        Climber.Front_Winch_Turn_Down(true);
     } else {
-        Climber.Front_Winch_Turn_Down(m_Joystick.getRawButton(Constants.Joystick.CLIMBER_FRONT_DOWN_BUTTON));
+        Climber.Front_Winch_Turn_Up(false); 
+        Climber.Front_Winch_Turn_Down(false);
     }
-
+    
+    // Climber 後伸縮
     if (m_Joystick.getRawButton(Constants.Joystick.CLIMBER_BACK_UP_BUTTON)) {
-        Climber.Back_Winch_Turn_Up(m_Joystick.getRawButton(Constants.Joystick.CLIMBER_BACK_UP_BUTTON));
+        Climber.Back_Winch_Turn_Up(true);
+        Climber.Back_Winch_Turn_Down(false);
+    } else if (m_Joystick.getRawButton(Constants.Joystick.CLIMBER_BACK_DOWN_BUTTON)) {
+        Climber.Back_Winch_Turn_Up(false);
+        Climber.Back_Winch_Turn_Down(true);
     } else {
-        Climber.Back_Winch_Turn_Down(m_Joystick.getRawButton(Constants.Joystick.CLIMBER_BACK_DOWN_BUTTON));
+      Climber.Back_Winch_Turn_Up(false);
+      Climber.Back_Winch_Turn_Down(false);
     }
 
+    // Climber 轉角度
     if (m_Joystick.getPOV(Constants.Joystick.CLIMBER_ANGLE_POV) == 90) { // 右側
       Climber.Back_Angle_Turn_Clockwise(true);
       Climber.Back_Angle_Turn_Unlockwise(false);
