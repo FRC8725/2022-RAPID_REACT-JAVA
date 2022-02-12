@@ -88,8 +88,7 @@ public final class Constants {
         public final static int WINCH_FRONT_VICTORPG = 9; // 絞盤馬達 (前)
         public final static int WINCH_BACK_VICTORPG = 10; // 絞盤馬達 (後)
 
-
-        public final static double ANGLE_ENCODER_SPEED = .5; // Angle Encoder 增加量
+        public final static double ANGLE_ENCODER_SPEED = 1; // Angle Encoder 增加量
         public final static double WINCH_ENCODER_SPEED = 1; // Winch Encoder 增加量
     }
 

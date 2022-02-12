@@ -6,7 +6,7 @@ import edu.wpi.first.math.controller.PIDController;
 
 public class PID {
     double kp, ki, kd;
-    double i_min, i_max; // i_min, i_max 標出執行 kI 動作的位置範圍
+    double i_min, i_max; // i_min, i_max marh ki working range.
     double setpoint = 0;
     
     PIDController PID;
@@ -24,7 +24,7 @@ public class PID {
         PID.setIntegratorRange(i_min, i_max);
     }
 
-    public void setSetpoint(double setpoint) { // 初始化終點位置距離
+    public void setSetpoint(double setpoint) { // init stating distance
         PID.setSetpoint(setpoint);
         this.setpoint = setpoint;
     }
@@ -45,7 +45,7 @@ public class PID {
         SmartDashboard.putNumber("ispd", i_speed);
         SmartDashboard.putNumber("dspd", d_speed);
 
-        if (i_min > error || error > i_max) { // 如果現在位置在可執行 kI 的範圍外，就將積值與速度歸零
+        if (i_min > error || error > i_max) { // if ki out of setpoint range，v and i reset.
             i_speed = 0; 
             errorSum = 0;
         }

@@ -136,14 +136,13 @@ public class Robot extends TimedRobot {
     if (m_Joystick.getPOV(Constants.Joystick.CLIMBER_ANGLE_POV) == 90) { // 右側
       Climber.Back_Angle_Turn_Clockwise(true);
       Climber.Back_Angle_Turn_Unlockwise(false);
-    } else if (m_Joystick.getPOV(Constants.Joystick.CLIMBER_ANGLE_POV) == 270) {
+    } else if (m_Joystick.getPOV(Constants.Joystick.CLIMBER_ANGLE_POV) == 270) { // 左側
       Climber.Back_Angle_Turn_Clockwise(false);
       Climber.Back_Angle_Turn_Unlockwise(true);
     } else if (m_Joystick.getPOV(Constants.Joystick.CLIMBER_ANGLE_POV) == -1) {
       Climber.Back_Angle_Turn_Clockwise(false);
       Climber.Back_Angle_Turn_Unlockwise(false);
     }
-    
   }
 
   @Override
