@@ -82,8 +82,8 @@ public final class Constants {
         public final static int WINCH_BACK_VICTORPG = 10; // 絞盤馬達 (後)
 
 
-        public final static double ANGLE_ENCODER_SPEED = .3; // Angle Encoder 增加量
-        public final static double WINCH_ENCODER_SPEED = .3; // Winch Encoder 增加量
+        public final static double ANGLE_ENCODER_SPEED = 1; // Angle Encoder 增加量
+        public final static double WINCH_ENCODER_SPEED = 1; // Winch Encoder 增加量
 
         // ANGLE_BACK_VICTORPG PID 常數
         public final static double ANGLE_BACK_SPARKNEO_KP = 0;

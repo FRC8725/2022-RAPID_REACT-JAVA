@@ -77,6 +77,8 @@ public class Climber {
         Winch_Front_Encoder_VictorPG.getDistance();
         if (run) {
             Winch_Front_VictorPG.set(Constants.Climber.WINCH_ENCODER_SPEED);
+        } else {
+            Winch_Front_VictorPG.set(0);
         }
     }
 
@@ -84,6 +86,8 @@ public class Climber {
         Winch_Front_Encoder_VictorPG.getDistance();
         if (run) {
             Winch_Front_VictorPG.set(- Constants.Climber.WINCH_ENCODER_SPEED);
+        } else {
+            Winch_Front_VictorPG.set(0);
         }
     }
 

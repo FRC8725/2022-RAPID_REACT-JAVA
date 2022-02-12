@@ -122,7 +122,7 @@ public class Robot extends TimedRobot {
     if (m_Joystick.getRawButton(4)) {
         Climber.Front_Winch_Turn_Up(m_Joystick.getRawButton(4));
     } else {
-        Climber.Front_Winch_Turn_Up(m_Joystick.getRawButton(1));
+        Climber.Front_Winch_Turn_Down(m_Joystick.getRawButton(1));
     }
     
   }
