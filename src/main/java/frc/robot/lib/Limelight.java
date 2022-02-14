@@ -5,12 +5,12 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Limelight {
-    double tx, steering_adjust = 0.0f, ts, lasterror;
+    double tx, steering_adjust = 0.0f, ts, lasterror, ta;
     boolean tv;
 
     public Limelight () {
         SmartDashboard.putNumber("limelight kp", 0.03);
-        SmartDashboard.putNumber("limelight kd", 0.05);
+        SmartDashboard.putNumber("limelight kd", 0.08);
         update();
         lasterror = 0;
     }
@@ -19,6 +19,7 @@ public class Limelight {
         tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(-1);
         tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getBoolean (false);
         ts = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ts").getDouble(0.0);
+        ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0.0);
         put_limelight();
 
     }
@@ -35,7 +36,7 @@ public class Limelight {
         double dt = tx-lasterror;
         lasterror = tx;
 
-        if (tx < -0.5 || tx > .5) {
+        if (tx < -0.1 || tx > .1) {
             steering_adjust = kp * tx + kd * dt;
             double left = Math.max(Math.min(steering_adjust, 1), -1);
             double right = Math.max(Math.min(-steering_adjust, 1), -1);
