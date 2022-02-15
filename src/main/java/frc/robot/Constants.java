@@ -72,8 +72,7 @@ public final class Constants {
         public final static int LEFT_MOTOR_AXIS = 1;
         public final static int RIGHT_MOTOR_AXIS = 3;
 
-        public final static int OPEN_LID = 1;
-        public final static int CLOSE_LID = 3;
+        public final static int RELEASE_BUTTON = 4;
         public final static int INTAKE_BUTTON = 5;
         public final static int SHOOT_BUTTON = 6;
         public final static int HELF_SPEED_BUTTON = 7;
@@ -98,17 +97,5 @@ public final class Constants {
     }
 
     public final static class Climber {
-
-        // Encoder 值
-        public final static int WINCH_FRONT_ENCODER_VICTORPG = 6; // 絞盤馬達 (前) ENCODER DIO 6 & 7
-        public final static int WINCH_BACK_ENCODER_VICTORPG = 8; // 絞盤馬達 (後) ENCODER  DIO 8 & 9
-
-        public final static int ANGLE_BACK_SPARKNEO = 11; // 後邊轉角馬達
-
-        public final static int WINCH_FRONT_VICTORPG = 9; // 絞盤馬達 (前)
-        public final static int WINCH_BACK_VICTORPG = 10; // 絞盤馬達 (後)
-
-        public final static double ANGLE_SPEED = 1; // Angle Encoder 增加量
-        public final static double WINCH_SPEED = 1; // Winch Encoder 增加量
     }
 }

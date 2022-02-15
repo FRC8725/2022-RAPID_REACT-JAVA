@@ -17,7 +17,6 @@ import frc.robot.lib.Test;
 import frc.robot.lib.Limelight;
 
 // import frc.robot.lib.ColorSensor;
-import frc.robot.lib.Climber;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -41,7 +40,7 @@ public class Robot extends TimedRobot {
   Test Test = new Test();
   ShootSub ShootSub = new ShootSub();
   Limelight Limelight = new Limelight();
-  Climber Climber = new Climber();
+  ClimbSub ClimbSub = new ClimbSub();
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -55,6 +54,7 @@ public class Robot extends TimedRobot {
     ShootSub.Init();
     Test.Motor_Stop();
     Test.Zero_Encoder();
+    ClimbSub.stop();
   }
 
   @Override
@@ -109,6 +109,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    ClimbSub.init();
     DriveSub.Encoder_Zero();
 
     Robot_Pause();
@@ -123,9 +124,10 @@ public class Robot extends TimedRobot {
       Limelight.update();
     } else {
       DriveSub.Move(-m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
-      -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS),
-      m_Joystick.getRawButton(Constants.Joystick.HELF_SPEED_BUTTON));
+          -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS),
+          m_Joystick.getRawButton(Constants.Joystick.HELF_SPEED_BUTTON));
     }
+    ClimbSub.Release_Angle(m_Joystick.getRawButton(Constants.Joystick.RELEASE_BUTTON));
     ShootSub.Intake(m_Joystick.getRawButton(Constants.Joystick.INTAKE_BUTTON));
   }
 
@@ -149,7 +151,5 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("TestEncoder", Test.get_Encoder());
     SmartDashboard.putBoolean("Button", m_Joystick.getRawButton(Constants.Test.SPIN_BUTTON));
   }
-
-
 
 }
