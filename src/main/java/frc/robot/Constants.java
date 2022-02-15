@@ -93,6 +93,22 @@ public final class Constants {
         // Motors
         public final static int TALONFX_ENCODER_UNITS = 2048;
         public final static int CIMCODER_PPR = 20;
+        public final static double PG_ENCODER_PPR = 7.;
         public final static int REDLINE_ENCODER_CPR = 1024;
+    }
+
+    public final static class Climber {
+
+        // Encoder 值
+        public final static int WINCH_FRONT_ENCODER_VICTORPG = 6; // 絞盤馬達 (前) ENCODER DIO 6 & 7
+        public final static int WINCH_BACK_ENCODER_VICTORPG = 8; // 絞盤馬達 (後) ENCODER  DIO 8 & 9
+
+        public final static int ANGLE_BACK_SPARKNEO = 11; // 後邊轉角馬達
+
+        public final static int WINCH_FRONT_VICTORPG = 9; // 絞盤馬達 (前)
+        public final static int WINCH_BACK_VICTORPG = 10; // 絞盤馬達 (後)
+
+        public final static double ANGLE_SPEED = 1; // Angle Encoder 增加量
+        public final static double WINCH_SPEED = 1; // Winch Encoder 增加量
     }
 }

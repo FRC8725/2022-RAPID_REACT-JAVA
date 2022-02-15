@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import edu.wpi.first.wpilibj.Joystick;
 // import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.cameraserver.CameraServer;
@@ -16,6 +17,7 @@ import frc.robot.lib.Test;
 import frc.robot.lib.Limelight;
 
 // import frc.robot.lib.ColorSensor;
+import frc.robot.lib.Climber;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,10 +36,12 @@ public class Robot extends TimedRobot {
   private final SendableChooser<Boolean> m_Chooser_Color = new SendableChooser<>();
 
   Joystick m_Joystick = new Joystick(Constants.Joystick.JOYSTICK_A);
+  boolean joy_blue_button;
 
   Test Test = new Test();
   ShootSub ShootSub = new ShootSub();
   Limelight Limelight = new Limelight();
+  Climber Climber = new Climber();
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -106,6 +110,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     DriveSub.Encoder_Zero();
+
     Robot_Pause();
   }
 

@@ -17,7 +17,7 @@ public class Drive {
     private CANSparkMax rightback_SparkMax;
 
     private RelativeEncoder left_Encoder;
-    private RelativeEncoder righ_Encoder;
+    private RelativeEncoder right_Encoder;
 
     String Motor_Port_Type;
 
@@ -105,17 +105,17 @@ public class Drive {
 
     public void Encoder_Setup() {
         left_Encoder = leftfront_SparkMax.getEncoder();
-        righ_Encoder = rightfront_SparkMax.getEncoder();
+        right_Encoder = rightfront_SparkMax.getEncoder();
     }
 
     public void Encoder_Zero() {
         left_Encoder.setPosition(0);
-        righ_Encoder.setPosition(0);
+        right_Encoder.setPosition(0);
     }
 
     public double[] get_Position() {
         double L = left_Encoder.getPosition();
-        double R = righ_Encoder.getPosition();
+        double R = right_Encoder.getPosition();
         double Position[] = { L, R };
         return Position;
     }
