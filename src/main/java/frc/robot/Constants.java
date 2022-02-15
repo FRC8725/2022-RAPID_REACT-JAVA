@@ -63,7 +63,7 @@ public final class Constants {
         public final static int SENSOR_OFFSET = -25;
         public final static int SENSOR_A = 0;
         // PCM CAN
-        public final static int PCM_CAN = 6;
+        public final static int PCM_CAN = 15;
     }
 
     public final class Joystick {

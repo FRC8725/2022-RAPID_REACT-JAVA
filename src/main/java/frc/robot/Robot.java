@@ -109,10 +109,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    ClimbSub.init();
     DriveSub.Encoder_Zero();
-
     Robot_Pause();
+    ClimbSub.init();
   }
 
   boolean close = false;
