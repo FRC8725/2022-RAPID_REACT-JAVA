@@ -14,7 +14,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import frc.robot.subsystem.*;
 import frc.robot.lib.Test;
 import frc.robot.lib.Limelight;
-
+//import edu.wpi.first.math.filter.SlewRateLimiter;
 // import frc.robot.lib.ColorSensor;
 
 /**
@@ -32,6 +32,10 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   private final SendableChooser<Boolean> m_Chooser_Color = new SendableChooser<>();
+  //private final SlewRateLimiter speed = new SlewRateLimiter(0);
+  //private final SlewRateLimiter rotation = new SlewRateLimiter(0);
+
+
 
   Joystick m_Joystick = new Joystick(Constants.Joystick.JOYSTICK_A);
 
@@ -122,6 +126,8 @@ public class Robot extends TimedRobot {
       m_Joystick.getRawButton(Constants.Joystick.HELF_SPEED_BUTTON));
     }
     ShootSub.Intake(m_Joystick.getRawButton(Constants.Joystick.INTAKE_BUTTON));
+
+    
   }
 
   @Override

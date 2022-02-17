@@ -7,7 +7,7 @@ import frc.robot.Constants;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
+//import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 public class Shooter {
 

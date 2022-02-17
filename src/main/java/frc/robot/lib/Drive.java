@@ -1,122 +1,102 @@
 package frc.robot.lib;
 
 import frc.robot.Constants;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.SPI.Port;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import edu.wpi.first.math.geometry.Pose2d;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
+import com.kauailabs.navx.frc.AHRS;
 
 public class Drive {
-    MotorControllerGroup Motors[] = {};
 
-    private CANSparkMax leftfront_SparkMax;
-    private CANSparkMax leftback_SparkMax;
-    private CANSparkMax rightfront_SparkMax;
-    private CANSparkMax rightback_SparkMax;
 
     private RelativeEncoder left_Encoder;
-    private RelativeEncoder righ_Encoder;
+    private RelativeEncoder right_Encoder;
+    private CANSparkMax leftfront_SparkMax = new CANSparkMax(Constants.Driver.LEFT_FRONT_MOTOR, MotorType.kBrushless);
+    private CANSparkMax leftback_SparkMax = new CANSparkMax(Constants.Driver.LEFT_BACK_MOTOR, MotorType.kBrushless);
+    private CANSparkMax rightfront_SparkMax = new CANSparkMax(Constants.Driver.RIGHT_FRONT_MOTOR, MotorType.kBrushless);
+    private CANSparkMax rightback_SparkMax = new CANSparkMax(Constants.Driver.RIGHT_BACK_MOTOR, MotorType.kBrushless);
+    MotorControllerGroup left_motor = new MotorControllerGroup(leftfront_SparkMax, leftback_SparkMax);
+    MotorControllerGroup right_motor = new MotorControllerGroup(rightfront_SparkMax, rightback_SparkMax);
+    DifferentialDrive m_drive = new DifferentialDrive(left_motor, right_motor);
+    private final AHRS m_gyro = new AHRS(Port.kMXP);
+    private final DifferentialDriveOdometry m_odometry;
 
-    String Motor_Port_Type;
-
-    public Drive(String Motor_Port_Type) {
-        this.Motor_Port_Type = Motor_Port_Type;
-        Drive_Setup(Motor_Port_Type);
+    public Drive() {
         Encoder_Setup();
+        Encoder_Reset();
+        m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
+
+    }
+    public void UpdateOdometry(){
+        m_odometry.update(m_gyro.getRotation2d(), left_Encoder.getPosition(), right_Encoder.getPosition());
     }
 
-    public void Drive_Setup(String Motor_Port_Type) {
-        switch (Motor_Port_Type) {
-            case "CAN":
-                Motors = Motor_Setup_CAN();
-                break;
-            case "PWM":
-                Motors = Motor_Setup_PWM();
-                break;
-            case "Spark":
-                Motor_Setup_Spark();
-                break;
-            default:
-                System.out.println("Error");
-        }
+    public Pose2d getPose(){
+        return m_odometry.getPoseMeters();
+    }
+
+    public DifferentialDriveWheelSpeeds getWheelSpeeeds(){
+        return new DifferentialDriveWheelSpeeds(left_Encoder.getVelocity(), right_Encoder.getVelocity());
+    }
+
+    public void resetodometry(Pose2d pose){
+        Encoder_Reset();
+        m_odometry.resetPosition(pose, m_gyro.getRotation2d());
+    }
+
+    public void tankDrive(double leftVelocity, double rightVelocity){
+        m_drive.tankDrive(leftVelocity, rightVelocity);
+    }
+
+    public void setVoltage(double leftVoltage, double rightVoltage){
+        left_motor.setVoltage(leftVoltage);
+        right_motor.setVoltage(rightVoltage);
+        m_drive.feed();
     }
 
     public void Motor_Run(double LSpeed, double RSpeed) {
         RSpeed = -RSpeed;
-        if (Motor_Port_Type == "Spark") {
-            if (Math.abs(LSpeed) > 0.08) {
-                leftfront_SparkMax.set(LSpeed);
-                leftback_SparkMax.set(LSpeed);
-            } else {
-                leftfront_SparkMax.set(0);
-                leftback_SparkMax.set(0);
-            }
-            if (Math.abs(RSpeed) > 0.08) {
-                rightfront_SparkMax.set(RSpeed);
-                rightback_SparkMax.set(RSpeed);
-            } else {
-                rightfront_SparkMax.set(0);
-                rightback_SparkMax.set(0);
-            }
+        if (Math.abs(LSpeed) > 0.08) {
+            left_motor.set(LSpeed);
         } else {
-            Motors[0].set(LSpeed);
-            Motors[1].set(RSpeed);
+            left_motor.set(0);
         }
-    }
-
-    private MotorControllerGroup[] Motor_Setup_CAN() {
-        WPI_VictorSPX leftfront_VictorSPX = new WPI_VictorSPX(Constants.Driver.LEFT_FRONT_MOTOR);
-        WPI_VictorSPX leftback_VictorSPX = new WPI_VictorSPX(Constants.Driver.LEFT_BACK_MOTOR);
-        WPI_VictorSPX rightfront_VictorSPX = new WPI_VictorSPX(Constants.Driver.RIGHT_FRONT_MOTOR);
-        WPI_VictorSPX rightback_VictorSPX = new WPI_VictorSPX(Constants.Driver.RIGHT_BACK_MOTOR);
-
-        MotorControllerGroup leftMotors = new MotorControllerGroup(leftfront_VictorSPX, leftback_VictorSPX);
-        MotorControllerGroup rightMotors = new MotorControllerGroup(rightfront_VictorSPX, rightback_VictorSPX);
-
-        MotorControllerGroup[] Motors = { leftMotors, rightMotors };
-
-        return Motors;
-    }
-
-    private MotorControllerGroup[] Motor_Setup_PWM(){
-        PWMVictorSPX leftfront_VictorSPX = new PWMVictorSPX(Constants.Driver.LEFT_FRONT_MOTOR);
-        PWMVictorSPX leftback_VictorSPX = new PWMVictorSPX(Constants.Driver.LEFT_BACK_MOTOR);
-        PWMVictorSPX rightfront_VictorSPX = new PWMVictorSPX(Constants.Driver.RIGHT_FRONT_MOTOR);
-        PWMVictorSPX rightback_VictorSPX = new PWMVictorSPX(Constants.Driver.RIGHT_BACK_MOTOR);
-
-        MotorControllerGroup leftMotors = new MotorControllerGroup(leftfront_VictorSPX, leftback_VictorSPX);
-        MotorControllerGroup rightMotors = new MotorControllerGroup(rightfront_VictorSPX, rightback_VictorSPX);
-
-        leftMotors.setInverted(true);
-
-        MotorControllerGroup[] Motors = { leftMotors, rightMotors };
-
-        return Motors;
-    }
-
-    private void Motor_Setup_Spark() {
-        leftfront_SparkMax = new CANSparkMax(Constants.Driver.LEFT_FRONT_MOTOR, MotorType.kBrushless);
-        leftback_SparkMax = new CANSparkMax(Constants.Driver.LEFT_BACK_MOTOR, MotorType.kBrushless);
-        rightfront_SparkMax = new CANSparkMax(Constants.Driver.RIGHT_FRONT_MOTOR, MotorType.kBrushless);
-        rightback_SparkMax = new CANSparkMax(Constants.Driver.RIGHT_BACK_MOTOR, MotorType.kBrushless);
-    }
+        if (Math.abs(RSpeed) > 0.08) {
+            right_motor.set(RSpeed);
+        } else {
+            right_motor.set(0);
+            }
+        }
+    
 
     public void Encoder_Setup() {
         left_Encoder = leftfront_SparkMax.getEncoder();
-        righ_Encoder = rightfront_SparkMax.getEncoder();
+        right_Encoder = rightfront_SparkMax.getEncoder();
     }
 
-    public void Encoder_Zero() {
+    public void Encoder_Reset() {
         left_Encoder.setPosition(0);
-        righ_Encoder.setPosition(0);
+        right_Encoder.setPosition(0);
     }
 
-    public double[] get_Position() {
-        double L = left_Encoder.getPosition();
-        double R = righ_Encoder.getPosition();
-        double Position[] = { L, R };
-        return Position;
+    public double getLeftPosition() {
+        return left_Encoder.getPosition();
+    }
+    public double getRightPosition(){
+        return right_Encoder.getPosition();
+    }
+
+    public void zeroHeaing(){
+        m_gyro.reset();
+    }
+
+    public double getHeading(){
+        return m_gyro.getAngle();
     }
 }
