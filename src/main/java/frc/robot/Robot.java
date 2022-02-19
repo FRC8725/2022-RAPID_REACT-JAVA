@@ -7,7 +7,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -15,6 +20,30 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
+
+
+  private static final String kDefaultAuto = "Default";
+  private static final String kCustomAuto = "My Auto";
+  private String m_autoSelected;
+  private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  private final SendableChooser<Boolean> m_Chooser_Color = new SendableChooser<>();
+  //private final SlewRateLimiter speed = new SlewRateLimiter(0);
+  //private final SlewRateLimiter rotation = new SlewRateLimiter(0);
+
+  private Command m_Command;
+  DriveSubsystem m_DriveSubsystem = new DriveSubsystem();
+  ShooterSubsystem ShooterSubsystem = new ShooterSubsystem();
+  Limelight Limelight = new Limelight();
+  DriveSubsystem DriveSub = new DriveSubsystem();
+  Joystick m_Joystick = new Joystick(Constants.Joystick.JOYSTICK_A);
+  JoystickButton halfSpeed = new JoystickButton(m_Joystick, 7);
+
+  private void Robot_Pause() {
+    m_DriveSubsystem.Stop();
+    m_DriveSubsystem.Encoder_Zero();
+    ShooterSubsystem.Init();
+  }
+
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
@@ -25,6 +54,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    Robot_Pause();
+    CameraServer.startAutomaticCapture();
+    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
+    m_chooser.addOption("My Auto", kCustomAuto);
+    m_Chooser_Color.setDefaultOption("Blue", true);
+    m_Chooser_Color.addOption("Red", false);
+    SmartDashboard.putData("Team_Color", m_Chooser_Color);
+    SmartDashboard.putData("Auto choices", m_chooser);
+    SmartDashboard.putNumber("Drive Speed", Constants.Driver.SPEED);
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
@@ -81,7 +119,19 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    ShooterSubsystem.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON));
+    if (m_Joystick.getRawButton(8)) {
+      Limelight.update();
+    } else {
+      
+      halfSpeed.whenPressed(() -> DriveSub.setMaxOutput(0.5)).whenReleased(() -> DriveSub.setMaxOutput(1.));
+      DriveSub.tankDrive(-m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
+      -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
+    }
+    ShooterSubsystem.Intake(m_Joystick.getRawButton(Constants.Joystick.INTAKE_BUTTON));
+
+  }
 
   @Override
   public void testInit() {
@@ -91,7 +141,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    
+  }
 
   /** This function is called once when the robot is first started up. */
   @Override
