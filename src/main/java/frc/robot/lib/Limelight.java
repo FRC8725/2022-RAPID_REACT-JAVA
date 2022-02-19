@@ -39,7 +39,7 @@ public class Limelight {
             steering_adjust = kp * tx + kd * dt;
             double left = Math.max(Math.min(steering_adjust, 1), -1);
             double right = Math.max(Math.min(-steering_adjust, 1), -1);
-            DriveSub.Move(left, right, false);
+            DriveSub.(left, right, false);
         } else {
             DriveSub.Move(0, 0, false);
         }

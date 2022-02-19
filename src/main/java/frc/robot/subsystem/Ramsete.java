@@ -2,25 +2,17 @@ package frc.robot.subsystem;
 
 
 import frc.robot.Constants;
-import frc.robot.subsystem.DriveSub;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.RelativeEncoder;
 import java.util.List;
 
 public class Ramsete {
@@ -57,6 +49,10 @@ public class Ramsete {
             DriveSub::setVoltage,
             DriveSub 
             );
+        DriveSub.resetodometry(trajectory.getInitialPose());
+        return ramseteCommand.andThen(() -> DriveSub.tankDrive(0, 0));
+
+        
 
     
 }}
