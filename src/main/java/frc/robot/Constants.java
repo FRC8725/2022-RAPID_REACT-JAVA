@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 // All of the speed is set as default speed
 public final class Constants {
 
@@ -19,6 +19,11 @@ public final class Constants {
         public final static double SPEED = .7;
         public final static double ENCODER_PULSE = 526.;
         public final static double MOTOR_PERIMETER = 4.;
+        public final static double Ks_DRIVE = 0.;
+        public final static double Kv_DRIVE = 0.;
+        public final static double Ka_DRIVE = 0.;
+        public final static double MaxAcceleration = 0.;
+        public final static double MaxVelocity = 0.;
     }
 
     public static final class Shooter {
@@ -63,7 +68,7 @@ public final class Constants {
         public final static int SENSOR_OFFSET = -25;
         public final static int SENSOR_A = 0;
         // PCM CAN
-        public final static int PCM_CAN = 15;
+        public final static int PCM_CAN = 6;
     }
 
     public final class Joystick {
@@ -72,7 +77,8 @@ public final class Constants {
         public final static int LEFT_MOTOR_AXIS = 1;
         public final static int RIGHT_MOTOR_AXIS = 3;
 
-        public final static int RELEASE_BUTTON = 4;
+        public final static int OPEN_LID = 1;
+        public final static int CLOSE_LID = 3;
         public final static int INTAKE_BUTTON = 5;
         public final static int SHOOT_BUTTON = 6;
         public final static int HELF_SPEED_BUTTON = 7;
@@ -92,15 +98,18 @@ public final class Constants {
         // Motors
         public final static int TALONFX_ENCODER_UNITS = 2048;
         public final static int CIMCODER_PPR = 20;
-        public final static double PG_ENCODER_PPR = 7.;
         public final static int REDLINE_ENCODER_CPR = 1024;
     }
 
-    public final static class Climber {
-    }
-
-    public final static class Limelight {
-        public final static int PRESETA = 19;
-        public final static double HEIGH_DIFF = 1.3;
+    public static final class Sim {
+        public static final double WHEELRADIUS = 0.0762;
+        public static final double KvLINEAR = 0.;
+        public static final double KaLINEAR = 0.;
+        public static final double KvANGULAR = 0.; 
+        public static final double KaANGULAR = 0.; 
+        public static final double GEARING = 0.;
+        public static final double TRACK_WIDTH_METER = 0.;
+        public static final double UPDATE_TIME = 0.02;
+        public static final DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(TRACK_WIDTH_METER);
     }
 }
