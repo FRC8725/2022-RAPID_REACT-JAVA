@@ -1,59 +1,102 @@
 package frc.robot.subsystem;
 
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import java.util.List;
-
-import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.lib.Drive;
 import frc.robot.Constants;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.SPI.Port;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.math.geometry.Pose2d;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
 
-public class DriveSub extends SubsystemBase {
-    static double Move_Speed = Constants.Driver.SPEED;
-    private Trajectory m_trajectory;
+public class DriveSub{
 
-    private final RamseteController m_RamseteController = new RamseteController();
-    private Field2d m_field;
 
-    static Drive Drive = new Drive();
+    private RelativeEncoder left_Encoder;
+    private RelativeEncoder right_Encoder;
+    private CANSparkMax leftfront_SparkMax = new CANSparkMax(Constants.Driver.LEFT_FRONT_MOTOR, MotorType.kBrushless);
+    private CANSparkMax leftback_SparkMax = new CANSparkMax(Constants.Driver.LEFT_BACK_MOTOR, MotorType.kBrushless);
+    private CANSparkMax rightfront_SparkMax = new CANSparkMax(Constants.Driver.RIGHT_FRONT_MOTOR, MotorType.kBrushless);
+    private CANSparkMax rightback_SparkMax = new CANSparkMax(Constants.Driver.RIGHT_BACK_MOTOR, MotorType.kBrushless);
+    MotorControllerGroup left_motor = new MotorControllerGroup(leftfront_SparkMax, leftback_SparkMax);
+    MotorControllerGroup right_motor = new MotorControllerGroup(rightfront_SparkMax, rightback_SparkMax);
+    DifferentialDrive m_drive = new DifferentialDrive(left_motor, right_motor);
+    private final AHRS m_gyro = new AHRS(Port.kMXP);
+    private final DifferentialDriveOdometry m_odometry;
+    public DriveSub() {
+        Encoder_Setup();
+        Encoder_Reset();
+        m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
+
+    }
+    public void UpdateOdometry(){
+        m_odometry.update(m_gyro.getRotation2d(), left_Encoder.getPosition(), right_Encoder.getPosition());
+    }
+
+    public Pose2d getPose(){
+        return m_odometry.getPoseMeters();
+    }
+
+    public DifferentialDriveWheelSpeeds getWheelSpeeds(){
+        return new DifferentialDriveWheelSpeeds(left_Encoder.getVelocity(), right_Encoder.getVelocity());
+    }
+
+    public void resetodometry(Pose2d pose){
+        Encoder_Reset();
+        m_odometry.resetPosition(pose, m_gyro.getRotation2d());
+    }
+
+    public void tankDrive(double leftVelocity, double rightVelocity){
+        m_drive.tankDrive(leftVelocity, rightVelocity);
+    }
+
+    public void setVoltage(double leftVoltage, double rightVoltage){
+        left_motor.setVoltage(leftVoltage);
+        right_motor.setVoltage(rightVoltage);
+        m_drive.feed();
+    }
     
-    public void Init() {
-        m_trajectory = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(0, 0, new Rotation2d(0)), 
-            List.of(
-                new Translation2d(1, 1),
-                new Translation2d(2, -1)
-            ), 
-            new Pose2d(3, 0, new Rotation2d(0)), 
-            new TrajectoryConfig(Units.feetToMeters(3), Units.feetToMeters(3)));
-        m_field = new Field2d();
-        SmartDashboard.putNumber("Drive Speed", Move_Speed);
-        SmartDashboard.putData(m_field);
-        m_field.getObject("trajetory").setTrajectory(m_trajectory);
+
+    public void Encoder_Setup() {
+        left_Encoder = leftfront_SparkMax.getEncoder();
+        right_Encoder = rightfront_SparkMax.getEncoder();
     }
 
-
-    static public void Move(double LSpeed, double RSpeed, boolean helf) {
-        Move_Speed = SmartDashboard.getNumber("Drive Speed", Move_Speed);
-        if (helf) Move_Speed *= 0.5;
-        Drive.Motor_Run(LSpeed * Move_Speed, RSpeed * Move_Speed);
+    public void Encoder_Reset() {
+        left_Encoder.setPosition(0);
+        right_Encoder.setPosition(0);
     }
 
-    static public void Drive_Stop() {
-        Drive.Motor_Run(0, 0);
+    public double getLeftPosition() {
+        return left_Encoder.getPosition();
+    }
+    public double getRightPosition(){
+        return right_Encoder.getPosition();
+    }
+
+    public void zeroHeaing(){
+        m_gyro.reset();
+    }
+
+    public double getHeading(){
+        return m_gyro.getAngle();
+    }
+    public void Encoder_Zero() {
+        left_Encoder.setPosition(0);
+        right_Encoder.setPosition(0);
+    }
+
+    public void setMaxOutput(double maxOutput){
+        m_drive.setMaxOutput(maxOutput);
+    }
+    
+    public void Stop(){
+        right_motor.set(0);
+        left_motor.set(0);
     }
 
     
-
-
 }

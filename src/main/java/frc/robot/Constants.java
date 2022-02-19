@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 // All of the speed is set as default speed
 public final class Constants {
 
@@ -19,6 +19,11 @@ public final class Constants {
         public final static double SPEED = .7;
         public final static double ENCODER_PULSE = 526.;
         public final static double MOTOR_PERIMETER = 4.;
+        public final static double Ks_DRIVE = 0.;
+        public final static double Kv_DRIVE = 0.;
+        public final static double Ka_DRIVE = 0.;
+        public final static double MaxAcceleration = 0.;
+        public final static double MaxVelocity = 0.;
     }
 
     public static final class Shooter {
@@ -94,5 +99,17 @@ public final class Constants {
         public final static int TALONFX_ENCODER_UNITS = 2048;
         public final static int CIMCODER_PPR = 20;
         public final static int REDLINE_ENCODER_CPR = 1024;
+    }
+
+    public static final class Sim {
+        public static final double WHEELRADIUS = 0.0762;
+        public static final double KvLINEAR = 0.;
+        public static final double KaLINEAR = 0.;
+        public static final double KvANGULAR = 0.; 
+        public static final double KaANGULAR = 0.; 
+        public static final double GEARING = 0.;
+        public static final double TRACK_WIDTH_METER = 0.;
+        public static final double UPDATE_TIME = 0.02;
+        public static final DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(TRACK_WIDTH_METER);
     }
 }

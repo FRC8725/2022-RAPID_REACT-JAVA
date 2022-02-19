@@ -7,15 +7,20 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
-// import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.cameraserver.CameraServer;
 
+//import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.cameraserver.CameraServer;
 import frc.robot.subsystem.*;
 import frc.robot.lib.Test;
 import frc.robot.lib.Limelight;
+import edu.wpi.first.wpilibj2.command.Command;
+
+
+
 //import edu.wpi.first.math.filter.SlewRateLimiter;
-// import frc.robot.lib.ColorSensor;
+//import frc.robot.lib.ColorSensor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -35,13 +40,14 @@ public class Robot extends TimedRobot {
   //private final SlewRateLimiter speed = new SlewRateLimiter(0);
   //private final SlewRateLimiter rotation = new SlewRateLimiter(0);
 
-
-
-  Joystick m_Joystick = new Joystick(Constants.Joystick.JOYSTICK_A);
-
+  private Command m_Command;
   Test Test = new Test();
   ShootSub ShootSub = new ShootSub();
   Limelight Limelight = new Limelight();
+  DriveSub DriveSub = new DriveSub();
+  Joystick m_Joystick = new Joystick(Constants.Joystick.JOYSTICK_A);
+  JoystickButton halfSpeed = new JoystickButton(m_Joystick, 7);
+  Ramsete Ramsete;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -50,7 +56,7 @@ public class Robot extends TimedRobot {
    */
 
   private void Robot_Pause() {
-    DriveSub.Drive_Stop();
+    DriveSub.Stop();
     DriveSub.Encoder_Zero();
     ShootSub.Init();
     Test.Motor_Stop();
@@ -67,7 +73,7 @@ public class Robot extends TimedRobot {
     m_Chooser_Color.addOption("Red", false);
     SmartDashboard.putData("Team_Color", m_Chooser_Color);
     SmartDashboard.putData("Auto choices", m_chooser);
-    DriveSub.init();
+    SmartDashboard.putNumber("Drive Speed", Constants.Driver.SPEED);
   }
 
   /**
@@ -88,14 +94,20 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     Robot_Pause();
+    m_Command = Ramsete.getAutoCommand();
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
+    
   }
+
+
+
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
+    
     switch (m_autoSelected) {
       case kCustomAuto:
         // Put custom auto code here
@@ -121,9 +133,10 @@ public class Robot extends TimedRobot {
     if (m_Joystick.getRawButton(8)) {
       Limelight.update();
     } else {
-      DriveSub.Move(-m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
-      -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS),
-      m_Joystick.getRawButton(Constants.Joystick.HELF_SPEED_BUTTON));
+      
+      halfSpeed.whenPressed(() -> DriveSub.setMaxOutput(0.5)).whenReleased(() -> DriveSub.setMaxOutput(1.));
+      DriveSub.tankDrive(-m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
+      -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
     }
     ShootSub.Intake(m_Joystick.getRawButton(Constants.Joystick.INTAKE_BUTTON));
 

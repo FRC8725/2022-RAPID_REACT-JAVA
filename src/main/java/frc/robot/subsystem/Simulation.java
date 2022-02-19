@@ -6,7 +6,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.simulation.EncoderSim;
@@ -29,26 +28,19 @@ public class Simulation {
     private CANSparkMax rightfront_SparkMax = new CANSparkMax(Constants.Driver.RIGHT_FRONT_MOTOR, MotorType.kBrushless);
     private CANSparkMax rightback_SparkMax = new CANSparkMax(Constants.Driver.RIGHT_BACK_MOTOR, MotorType.kBrushless);
     
-    private static final double WheelRadius = Units.inchesToMeters(3.);
-    private static final double kVLinear = 0.;
-    private static final double kALinear = 0.;
-    private static final double kVAngular = 0.; 
-    private static final double kAAngular = 0.; 
-    private static final double gearing = 0.;
-    private static final double trackWidthMeters = 0.;
-    private static final double update_time = 0.02;
+
     private DifferentialDrivetrainSim SimDrivetrain = new DifferentialDrivetrainSim(
-        LinearSystemId.identifyDrivetrainSystem(kVLinear, kALinear, kVAngular, kAAngular),
+        LinearSystemId.identifyDrivetrainSystem(Constants.Sim.KvLINEAR, Constants.Sim.KaLINEAR, Constants.Sim.KvANGULAR, Constants.Sim.KaANGULAR),
         DCMotor.getNEO(2),
-        gearing,
-        trackWidthMeters,
-        WheelRadius,
+        Constants.Sim.GEARING,
+        Constants.Sim.TRACK_WIDTH_METER,
+        Constants.Sim.WHEELRADIUS,
         VecBuilder.fill(0.001 ,0.001 ,0.001 ,0.1 ,0.1 ,0.005 ,0.005));
     private EncoderSim SimLeftEncoder;
     private EncoderSim SimRightEncoder;
     private AHRS Simgyro;
     private DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(Simgyro.getAngle()));
-    private DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(trackWidthMeters);
+    private DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(Constants.Sim.TRACK_WIDTH_METER);
     private Field2d field = new Field2d();
     private static final double ks_simple_motor = 0.;
     private static final double kv_simple_motor = 0.;
@@ -86,7 +78,7 @@ public class Simulation {
     public void simulationPeriodic(){
         SimDrivetrain.setInputs(leftfront_SparkMax.get() * RobotController.getInputVoltage(), 
             -rightfront_SparkMax.get() * RobotController.getInputVoltage());
-        SimDrivetrain.update(update_time);
+        SimDrivetrain.update(Constants.Sim.UPDATE_TIME);
         SimLeftEncoder.setDistance(SimDrivetrain.getLeftPositionMeters());
         SimLeftEncoder.setRate(SimDrivetrain.getLeftVelocityMetersPerSecond());
         SimRightEncoder.setDistance(SimDrivetrain.getRightPositionMeters());
