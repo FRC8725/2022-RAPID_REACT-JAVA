@@ -51,7 +51,11 @@ public class Limelight {
     }
 
     public void calcV() {
-        distance = Math.tan(Constants.Limelight.PRESETA + ta)/Constants.Limelight.HEIGH_DIFF;
+        if (ty == 0){
+            distance = 0;
+            return;
+        }
+        distance = Math.tan(Constants.Limelight.PRESETA + ty)/Constants.Limelight.HEIGH_DIFF;
         SmartDashboard.putNumber("Distance", distance);
     }
 
