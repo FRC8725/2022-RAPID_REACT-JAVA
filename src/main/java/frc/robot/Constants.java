@@ -98,4 +98,9 @@ public final class Constants {
 
     public final static class Climber {
     }
+
+    public final static class Limelight {
+        public final static int PRESETA = 19;
+        public final static double HEIGH_DIFF = 1.3;
+    }
 }
