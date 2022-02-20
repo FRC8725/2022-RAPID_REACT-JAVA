@@ -75,6 +75,8 @@ public final class Constants {
         public final static int INTAKE_BUTTON = 5;
         public final static int SHOOT_BUTTON = 6;
         public final static int HELF_SPEED_BUTTON = 7;
+
+
     }
 
     public static final class Test {
@@ -96,6 +98,10 @@ public final class Constants {
     }
 
     public final static class Climber {
+        // PG Motor
+        public final static int WINCH_VICTORPG = 9; // CAN
+        public final static double WINCH_ENCODER_SPEED = 1.0; // Speed
+
     }
 
     public final static class Limelight {
