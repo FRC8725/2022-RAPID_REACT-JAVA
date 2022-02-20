@@ -112,4 +112,11 @@ public final class Constants {
         public static final double UPDATE_TIME = 0.02;
         public static final DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(TRACK_WIDTH_METER);
     }
+    
+    public final static class Climber {
+        // PG Motor
+        public final static int WINCH_VICTORPG = 9; // CAN
+        public final static double WINCH_ENCODER_SPEED = 1.0; // Speed
+
+    }
 }

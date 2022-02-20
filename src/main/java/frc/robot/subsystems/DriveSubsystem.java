@@ -1,105 +1,96 @@
 package frc.robot.subsystems;
 
-import frc.robot.Constants;
-import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.wpilibj.SPI.Port;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.math.geometry.Pose2d;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 public class DriveSubsystem extends SubsystemBase{
+    private final DifferentialDrive Drive;
+    private final MotorControllerGroup LeftMotors,RightMotors;
+    private final DifferentialDriveOdometry Odometry;
+    private final Field2d Field;
+    private final RelativeEncoder RightEncoder;
+    private final RelativeEncoder LeftEncoder;
+    private final AHRS Gyro;
 
-
-    private RelativeEncoder left_Encoder;
-    private RelativeEncoder right_Encoder;
-    private CANSparkMax leftfront_SparkMax = new CANSparkMax(Constants.Driver.LEFT_FRONT_MOTOR, MotorType.kBrushless);
-    private CANSparkMax leftback_SparkMax = new CANSparkMax(Constants.Driver.LEFT_BACK_MOTOR, MotorType.kBrushless);
-    private CANSparkMax rightfront_SparkMax = new CANSparkMax(Constants.Driver.RIGHT_FRONT_MOTOR, MotorType.kBrushless);
-    private CANSparkMax rightback_SparkMax = new CANSparkMax(Constants.Driver.RIGHT_BACK_MOTOR, MotorType.kBrushless);
-    MotorControllerGroup left_motor = new MotorControllerGroup(leftfront_SparkMax, leftback_SparkMax);
-    MotorControllerGroup right_motor = new MotorControllerGroup(rightfront_SparkMax, rightback_SparkMax);
-    DifferentialDrive m_drive = new DifferentialDrive(left_motor, right_motor);
-    private final AHRS m_gyro = new AHRS(Port.kMXP);
-    private final DifferentialDriveOdometry m_odometry;
-    public DriveSubsystem() {
-        Encoder_Setup();
-        Encoder_Reset();
-        m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
-
+    public DriveSubsystem(DifferentialDrive Drive,
+    AHRS Gyro, 
+    MotorControllerGroup LeftMotors, 
+    MotorControllerGroup RightMotors, 
+    RelativeEncoder RightEncoder,
+    RelativeEncoder LeftEncoder,
+    DifferentialDriveOdometry Odometry,
+    Field2d Field){
+        this.Gyro = Gyro;
+        this.Drive = Drive;
+        this.RightMotors = RightMotors;
+        this.LeftMotors = LeftMotors;
+        this.Odometry = Odometry;
+        this.Field = Field;
+        this.RightEncoder = RightEncoder;
+        this.LeftEncoder = LeftEncoder;
+        SmartDashboard.putData("Field", Field);
     }
-    public void UpdateOdometry(){
-        m_odometry.update(m_gyro.getRotation2d(), left_Encoder.getPosition(), right_Encoder.getPosition());
+
+    public void tankDrive(double LeftVelocity, double RightVelocity){
+        LeftMotors.set(LeftVelocity);
+        RightMotors.set(RightVelocity);
+        Drive.feed();
+    }
+    public void setVoltage(double LeftVoltage, double RightVoltage){
+        LeftMotors.setVoltage(LeftVoltage);
+        RightMotors.setVoltage(RightVoltage);
+    }
+
+    public void resetEncoder(){
+        RightEncoder.setPosition(0);
+        LeftEncoder.setPosition(0);
     }
 
     public Pose2d getPose(){
-        return m_odometry.getPoseMeters();
+        return Odometry.getPoseMeters();
     }
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds(){
-        return new DifferentialDriveWheelSpeeds(left_Encoder.getVelocity(), right_Encoder.getVelocity());
+        return new DifferentialDriveWheelSpeeds(LeftEncoder.getVelocity(),RightEncoder.getVelocity());
     }
 
-    public void resetodometry(Pose2d pose){
-        Encoder_Reset();
-        m_odometry.resetPosition(pose, m_gyro.getRotation2d());
+    public void resetOdometry(Pose2d Pose){
+        resetEncoder();
+        Odometry.resetPosition(Pose, Gyro.getRotation2d());
     }
 
-    public void tankDrive(double leftVelocity, double rightVelocity){
-        m_drive.tankDrive(leftVelocity, rightVelocity);
-    }
-
-    public void setVoltage(double leftVoltage, double rightVoltage){
-        left_motor.setVoltage(leftVoltage);
-        right_motor.setVoltage(rightVoltage);
-        m_drive.feed();
-    }
-    
-
-    public void Encoder_Setup() {
-        left_Encoder = leftfront_SparkMax.getEncoder();
-        right_Encoder = rightfront_SparkMax.getEncoder();
-    }
-
-    public void Encoder_Reset() {
-        left_Encoder.setPosition(0);
-        right_Encoder.setPosition(0);
-    }
-
-    public double getLeftPosition() {
-        return left_Encoder.getPosition();
-    }
-    public double getRightPosition(){
-        return right_Encoder.getPosition();
-    }
-
-    public void zeroHeaing(){
-        m_gyro.reset();
+    public void resetHeading(){
+        Gyro.reset();
     }
 
     public double getHeading(){
-        return m_gyro.getAngle();
+        return Gyro.getAngle();
     }
 
-    public void Encoder_Zero() {
-        left_Encoder.setPosition(0);
-        right_Encoder.setPosition(0);
+    public void setMaxOutput(double MaxOutput){
+        Drive.setMaxOutput(MaxOutput);
     }
 
-    public void setMaxOutput(double maxOutput){
-        m_drive.setMaxOutput(maxOutput);
+    public void StopDrive(){
+        Drive.stopMotor();
     }
-    
-    public void Stop(){
-        right_motor.set(0);
-        left_motor.set(0);
+
+    @Override
+    public void periodic(){
+        Field.setRobotPose(Odometry.getPoseMeters());
+        Odometry.update(Gyro.getRotation2d(), LeftEncoder.getPosition(), RightEncoder.getPosition());
     }
+
+
 
     
 }
