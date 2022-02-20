@@ -17,7 +17,6 @@ public class Intake {
 
     public Intake() {
         Intake_Motor = new CANSparkMax(Constants.Intake.INTAKE_MOTOR, MotorType.kBrushless);
-        Lift_Motor = new CANSparkMax(Constants.Intake.LIFT_MOTOR, MotorType.kBrushed);
         Intake_Time.reset();
     }
 
