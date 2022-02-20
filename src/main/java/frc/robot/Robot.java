@@ -126,7 +126,11 @@ public class Robot extends TimedRobot {
           -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS),
           m_Joystick.getRawButton(Constants.Joystick.HELF_SPEED_BUTTON));
     }
-    ClimbSub.Release_Angle(m_Joystick.getRawButton(Constants.Joystick.RELEASE_BUTTON));
+    if (m_Joystick.getRawButton(Constants.Joystick.CLIMBER_RISE_BUTTON)) {
+      ClimbSub.Rise_Winch(m_Joystick.getRawButton(Constants.Joystick.CLIMBER_RISE_BUTTON));
+    } else {
+      ClimbSub.Fall_Winch(m_Joystick.getRawButton(Constants.Joystick.CLIMBER_RISE_BUTTON));
+    }
     ShootSub.Intake(m_Joystick.getRawButton(Constants.Joystick.INTAKE_BUTTON));
   }
 
