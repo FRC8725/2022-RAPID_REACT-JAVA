@@ -17,14 +17,20 @@ public class ClimbSub {
     }
 
     public void Rise_Winch(boolean rise) {
-        
+        Climber.Climb_Up(rise);
+    }
+
+    public void Fall_Winch(boolean fall) {
+        Climber.Climb_Down(fall);
     }
 
     public void init() {
         Pneumatic.Pumping();
+        Climber.reset();
     }
 
     public void stop() {
         Pneumatic.Stop();
+        Climber.Stop();
     }
 }
