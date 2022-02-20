@@ -70,8 +70,9 @@ public final class Constants {
 
         public final static int LEFT_MOTOR_AXIS = 1;
         public final static int RIGHT_MOTOR_AXIS = 3;
-
-        public final static int RELEASE_BUTTON = 4;
+        
+        public final static int CLIMBER_FALL_BUTTON = 2;
+        public final static int CLIMBER_RISE_BUTTON = 4;
         public final static int INTAKE_BUTTON = 5;
         public final static int SHOOT_BUTTON = 6;
         public final static int HELF_SPEED_BUTTON = 7;
