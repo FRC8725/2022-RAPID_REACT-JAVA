@@ -14,6 +14,10 @@ public class Climber {
         Winch_VictorPG = new WPI_VictorSPX(Constants.Climber.WINCH_VICTORPG);
     }
 
+    public void reset() {
+        Winch_VictorPG.set(0); // 我不確定 reset 對不對
+    }
+
     // 伸縮
     public void Climb_Up(boolean run) {
         if (run) {
