@@ -23,10 +23,6 @@ public class FollowTrajectory extends SequentialCommandGroup {
     public FollowTrajectory(DriveSubsystem DriveSubsystem, Trajectory Trajectory){
         this.DriveSubsystem = DriveSubsystem;
         this.Trajectory = Trajectory;
-    }
-    
-    public void RamseteTrajectory(){
-    
         RamseteCommand ramseteCommand = 
         new RamseteCommand(
             Trajectory, 
@@ -47,5 +43,5 @@ public class FollowTrajectory extends SequentialCommandGroup {
             new InstantCommand(() -> this.DriveSubsystem.StopDrive())
         
         );
-    }   
+    }
 }

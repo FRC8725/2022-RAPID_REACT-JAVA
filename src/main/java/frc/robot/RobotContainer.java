@@ -10,14 +10,23 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.AutoPath.BlueBackward1;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.commands.FollowTrajectory;
 
 public class RobotContainer {
   VictorSPX ClimberMotor = new VictorSPX(Constants.Climber.WINCH_VICTORPG);
@@ -56,9 +65,21 @@ public class RobotContainer {
     JoystickButton ShooterButton = new JoystickButton(Joystick, 6);
     JoystickButton HalfSpeed = new JoystickButton(Joystick, 7);
     JoystickButton LimlighButton = new JoystickButton(Joystick, 8);
+
+    HalfSpeed.whenHeld(new InstantCommand(() -> DriveSubsystem.setMaxOutput(.5)));
     
   }
   
  
-  //public Command getAutonomousCommand() { }
+  public Command getAutonomousCommand() { 
+    Trajectory Trajectory = new Trajectory();
+    return new SequentialCommandGroup(
+      new InstantCommand(() -> DriveSubsystem.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)))),
+      new ParallelCommandGroup(
+        new InstantCommand(() -> FollowTrajectory( ))
+        //new IntakeSubsystem(IntakeMotor)
+      )
+      
+    );
+  }
 }

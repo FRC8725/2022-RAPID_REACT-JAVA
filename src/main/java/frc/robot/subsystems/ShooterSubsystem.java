@@ -1,8 +1,9 @@
 package frc.robot.subsystems;
 
 import frc.robot.commands.ColorSensor;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 public class ShooterSubsystem {
 
     ColorSensor ColorSensor = new ColorSensor();
@@ -14,8 +15,8 @@ public class ShooterSubsystem {
         this.ShooterRightMotor = ShooterRightMotor;
     }
 
-    
-
-
-
+    public void SetSpeed(double Speed){
+        ShooterLeftMotor.set(ControlMode.PercentOutput, Speed);
+        ShooterRightMotor.set(ControlMode.PercentOutput, -Speed);
+    }
 }

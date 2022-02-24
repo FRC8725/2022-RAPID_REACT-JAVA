@@ -3,24 +3,38 @@ package frc.robot.subsystems;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.RelativeEncoder;
 
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
+import edu.wpi.first.wpilibj.simulation.EncoderSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class DriveSubsystem extends SubsystemBase{
     private final DifferentialDrive Drive;
     private final MotorControllerGroup LeftMotors,RightMotors;
     private final DifferentialDriveOdometry Odometry;
-    private final Field2d Field;
+    private Field2d Field = new Field2d();
     private final RelativeEncoder RightEncoder;
     private final RelativeEncoder LeftEncoder;
-    private final AHRS Gyro;
+    
 
+    private final AHRS Gyro;
+    private DifferentialDrivetrainSim SimDrivetrain = new DifferentialDrivetrainSim(
+        LinearSystemId.identifyDrivetrainSystem(Constants.Sim.KvLINEAR, Constants.Sim.KaLINEAR, Constants.Sim.KvANGULAR, Constants.Sim.KaANGULAR), 
+        DCMotor.getNEO(2), 
+        Constants.Sim.GEARING, 
+        Constants.Sim.TRACK_WIDTH_METER, 
+        Constants.Sim.WHEELRADIUS, 
+        VecBuilder.fill(0.001, 0.001, 0.001, 0.1, 0.1, 0.005, 0.005));
     public DriveSubsystem(DifferentialDrive Drive,
     AHRS Gyro, 
     MotorControllerGroup LeftMotors, 
@@ -40,7 +54,10 @@ public class DriveSubsystem extends SubsystemBase{
         SmartDashboard.putData("Field", Field);
     }
 
-    public void tankDrive(double LeftVelocity, double RightVelocity){
+    private EncoderSim LeftEncoder_Sim;
+    private EncoderSim RightEncoder_Sim;
+
+    public synchronized void tankDrive(double LeftVelocity, double RightVelocity){
         LeftMotors.set(LeftVelocity);
         RightMotors.set(RightVelocity);
         Drive.feed();
@@ -88,6 +105,11 @@ public class DriveSubsystem extends SubsystemBase{
     public void periodic(){
         Field.setRobotPose(Odometry.getPoseMeters());
         Odometry.update(Gyro.getRotation2d(), LeftEncoder.getPosition(), RightEncoder.getPosition());
+    }
+
+    @Override
+    public void simulationPeriodic(){
+
     }
 
 

@@ -52,7 +52,7 @@ public class BlueBackward4 {
             new Translation2d(6.3302865741617556, 0.693093287073757),
             new Translation2d(6.269730520247473, 0.6901901020687022)
             ),
-            new Pose2d(6.219440501578186, 0.6909085704447708, new Rotation2d(3.112615259738194)), 
+            new Pose2d(6.219440501578186, 0.6909085704447708, new Rotation2d(-3.112615259738194)), 
         config);
 
         public Trajectory getTrajectory(){
