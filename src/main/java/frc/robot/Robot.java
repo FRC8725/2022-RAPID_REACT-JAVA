@@ -53,7 +53,6 @@ public class Robot extends TimedRobot {
     DriveSub.Encoder_Zero();
     Test.Motor_Stop();
     Test.Zero_Encoder();
-    ClimbSub.stop();
   }
 
   @Override
@@ -114,7 +113,6 @@ public class Robot extends TimedRobot {
     Robot_Pause();
     DriveSub.Encoder_Zero();
     ShootSub.Enable_Intake();
-    ClimbSub.init();
   }
 
   boolean close = false;
@@ -130,6 +128,13 @@ public class Robot extends TimedRobot {
           m_Joystick.getRawButton(Constants.Joystick.HELF_SPEED_BUTTON));
     }
     ShootSub.Intake_Button(m_Joystick.getRawButton(Constants.Joystick.INTAKE_BUTTON));
+    if (m_Joystick.getRawButton(Constants.Joystick.RISE_BUTTON) == true
+        && m_Joystick.getRawButton(Constants.Joystick.RELEASE_BUTTON) == false)
+      ClimbSub.Rise_Winch();
+    else if (m_Joystick.getRawButton(Constants.Joystick.RISE_BUTTON) == false
+        && m_Joystick.getRawButton(Constants.Joystick.RELEASE_BUTTON) == true)
+      ClimbSub.Release_Winch();
+    else ClimbSub.stop();
   }
 
   @Override

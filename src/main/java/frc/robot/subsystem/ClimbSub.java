@@ -1,30 +1,28 @@
 package frc.robot.subsystem;
 
 import frc.robot.lib.Pneumatic;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
+import frc.robot.Constants;
 import frc.robot.lib.Climber;
 
 public class ClimbSub {
     Pneumatic Pneumatic;
     Climber Climber;
+    VictorSPX Climb_Motor = new VictorSPX(Constants.Climber.CLIMBER_MOTOR);
 
-    public ClimbSub() {
-        Pneumatic = new Pneumatic();
-        Climber = new Climber();
+    public void Rise_Winch() {
+        Climb_Motor.set(ControlMode.PercentOutput, 1);
     }
 
-    public void Release_Angle(boolean release) {
-        Pneumatic.Solenoid_Release(release);
+    public void Release_Winch() {
+        Climb_Motor.set(ControlMode.PercentOutput, -1);
     }
 
-    public void Rise_Winch(boolean rise) {
-        
+    public void stop () {
+        Climb_Motor.set(ControlMode.PercentOutput, 0);
     }
 
-    public void init() {
-        Pneumatic.Pumping();
-    }
-
-    public void stop() {
-        Pneumatic.Stop();
-    }
 }
