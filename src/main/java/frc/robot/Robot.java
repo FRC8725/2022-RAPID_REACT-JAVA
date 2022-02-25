@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
 // import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.Timer;
 
 import frc.robot.subsystem.*;
 import frc.robot.lib.Test;
@@ -41,6 +42,8 @@ public class Robot extends TimedRobot {
   ShootSub ShootSub = new ShootSub();
   Limelight Limelight = new Limelight();
   ClimbSub ClimbSub = new ClimbSub();
+
+  double timer_temp = 0;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -92,6 +95,7 @@ public class Robot extends TimedRobot {
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
+    double timer_temp = Timer.getFPGATimestamp();
   }
 
   /** This function is called periodically during autonomous. */
@@ -105,6 +109,11 @@ public class Robot extends TimedRobot {
       default:
         // Put default auto code here
         break;
+    }
+    if (timer_temp < 3) {
+      DriveSub.Move(-.5, -.5, false);
+    } else {
+      DriveSub.Drive_Stop();
     }
   }
 
