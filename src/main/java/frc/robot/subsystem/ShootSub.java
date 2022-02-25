@@ -3,15 +3,16 @@ package frc.robot.subsystem;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.robot.lib.Intake;
+import frc.robot.lib.Intake_Pneumatic;
 import frc.robot.lib.Shooter;
 import frc.robot.lib.ColorSensor;
 import frc.robot.Constants;
 
 public class ShootSub {
-    Intake Intake = new Intake();
+    Intake_Pneumatic Intake = new Intake_Pneumatic();
     Shooter Shooter = new Shooter();
     ColorSensor ColorSensor = new ColorSensor();
+    Boolean run_intake = false;
 
     public ShootSub() {
         SmartDashboard.putNumber("Rise Speed", Constants.Shooter.RISE_SPEED);
@@ -21,21 +22,27 @@ public class ShootSub {
         SmartDashboard.putNumber("Lid_ki", Constants.Shooter.LID_ki);
         SmartDashboard.putNumber("Lid_iLimit", Constants.Shooter.LID_iLimit);
         SmartDashboard.putNumber("Lid_kd", Constants.Shooter.LID_kd);
-        if (Intake.get_is_upper() == false) {
-            Intake_Lift(true);
-        }
     }
 
-    public void Intake(boolean run) {
-        if (run) { // Intake down
+    boolean second_loop = false;
+
+    public void Intake_Button (boolean press) {
+        if (press && !second_loop) {
+            run_intake = !run_intake;
+            second_loop = true;
+        } else if (!press) {
+            second_loop = false;
+        }
+        SmartDashboard.putBoolean("Intake", run_intake);
+
+    }
+
+    public void IntakePeriodic() {
+        if (run_intake) { // Intake down
             Intake.Run_Intake(SmartDashboard.getNumber("Intake Speed", Constants.Intake.INTAKE_SPEED));
         } else {
             Intake.Run_Intake(0);
         }
-    }
-
-    public void Intake_Lift(boolean Lift) {
-        Intake.Intake_Lift(Lift);
     }
 
     public void Shoot(boolean shoot) {
@@ -55,8 +62,15 @@ public class ShootSub {
     }
 
     public void Init() {
-        Intake.Run_Intake(0);
+        Intake.Disable_Compress();
+        run_intake = false;
         Shooter.Shoot(0);
         Shooter.Run(0);
     }
+
+    public void Enable_Intake() {
+        Intake.Enable_Compress();
+        run_intake = true;
+    }
+
 }

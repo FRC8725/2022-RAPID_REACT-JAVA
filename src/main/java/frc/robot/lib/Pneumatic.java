@@ -31,9 +31,9 @@ public class Pneumatic {
     public void Solenoid_Release(boolean release) {
         // if actually use this library, turn joystick to boolean.
         if (release) {
-        doubleSolenoid.set(Value.kForward);
+            doubleSolenoid.set(Value.kForward);
         } else {
-        doubleSolenoid.set(Value.kReverse);
+            doubleSolenoid.set(Value.kReverse);
         }
 
     }

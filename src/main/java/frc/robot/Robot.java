@@ -51,7 +51,6 @@ public class Robot extends TimedRobot {
   private void Robot_Pause() {
     DriveSub.Drive_Stop();
     DriveSub.Encoder_Zero();
-    ShootSub.Init();
     Test.Motor_Stop();
     Test.Zero_Encoder();
     ClimbSub.stop();
@@ -67,7 +66,8 @@ public class Robot extends TimedRobot {
     m_Chooser_Color.addOption("Red", false);
     SmartDashboard.putData("Team_Color", m_Chooser_Color);
     SmartDashboard.putData("Auto choices", m_chooser);
-    DriveSub.init();
+    ShootSub.Init();
+    DriveSub.Init();
   }
 
   /**
@@ -83,11 +83,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    ShootSub.IntakePeriodic();
   }
 
   @Override
   public void autonomousInit() {
     Robot_Pause();
+    ShootSub.Enable_Intake();
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
@@ -109,8 +111,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    DriveSub.Encoder_Zero();
     Robot_Pause();
+    DriveSub.Encoder_Zero();
+    ShootSub.Enable_Intake();
     ClimbSub.init();
   }
 
@@ -126,13 +129,13 @@ public class Robot extends TimedRobot {
           -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS),
           m_Joystick.getRawButton(Constants.Joystick.HELF_SPEED_BUTTON));
     }
-    ClimbSub.Release_Angle(m_Joystick.getRawButton(Constants.Joystick.RELEASE_BUTTON));
-    ShootSub.Intake(m_Joystick.getRawButton(Constants.Joystick.INTAKE_BUTTON));
+    ShootSub.Intake_Button(m_Joystick.getRawButton(Constants.Joystick.INTAKE_BUTTON));
   }
 
   @Override
   public void disabledInit() {
     Robot_Pause();
+    ShootSub.Init();
   }
 
   @Override
@@ -142,6 +145,7 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     Robot_Pause();
+    ShootSub.Enable_Intake();
   }
 
   @Override

@@ -12,7 +12,7 @@ public class DriveSub extends SubsystemBase {
 
     static Drive Drive = new Drive("Spark");
 
-    static public void init() {
+    static public void Init() {
         SmartDashboard.putNumber("Drive Speed", Move_Speed);
     }
 
