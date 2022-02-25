@@ -44,18 +44,20 @@ public class ShootSub {
             Intake.Run_Intake(0);
         }
     }
+    
+    public void ShooterPeriodic() {
+        Shooter.Shoot(SmartDashboard.getNumber("Shoot Speed", 0));
+    }
 
     public void Shoot(boolean shoot) {
         if (shoot) {
             Shooter.Run(SmartDashboard.getNumber("Rise Speed", 0));
-            Shooter.Shoot(SmartDashboard.getNumber("Shoot Speed", 0));
         } else {
             if (ColorSensor.get_Color().blue > .3 || ColorSensor.get_Color().red > .3) {
                 Shooter.Run(0);
             } else {
                 Shooter.Run(SmartDashboard.getNumber("Rise Speed", 0));
             }
-            Shooter.Shoot(0);
         }
         SmartDashboard.putNumber("Blue", ColorSensor.get_Color().blue);
         SmartDashboard.putNumber("Red", ColorSensor.get_Color().red);
