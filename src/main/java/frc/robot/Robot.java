@@ -128,7 +128,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    ShootSub.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON));
+    ShootSub.Shoot(true);
     if (m_Joystick.getRawButton(8)) {
       Limelight.update();
     } else {
