@@ -16,7 +16,7 @@ public final class Constants {
         public final static int RIGHT_BACK_MOTOR = 4;
 
         // Value
-        public final static double SPEED = .7;
+        public final static double SPEED = .5;
         public final static double ENCODER_PULSE = 526.;
         public final static double MOTOR_PERIMETER = 4.;
     }
@@ -31,7 +31,7 @@ public final class Constants {
         public final static int ULTRASONIC = 0;
 
         // Value
-        public final static double SPEED = .4; // default speed
+        public final static double SPEED = .23; // default speed
 
         // PID
         public final static double LID_kp = 0.042;
@@ -41,13 +41,13 @@ public final class Constants {
 
         // Rise
         public final static int RISER_MOTOR = 7;
-        public final static double RISE_SPEED = .2;
+        public final static double RISE_SPEED = 0.8;
     }
 
     public static final class Intake {
         // CAN
         public final static int INTAKE_MOTOR = 13;
-        public final static double INTAKE_SPEED = .7;
+        public final static double INTAKE_SPEED = .3;
         // DIO
         public final static int LIFT_SWITCH = 0;
     }

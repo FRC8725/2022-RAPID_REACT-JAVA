@@ -53,7 +53,7 @@ public class ShootSub {
         if (shoot) {
             Shooter.Run(SmartDashboard.getNumber("Rise Speed", 0));
         } else {
-            if (ColorSensor.get_Color().blue > .3 || ColorSensor.get_Color().red > .3) {
+            if (ColorSensor.get_Color().blue > .33 || ColorSensor.get_Color().red > .33) {
                 Shooter.Run(0);
             } else {
                 Shooter.Run(SmartDashboard.getNumber("Rise Speed", 0));
@@ -64,10 +64,13 @@ public class ShootSub {
     }
 
     public void Init() {
-        Intake.Disable_Compress();
-        run_intake = false;
         Shooter.Shoot(0);
         Shooter.Run(0);
+    }
+
+    public void Disable_Intake() {
+        Intake.Disable_Compress();
+        run_intake = false;
     }
 
     public void Enable_Intake() {

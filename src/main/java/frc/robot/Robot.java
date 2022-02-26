@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 import frc.robot.subsystem.*;
 import frc.robot.lib.Test;
+import frc.robot.Constants.Intake;
 import frc.robot.lib.Limelight;
 
 // import frc.robot.lib.ColorSensor;
@@ -56,6 +57,7 @@ public class Robot extends TimedRobot {
     DriveSub.Encoder_Zero();
     Test.Motor_Stop();
     Test.Zero_Encoder();
+    ShootSub.Init();
   }
 
   @Override
@@ -68,7 +70,7 @@ public class Robot extends TimedRobot {
     m_Chooser_Color.addOption("Red", false);
     SmartDashboard.putData("Team_Color", m_Chooser_Color);
     SmartDashboard.putData("Auto choices", m_chooser);
-    ShootSub.Init();
+    ShootSub.Disable_Intake();
     DriveSub.Init();
   }
 
@@ -96,7 +98,7 @@ public class Robot extends TimedRobot {
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
-    double timer_temp = Timer.getFPGATimestamp();
+    timer_temp = Timer.getFPGATimestamp();
   }
 
   /** This function is called periodically during autonomous. */
@@ -111,8 +113,8 @@ public class Robot extends TimedRobot {
         // Put default auto code here
         break;
     }
-    if (timer_temp < 3) {
-      DriveSub.Move(-.5, -.5, false);
+    if (Timer.getFPGATimestamp() - timer_temp < 6) {
+      DriveSub.Move(-.3, -.3, false);
     } else {
       DriveSub.Drive_Stop();
     }
@@ -145,12 +147,14 @@ public class Robot extends TimedRobot {
         && m_Joystick.getRawButton(Constants.Joystick.RELEASE_BUTTON) == true)
       ClimbSub.Release_Winch();
     else ClimbSub.stop();
+    ShootSub.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON));
+
   }
 
   @Override
   public void disabledInit() {
     Robot_Pause();
-    ShootSub.Init();
+    ShootSub.Disable_Intake();
   }
 
   @Override

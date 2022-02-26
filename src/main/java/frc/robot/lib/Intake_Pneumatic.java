@@ -1,5 +1,7 @@
 package frc.robot.lib;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -7,17 +9,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
+import edu.wpi.first.wpilibj.Timer;
 
 import frc.robot.Constants;
 
 // 775 Red line
 public class Intake_Pneumatic {
-    CANSparkMax Intake_Motor, Lift_Motor;
+    TalonFX Intake_Motor, Lift_Motor;
     private PneumaticsControlModule PCM = new PneumaticsControlModule(Constants.Pneumatic.PCM_CAN);
     private DoubleSolenoid doubleSolenoid;
+    Timer intake_timer = new Timer();
 
     public Intake_Pneumatic() {
-        Intake_Motor = new CANSparkMax(Constants.Intake.INTAKE_MOTOR, MotorType.kBrushless);
+        Intake_Motor = new TalonFX(Constants.Intake.INTAKE_MOTOR);
         doubleSolenoid = PCM.makeDoubleSolenoid(Constants.Pneumatic.DOUBLESOLENOID_FORWARD_CHANNEL[0], Constants.Pneumatic.DOUBLESOLENOID_BACKWARD_CHANNEL[0]);
     }
 
@@ -39,9 +43,15 @@ public class Intake_Pneumatic {
     }
 
     public void Run_Intake(double intake_speed) {
-        if (intake_speed == 0) Intake_Lift(true);
-        else Intake_Lift(false);
-        Intake_Motor.set(intake_speed);
+        if (intake_speed == 0) {
+            Intake_Lift(true);
+            intake_timer.stop();
+            intake_timer.reset();
+        } else {
+            Intake_Lift(false);
+            intake_timer.start();
+        }
+        if (intake_timer.get() > 2) Intake_Motor.set(ControlMode.PercentOutput, intake_speed);
     }
 
     public boolean get_Intake() {

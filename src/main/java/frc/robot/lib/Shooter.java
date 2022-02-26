@@ -11,7 +11,6 @@ public class Shooter {
     private TalonFX Shooter_Left_TalonFalcon, Shooter_Right_TalonFalcon;
 
     VictorSPX Riser;
-    CANSparkMax Intake;
 
     public Shooter() {
         Shooter_Left_TalonFalcon = new TalonFX(Constants.Shooter.LEFT_SHOOT_MOTOR[0]);
@@ -30,7 +29,7 @@ public class Shooter {
     }
 
     public void Run(double Riser_speed) {
-        Riser.set(ControlMode.PercentOutput, -Riser_speed);
+        Riser.set(ControlMode.PercentOutput, Riser_speed);
     }
 
 }
