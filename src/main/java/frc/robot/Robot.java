@@ -136,7 +136,7 @@ public class Robot extends TimedRobot {
 
       if(m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS) == 0)  JoystickLeftValue = 0;
       else  JoystickLeftValue = 0.465205 * Math.cosh(5.35477 * m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS) - 2.8561) + 0.511502;
-      DriveSub.Move(-JoystickLeftValue, -JoystickRightValue);
+      DriveSub.Move(JoystickLeftValue, JoystickRightValue);
       DriveSub.Move(-m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS), -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
       
     }
@@ -149,6 +149,8 @@ public class Robot extends TimedRobot {
       ClimbSub.Release_Winch();
     else ClimbSub.stop();
     ShootSub.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON));
+    if(m_Joystick.getRawButton(Constants.Joystick.STRAIGHT_BUTTON)) DriveSub.Move(0.7, 0.7);    
+    if(m_Joystick.getRawButton(Constants.Joystick.SGRAIGHT_BACK_BUTTON)) DriveSub.Move(-0.7, -0.7);
 
   }
 
