@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import frc.robot.Constants;
-import com.revrobotics.CANSparkMax;
 
 public class Shooter {
 
@@ -19,6 +18,11 @@ public class Shooter {
     }
 
     public void Shoot(double speed) {
+        if(speed < 0.33) {
+            Shooter_Left_TalonFalcon.set(ControlMode.PercentOutput, .33);
+            Shooter_Right_TalonFalcon.set(ControlMode.PercentOutput, -.33);
+            return;
+        }
         Shooter_Left_TalonFalcon.set(ControlMode.PercentOutput, speed);
         Shooter_Right_TalonFalcon.set(ControlMode.PercentOutput, -speed);
     }

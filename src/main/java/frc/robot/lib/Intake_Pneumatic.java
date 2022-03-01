@@ -2,10 +2,6 @@ package frc.robot.lib;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
@@ -52,6 +48,7 @@ public class Intake_Pneumatic {
             intake_timer.start();
         }
         if (intake_timer.get() > 2) Intake_Motor.set(ControlMode.PercentOutput, intake_speed);
+        else Intake_Motor.set(ControlMode.PercentOutput, 0);
     }
 
     public boolean get_Intake() {

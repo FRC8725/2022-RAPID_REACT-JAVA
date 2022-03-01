@@ -1,6 +1,5 @@
 package frc.robot.subsystem;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.lib.Intake_Pneumatic;

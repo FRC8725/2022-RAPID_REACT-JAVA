@@ -4,10 +4,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 // All of the speed is set as default speed
 public final class Constants {
 
-    public final class Driver {
+    public final static class Driver {
         // CAN
         public final static String MOTOR_TYPE = "Spark"; // CAN or PWM or Spark
         public final static int LEFT_FRONT_MOTOR = 1;
@@ -19,6 +20,16 @@ public final class Constants {
         public final static double SPEED = .5;
         public final static double ENCODER_PULSE = 526.;
         public final static double MOTOR_PERIMETER = 4.;
+
+        // Ramsete Command
+        public final static double MaxVelocity = 0.;
+        public final static double MaxAcceleration = 0.;
+        public final static double TrackWidthMeters = 0.;
+        public final static double Ks_DRIVE = 0.;
+        public final static double Kv_DRIVE = 0.;
+        public final static double Ka_DRIVE = 0.;
+
+        public final static DifferentialDriveKinematics Kinematics = new DifferentialDriveKinematics(TrackWidthMeters);
     }
 
     public static final class Shooter {
@@ -31,7 +42,7 @@ public final class Constants {
         public final static int ULTRASONIC = 0;
 
         // Value
-        public final static double SPEED = .23; // default speed
+        public final static double SPEED = .5; // default speed
 
         // PID
         public final static double LID_kp = 0.042;
@@ -41,16 +52,16 @@ public final class Constants {
 
         // Rise
         public final static int RISER_MOTOR = 7;
-        public final static double RISE_SPEED = 0.8;
+        public final static double RISE_SPEED = 0.33;
     }
 
     public static final class Intake {
         // CAN
         public final static int INTAKE_MOTOR = 13;
-        public final static double INTAKE_SPEED = .3;
+        public final static double INTAKE_SPEED = .28;
         // DIO
         public final static int LIFT_SWITCH = 0;
-    }
+    }   
 
     public final static class Pneumatic {
         public final static int COMPRESSOR = 0;
@@ -101,7 +112,7 @@ public final class Constants {
     }
 
     public final static class Limelight {
-        public final static int PRESETA = 19;
-        public final static double HEIGH_DIFF = 1.3;
+        public final static int PRETHETA = 19;
+        public final static double HEIGH_DIFF = 1.45;
     }
 }

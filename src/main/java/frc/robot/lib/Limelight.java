@@ -11,7 +11,7 @@ public class Limelight {
 
     public Limelight () {
         SmartDashboard.putNumber("limelight kp", 0.03);
-        SmartDashboard.putNumber("limelight kd", 0.08);
+        SmartDashboard.putNumber("limelight kd", 0.075);
         update();
         lasterror = 0;
         steering_adjust = 0.0f;
@@ -35,7 +35,7 @@ public class Limelight {
 
     public void aim_target() {
         update();
-        double kp = SmartDashboard.getNumber("limelight kp", .0);
+        double kp = SmartDashboard.getNumber("limelight kp", .75);
         double kd = SmartDashboard.getNumber("limelight kd", .0);
         double dt = tx-lasterror;
         lasterror = tx;
@@ -44,9 +44,9 @@ public class Limelight {
             steering_adjust = kp * tx + kd * dt;
             double left = Math.max(Math.min(steering_adjust, 1), -1);
             double right = Math.max(Math.min(-steering_adjust, 1), -1);
-            DriveSub.Move(left, right, false);
+            DriveSub.Move(left, right);
         } else if (tx == .0) {
-            DriveSub.Move(.5, -.5, false);
+            DriveSub.Move(.5, -.5);
         }
     }
 
@@ -55,10 +55,12 @@ public class Limelight {
             distance = 0;
             return;
         }
-        distance = Math.tan(Constants.Limelight.PRESETA + ty)/Constants.Limelight.HEIGH_DIFF;
-        SmartDashboard.putNumber("Distance", distance);
+        distance = Math.tan(Constants.Limelight.PRETHETA + ty)/Constants.Limelight.HEIGH_DIFF;
+        SmartDashboard.putNumber("Target distance", distance);
+        
     }
 
-    public void test() {
+    public void test_shoot() {
+
     }
 }

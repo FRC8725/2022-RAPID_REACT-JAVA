@@ -1,0 +1,9 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Auto choices": "String Chooser",
+      "/SmartDashboard/Team_Color": "String Chooser"
+    }
+  }
+}

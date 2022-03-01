@@ -6,11 +6,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import frc.robot.Constants;
-import frc.robot.lib.Climber;
 
 public class ClimbSub {
     Pneumatic Pneumatic;
-    Climber Climber;
     VictorSPX Climb_Motor = new VictorSPX(Constants.Climber.CLIMBER_MOTOR);
 
     public void Rise_Winch() {

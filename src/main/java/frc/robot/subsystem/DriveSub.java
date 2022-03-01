@@ -16,9 +16,8 @@ public class DriveSub extends SubsystemBase {
         SmartDashboard.putNumber("Drive Speed", Move_Speed);
     }
 
-    static public void Move(double LSpeed, double RSpeed, boolean helf) {
+    static public void Move(double LSpeed, double RSpeed) {
         Move_Speed = SmartDashboard.getNumber("Drive Speed", Move_Speed);
-        if (helf) Move_Speed *= 0.5;
         Drive.Motor_Run(LSpeed * Move_Speed, RSpeed * Move_Speed);
     }
 
@@ -29,4 +28,5 @@ public class DriveSub extends SubsystemBase {
     static public void Drive_Stop() {
         Drive.Motor_Run(0, 0);
     }
+
 }

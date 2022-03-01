@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.Timer;
 
 import frc.robot.subsystem.*;
 import frc.robot.lib.Test;
-import frc.robot.Constants.Intake;
 import frc.robot.lib.Limelight;
 
 // import frc.robot.lib.ColorSensor;
@@ -35,7 +34,8 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   private final SendableChooser<Boolean> m_Chooser_Color = new SendableChooser<>();
-
+  private double JoystickRightValue; 
+  private double JoystickLeftValue;
   Joystick m_Joystick = new Joystick(Constants.Joystick.JOYSTICK_A);
   boolean joy_blue_button;
 
@@ -104,19 +104,12 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
-    }
-    if (Timer.getFPGATimestamp() - timer_temp < 6) {
-      DriveSub.Move(-.3, -.3, false);
+    if (Timer.getFPGATimestamp() - timer_temp < 3.5) {
+      DriveSub.Move(-.3, -.3);
     } else {
       DriveSub.Drive_Stop();
+      ShootSub.Shoot(true);
+      SmartDashboard.putNumber("Shoot Speed", .5);
     }
   }
 
@@ -125,6 +118,7 @@ public class Robot extends TimedRobot {
     Robot_Pause();
     DriveSub.Encoder_Zero();
     ShootSub.Enable_Intake();
+    SmartDashboard.putNumber("Shoot Speed", Constants.Shooter.SPEED);
   }
 
   boolean close = false;
@@ -134,10 +128,17 @@ public class Robot extends TimedRobot {
     ShootSub.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON));
     if (m_Joystick.getRawButton(8)) {
       Limelight.update();
+      SmartDashboard.putNumber("Shoot Speed", 0.65);
     } else {
-      DriveSub.Move(-m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS),
-          -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS),
-          m_Joystick.getRawButton(Constants.Joystick.HELF_SPEED_BUTTON));
+      SmartDashboard.putNumber("Shoot Speed", Constants.Shooter.SPEED);
+      if(m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS) == 0) JoystickRightValue = 0;
+      else  JoystickRightValue = 0.465205 * Math.cosh(5.35477 * m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS) - 2.8561) + 0.511502;
+
+      if(m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS) == 0)  JoystickLeftValue = 0;
+      else  JoystickLeftValue = 0.465205 * Math.cosh(5.35477 * m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS) - 2.8561) + 0.511502;
+      DriveSub.Move(-JoystickLeftValue, -JoystickRightValue);
+      DriveSub.Move(-m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS), -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
+      
     }
     ShootSub.Intake_Button(m_Joystick.getRawButton(Constants.Joystick.INTAKE_BUTTON));
     if (m_Joystick.getRawButton(Constants.Joystick.RISE_BUTTON) == true
