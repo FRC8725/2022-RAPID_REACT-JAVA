@@ -47,7 +47,7 @@ public class Intake_Pneumatic {
             Intake_Lift(false);
             intake_timer.start();
         }
-        if (intake_timer.get() > 2) Intake_Motor.set(ControlMode.PercentOutput, intake_speed);
+        if (intake_timer.get() > 0.8) Intake_Motor.set(ControlMode.PercentOutput, intake_speed);
         else Intake_Motor.set(ControlMode.PercentOutput, 0);
     }
 

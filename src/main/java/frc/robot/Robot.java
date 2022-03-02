@@ -104,12 +104,12 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    if (Timer.getFPGATimestamp() - timer_temp < 3.5) {
+    if (Timer.getFPGATimestamp() - timer_temp < 2.45) {
       DriveSub.Move(-.3, -.3);
     } else {
       DriveSub.Drive_Stop();
       ShootSub.Shoot(true);
-      SmartDashboard.putNumber("Shoot Speed", .5);
+      SmartDashboard.putNumber("Shoot Speed", .7);
     }
   }
 
@@ -127,27 +127,36 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     ShootSub.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON));
     if (m_Joystick.getRawButton(8)) {
-      Limelight.update();
-      SmartDashboard.putNumber("Shoot Speed", 0.65);
+      Limelight.aim_target();
+      SmartDashboard.putNumber("Shoot Speed", 0.7);
     } else {
       SmartDashboard.putNumber("Shoot Speed", Constants.Shooter.SPEED);
-      if(m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS) == 0) JoystickRightValue = 0;
-      else  JoystickRightValue = 0.465205 * Math.cosh(5.35477 * m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS) - 2.8561) + 0.511502;
+      // FIXME: THIS IS NOT OK -- NoodlesK
+      // ------------------------------------ 
+      // if(m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS) == 0) JoystickRightValue = 0;
+      // else if(m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS) == 1) JoystickRightValue = -1;
+      // else if(m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS) == -1)  JoystickRightValue = 1;
+      // else if(m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS) > 0)  JoystickRightValue = 0.465205 * Math.cosh(5.35477 * -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS) - 2.8561) + 0.511502;  
+      // else  -JoystickRightValue = 0.465205 * Math.cosh(5.35477 * -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS) - 2.8561) + 0.511502;
 
-      if(m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS) == 0)  JoystickLeftValue = 0;
-      else  JoystickLeftValue = 0.465205 * Math.cosh(5.35477 * m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS) - 2.8561) + 0.511502;
-      DriveSub.Move(JoystickLeftValue, JoystickRightValue);
+      // if(m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS) == 0)  JoystickLeftValue = 0;
+      // else if(m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS) == 1)  JoystickLeftValue = -1;
+      // else if(m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS) == -1)   JoystickLeftValue = 1;
+      // else if(m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS) > 0)   -JoystickLeftValue = 0.465205 * Math.cosh(5.35477 * -m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS) - 2.8561) + 0.511502;
+      // else  JoystickLeftValue = 0.465205 * Math.cosh(5.35477 * -m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS) - 2.8561) + 0.511502;
+      // DriveSub.Move(JoystickLeftValue, JoystickRightValue);
+      // Result: 戰損版Falcon * 1
       DriveSub.Move(-m_Joystick.getRawAxis(Constants.Joystick.LEFT_MOTOR_AXIS), -m_Joystick.getRawAxis(Constants.Joystick.RIGHT_MOTOR_AXIS));
       
     }
     ShootSub.Intake_Button(m_Joystick.getRawButton(Constants.Joystick.INTAKE_BUTTON));
-    if (m_Joystick.getRawButton(Constants.Joystick.RISE_BUTTON) == true
-        && m_Joystick.getRawButton(Constants.Joystick.RELEASE_BUTTON) == false)
-      ClimbSub.Rise_Winch();
-    else if (m_Joystick.getRawButton(Constants.Joystick.RISE_BUTTON) == false
-        && m_Joystick.getRawButton(Constants.Joystick.RELEASE_BUTTON) == true)
-      ClimbSub.Release_Winch();
-    else ClimbSub.stop();
+    // if (m_Joystick.getRawButton(Constants.Joystick.RISE_BUTTON) == true
+    //     && m_Joystick.getRawButton(Constants.Joystick.RELEASE_BUTTON) == false)
+    //   ClimbSub.Rise_Winch();
+    // else if (m_Joystick.getRawButton(Constants.Joystick.RISE_BUTTON) == false
+    //     && m_Joystick.getRawButton(Constants.Joystick.RELEASE_BUTTON) == true)
+    //   ClimbSub.Release_Winch();
+    // else ClimbSub.stop();
     ShootSub.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON));
     if(m_Joystick.getRawButton(Constants.Joystick.STRAIGHT_BUTTON)) DriveSub.Move(0.7, 0.7);    
     if(m_Joystick.getRawButton(Constants.Joystick.SGRAIGHT_BACK_BUTTON)) DriveSub.Move(-0.7, -0.7);

@@ -1,5 +1,6 @@
 package frc.robot.subsystem;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.lib.Intake_Pneumatic;
@@ -12,6 +13,7 @@ public class ShootSub {
     Shooter Shooter = new Shooter();
     ColorSensor ColorSensor = new ColorSensor();
     Boolean run_intake = false;
+    Timer m_timer = new Timer();
 
     public ShootSub() {
         SmartDashboard.putNumber("Rise Speed", Constants.Shooter.RISE_SPEED);
@@ -29,6 +31,7 @@ public class ShootSub {
         if (press && !second_loop) {
             run_intake = !run_intake;
             second_loop = true;
+            m_timer.reset();
         } else if (!press) {
             second_loop = false;
         }
@@ -49,13 +52,17 @@ public class ShootSub {
     }
 
     public void Shoot(boolean shoot) {
+        double timeset = .5, reverse_time = .3;
         if (shoot) {
             Shooter.Run(SmartDashboard.getNumber("Rise Speed", 0));
         } else {
-            if (ColorSensor.get_Color().blue > .33 || ColorSensor.get_Color().red > .33) {
+            if (ColorSensor.get_Color().blue > .31 || ColorSensor.get_Color().red > .31 || m_timer.get() > timeset) {
                 Shooter.Run(0);
+            } else if (m_timer.get() >= timeset - reverse_time) {
+                Shooter.Run(-SmartDashboard.getNumber("Rise Speed", 0));
             } else {
                 Shooter.Run(SmartDashboard.getNumber("Rise Speed", 0));
+                m_timer.reset();
             }
         }
         SmartDashboard.putNumber("Blue", ColorSensor.get_Color().blue);
