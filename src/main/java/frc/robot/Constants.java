@@ -52,7 +52,7 @@ public final class Constants {
 
         // Rise
         public final static int RISER_MOTOR = 7;
-        public final static double RISE_SPEED = 0.25;
+        public final static double RISE_SPEED = 0.32;
     }
 
     public static final class Intake {

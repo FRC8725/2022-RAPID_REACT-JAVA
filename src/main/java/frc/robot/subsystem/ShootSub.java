@@ -73,9 +73,8 @@ public class ShootSub {
         else team_color = false;
     }
 
-    boolean have_run = false;
     public void Shoot(boolean shoot) {
-        double timeset = .2, reverse_time = .1;
+        double timeset = .18, reverse_time = .1;
         if (shoot) {
             Shooter.Run(SmartDashboard.getNumber("Rise Speed", 0));
             m_timer.stop();
@@ -83,7 +82,6 @@ public class ShootSub {
         } else {
             if (ColorSensor.get_Color().blue > .33 || ColorSensor.get_Color().red > .33) {
                 m_timer.start();
-                have_run = false;
                 if (ColorSensor.get_Color().blue > .33) ball_color = true;
                 else ball_color = false;
             }
