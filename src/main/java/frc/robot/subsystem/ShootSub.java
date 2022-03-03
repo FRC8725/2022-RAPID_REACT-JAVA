@@ -31,7 +31,7 @@ public class ShootSub {
 
     boolean second_loop = false;
 
-    public void Intake_Button (boolean press) {
+    public void Intake_Button(boolean press) {
         if (press && !second_loop) {
             run_intake = !run_intake;
             second_loop = true;
@@ -66,15 +66,17 @@ public class ShootSub {
             Intake.Run_Intake(0);
         }
     }
-    
+
     public void ShooterPeriodic() {
         Shooter.Shoot(SmartDashboard.getNumber("Shoot Speed", 0));
-        if(DriverStation.getAlliance() == Alliance.Blue) team_color = true;
-        else team_color = false;
+        if (DriverStation.getAlliance() == Alliance.Blue)
+            team_color = true;
+        else
+            team_color = false;
     }
 
     public void Shoot(boolean shoot) {
-        double timeset = .18, reverse_time = .1;
+        double timeset = 0.18, reverse_time = .1;
         if (shoot) {
             Shooter.Run(SmartDashboard.getNumber("Rise Speed", 0));
             m_timer.stop();
@@ -82,12 +84,17 @@ public class ShootSub {
         } else {
             if (ColorSensor.get_Color().blue > .33 || ColorSensor.get_Color().red > .33) {
                 m_timer.start();
-                if (ColorSensor.get_Color().blue > .33) ball_color = true;
-                else ball_color = false;
+                if (ColorSensor.get_Color().blue > .33)
+                    ball_color = true;
+                else
+                    ball_color = false;
             }
-            if ((ColorSensor.get_Color().blue > .33 || ColorSensor.get_Color().red > .33) && m_timer.get() >= timeset) Shooter.Run(0);
-            else if (m_timer.get() >= timeset - reverse_time && m_timer.get() < timeset) Shooter.Run(-.5);
-            else Shooter.Run(SmartDashboard.getNumber("Rise Speed", 0));
+            if ((ColorSensor.get_Color().blue > .33 || ColorSensor.get_Color().red > .33) && m_timer.get() >= timeset)
+                Shooter.Run(0);
+            else if (m_timer.get() >= timeset - reverse_time && m_timer.get() < timeset)
+                Shooter.Run(-.5);
+            else
+                Shooter.Run(SmartDashboard.getNumber("Rise Speed", 0));
             if (((!team_color && ball_color) || (team_color && !ball_color)) && m_timer.get() > 0 && enable_throw) {
                 Shooter.Run(-1);
                 Timer.delay(.7);

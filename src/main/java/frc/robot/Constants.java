@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+
 // All of the speed is set as default speed
 public final class Constants {
 
@@ -52,7 +53,7 @@ public final class Constants {
 
         // Rise
         public final static int RISER_MOTOR = 7;
-        public final static double RISE_SPEED = 0.32;
+        public final static double RISE_SPEED = 0.25;
     }
 
     public static final class Intake {
@@ -61,7 +62,7 @@ public final class Constants {
         public final static double INTAKE_SPEED = .28;
         // DIO
         public final static int LIFT_SWITCH = 0;
-    }   
+    }
 
     public final static class Pneumatic {
         public final static int COMPRESSOR = 0;
