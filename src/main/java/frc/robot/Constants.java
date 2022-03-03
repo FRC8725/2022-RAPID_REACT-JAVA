@@ -18,7 +18,7 @@ public final class Constants {
         public final static int RIGHT_BACK_MOTOR = 4;
 
         // Value
-        public final static double SPEED = 1;
+        public final static double SPEED = 0.9;
         public final static double ENCODER_PULSE = 526.;
         public final static double MOTOR_PERIMETER = 4.;
 
