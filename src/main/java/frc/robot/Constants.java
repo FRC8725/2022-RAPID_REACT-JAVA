@@ -84,8 +84,7 @@ public final class Constants {
 
         public final static int STRAIGHT_BUTTON = 2;
         public final static int SGRAIGHT_BACK_BUTTON = 1;
-        public final static int RISE_BUTTON = 3;
-        public final static int RELEASE_BUTTON = 4;
+        public final static int THROW_OTHERS_BUTTON = 3;
         public final static int INTAKE_BUTTON = 5;
         public final static int SHOOT_BUTTON = 6;
         public final static int HELF_SPEED_BUTTON = 7;

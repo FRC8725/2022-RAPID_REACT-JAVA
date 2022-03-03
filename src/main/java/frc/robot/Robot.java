@@ -150,6 +150,7 @@ public class Robot extends TimedRobot {
       
     }
     ShootSub.Intake_Button(m_Joystick.getRawButton(Constants.Joystick.INTAKE_BUTTON));
+    ShootSub.Throw_Others_Button(m_Joystick.getRawButton(Constants.Joystick.THROW_OTHERS_BUTTON));
     // if (m_Joystick.getRawButton(Constants.Joystick.RISE_BUTTON) == true
     //     && m_Joystick.getRawButton(Constants.Joystick.RELEASE_BUTTON) == false)
     //   ClimbSub.Rise_Winch();

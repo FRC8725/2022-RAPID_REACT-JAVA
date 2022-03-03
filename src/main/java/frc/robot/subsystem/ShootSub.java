@@ -1,8 +1,9 @@
 package frc.robot.subsystem;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.lib.Intake_Pneumatic;
 import frc.robot.lib.Shooter;
 import frc.robot.lib.ColorSensor;
@@ -13,7 +14,10 @@ public class ShootSub {
     Shooter Shooter = new Shooter();
     ColorSensor ColorSensor = new ColorSensor();
     Boolean run_intake = false;
+    boolean enable_throw = true;
     Timer m_timer = new Timer();
+    boolean team_color = true; // default: blue
+    boolean ball_color = true; // default: blue
 
     public ShootSub() {
         SmartDashboard.putNumber("Rise Speed", Constants.Shooter.RISE_SPEED);
@@ -31,11 +35,27 @@ public class ShootSub {
         if (press && !second_loop) {
             run_intake = !run_intake;
             second_loop = true;
+            m_timer.stop();
             m_timer.reset();
         } else if (!press) {
             second_loop = false;
         }
         SmartDashboard.putBoolean("Intake", run_intake);
+
+    }
+
+    boolean second_loop2 = false;
+
+    public void Throw_Others_Button(boolean press) {
+        if (press && !second_loop2) {
+            enable_throw = !enable_throw;
+            second_loop2 = true;
+            m_timer.stop();
+            m_timer.reset();
+        } else if (!press) {
+            second_loop2 = false;
+        }
+        SmartDashboard.putBoolean("Throw", enable_throw);
 
     }
 
@@ -49,22 +69,35 @@ public class ShootSub {
     
     public void ShooterPeriodic() {
         Shooter.Shoot(SmartDashboard.getNumber("Shoot Speed", 0));
+        if(DriverStation.getAlliance() == Alliance.Blue) team_color = true;
+        else team_color = false;
     }
 
+    boolean have_run = false;
     public void Shoot(boolean shoot) {
-        double timeset = .5, reverse_time = .3;
+        double timeset = .2, reverse_time = .1;
         if (shoot) {
             Shooter.Run(SmartDashboard.getNumber("Rise Speed", 0));
+            m_timer.stop();
+            m_timer.reset();
         } else {
-            if (ColorSensor.get_Color().blue > .31 || ColorSensor.get_Color().red > .31 || m_timer.get() > timeset) {
-                Shooter.Run(0);
-            } else if (m_timer.get() >= timeset - reverse_time) {
-                Shooter.Run(-SmartDashboard.getNumber("Rise Speed", 0));
-            } else {
-                Shooter.Run(SmartDashboard.getNumber("Rise Speed", 0));
+            if (ColorSensor.get_Color().blue > .33 || ColorSensor.get_Color().red > .33) {
+                m_timer.start();
+                have_run = false;
+                if (ColorSensor.get_Color().blue > .33) ball_color = true;
+                else ball_color = false;
+            }
+            if ((ColorSensor.get_Color().blue > .33 || ColorSensor.get_Color().red > .33) && m_timer.get() >= timeset) Shooter.Run(0);
+            else if (m_timer.get() >= timeset - reverse_time && m_timer.get() < timeset) Shooter.Run(-.5);
+            else Shooter.Run(SmartDashboard.getNumber("Rise Speed", 0));
+            if (((!team_color && ball_color) || (team_color && !ball_color)) && m_timer.get() > 0 && enable_throw) {
+                Shooter.Run(-1);
+                Timer.delay(.7);
+                m_timer.stop();
                 m_timer.reset();
             }
         }
+        SmartDashboard.putNumber("Shoot Timer", m_timer.get());
         SmartDashboard.putNumber("Blue", ColorSensor.get_Color().blue);
         SmartDashboard.putNumber("Red", ColorSensor.get_Color().red);
     }
@@ -72,6 +105,7 @@ public class ShootSub {
     public void Init() {
         Shooter.Shoot(0);
         Shooter.Run(0);
+        m_timer.reset();
     }
 
     public void Disable_Intake() {
