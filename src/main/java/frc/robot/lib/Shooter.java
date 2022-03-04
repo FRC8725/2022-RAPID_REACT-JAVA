@@ -18,11 +18,6 @@ public class Shooter {
     }
 
     public void Shoot(double speed) {
-        if(speed < 0.34) {
-            Shooter_Left_TalonFalcon.set(ControlMode.PercentOutput, .34);
-            Shooter_Right_TalonFalcon.set(ControlMode.PercentOutput, -.34);
-            return;
-        }
         Shooter_Left_TalonFalcon.set(ControlMode.PercentOutput, speed);
         Shooter_Right_TalonFalcon.set(ControlMode.PercentOutput, -speed);
     }

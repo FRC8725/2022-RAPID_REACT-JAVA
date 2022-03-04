@@ -36,8 +36,8 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   private final SendableChooser<Boolean> m_Chooser_Color = new SendableChooser<>();
-  private double JoystickRightValue; 
-  private double JoystickLeftValue;
+  //private double JoystickRightValue; 
+  //private double JoystickLeftValue;
   Joystick m_Joystick = new Joystick(Constants.Joystick.JOYSTICK_A);
   boolean joy_blue_button;
 
@@ -106,12 +106,12 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    if (Timer.getFPGATimestamp() - timer_temp < 2.45) {
-      DriveSub.Move(-.3, -.3);
+    if (Timer.getFPGATimestamp() - timer_temp < 3) {
+      DriveSub.Move(-.4, -.4);
     } else {
       DriveSub.Drive_Stop();
-      ShootSub.Shoot(true);
-      SmartDashboard.putNumber("Shoot Speed", .7);
+      ShootSub.Shoot(true, false);
+      SmartDashboard.putNumber("Shoot Speed", Constants.Shooter.AUTO_SPEED);
     }
   }
 
@@ -127,10 +127,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    ShootSub.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON));
+    ShootSub.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON), m_Joystick.getRawButton(Constants.Joystick.REVERSE_HOPPER_BUTTON));
     if (m_Joystick.getRawButton(8)) {
       Limelight.aim_target();
-      SmartDashboard.putNumber("Shoot Speed", 0.7);
+      SmartDashboard.putNumber("Shoot Speed", Constants.Shooter.HIGH_SPEED);
     } else {
       SmartDashboard.putNumber("Shoot Speed", Constants.Shooter.SPEED);
       // FIXME: THIS IS NOT OK -- NoodlesK
@@ -160,7 +160,6 @@ public class Robot extends TimedRobot {
     //     && m_Joystick.getRawButton(Constants.Joystick.RELEASE_BUTTON) == true)
     //   ClimbSub.Release_Winch();
     // else ClimbSub.stop();
-    ShootSub.Shoot(m_Joystick.getRawButton(Constants.Joystick.SHOOT_BUTTON));
     if(m_Joystick.getRawButton(Constants.Joystick.STRAIGHT_BUTTON)) DriveSub.Move(0.7, 0.7);    
     if(m_Joystick.getRawButton(Constants.Joystick.SGRAIGHT_BACK_BUTTON)) DriveSub.Move(-0.7, -0.7);
 

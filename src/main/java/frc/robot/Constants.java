@@ -18,7 +18,7 @@ public final class Constants {
         public final static int RIGHT_BACK_MOTOR = 4;
 
         // Value
-        public final static double SPEED = 0.9;
+        public final static double SPEED = .7;
         public final static double ENCODER_PULSE = 526.;
         public final static double MOTOR_PERIMETER = 4.;
 
@@ -43,7 +43,9 @@ public final class Constants {
         public final static int ULTRASONIC = 0;
 
         // Value
-        public final static double SPEED = .34; // default speed
+        public final static double SPEED = .23; // default speed
+        public final static double HIGH_SPEED = .5;
+        public final static double AUTO_SPEED = .4;
 
         // PID
         public final static double LID_kp = 0.042;
@@ -86,6 +88,7 @@ public final class Constants {
         public final static int STRAIGHT_BUTTON = 2;
         public final static int SGRAIGHT_BACK_BUTTON = 1;
         public final static int THROW_OTHERS_BUTTON = 3;
+        public final static int REVERSE_HOPPER_BUTTON = 4;
         public final static int INTAKE_BUTTON = 5;
         public final static int SHOOT_BUTTON = 6;
         public final static int HELF_SPEED_BUTTON = 7;

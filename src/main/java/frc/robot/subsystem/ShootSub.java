@@ -35,8 +35,6 @@ public class ShootSub {
         if (press && !second_loop) {
             run_intake = !run_intake;
             second_loop = true;
-            m_timer.stop();
-            m_timer.reset();
         } else if (!press) {
             second_loop = false;
         }
@@ -50,8 +48,6 @@ public class ShootSub {
         if (press && !second_loop2) {
             enable_throw = !enable_throw;
             second_loop2 = true;
-            m_timer.stop();
-            m_timer.reset();
         } else if (!press) {
             second_loop2 = false;
         }
@@ -75,34 +71,47 @@ public class ShootSub {
             team_color = false;
     }
 
-    public void Shoot(boolean shoot) {
-        double timeset = 0.18, reverse_time = .1;
+    boolean first_seen = false;
+    public void Shoot(boolean shoot, boolean reverse) {
         if (shoot) {
             Shooter.Run(SmartDashboard.getNumber("Rise Speed", 0));
             m_timer.stop();
             m_timer.reset();
-        } else {
-            if (ColorSensor.get_Color().blue > .33 || ColorSensor.get_Color().red > .33) {
+            first_seen = false;
+        } else if (!reverse) {
+            if (ColorSensor.get_Color().blue > .33 || ColorSensor.get_Color().red > .33 && !first_seen) {                
                 m_timer.start();
                 if (ColorSensor.get_Color().blue > .33)
                     ball_color = true;
                 else
                     ball_color = false;
             }
-            if ((ColorSensor.get_Color().blue > .33 || ColorSensor.get_Color().red > .33) && m_timer.get() >= timeset)
+            if (first_seen)
                 Shooter.Run(0);
-            else if (m_timer.get() >= timeset - reverse_time && m_timer.get() < timeset)
-                Shooter.Run(-.5);
             else
                 Shooter.Run(SmartDashboard.getNumber("Rise Speed", 0));
-            if (((!team_color && ball_color) || (team_color && !ball_color)) && m_timer.get() > 0 && enable_throw) {
+    
+            if ((!team_color && ball_color) && m_timer.get() > 0 && enable_throw) {
                 Shooter.Run(-1);
                 Timer.delay(.7);
                 m_timer.stop();
                 m_timer.reset();
             }
+            else if (m_timer.get() > 0.1 && !first_seen) {
+                Shooter.Run(-.1);
+                Timer.delay(.1);
+                m_timer.stop();
+                m_timer.reset();
+                first_seen = true;
+            }
+        } else {
+            Shooter.Run(-0.4);
+            m_timer.stop();
+            m_timer.reset();
+            first_seen = false;
         }
         SmartDashboard.putNumber("Shoot Timer", m_timer.get());
+        SmartDashboard.putBoolean("First_Seen", first_seen);
         SmartDashboard.putNumber("Blue", ColorSensor.get_Color().blue);
         SmartDashboard.putNumber("Red", ColorSensor.get_Color().red);
     }
@@ -110,6 +119,7 @@ public class ShootSub {
     public void Init() {
         Shooter.Shoot(0);
         Shooter.Run(0);
+        m_timer.stop();
         m_timer.reset();
     }
 
